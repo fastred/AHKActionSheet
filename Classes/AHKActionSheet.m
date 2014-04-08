@@ -242,6 +242,9 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(void) {
 
 - (void)dismissAnimated:(BOOL)animated duration:(CGFloat)duration completion:(AHKActionSheetHandler)completionHandler
 {
+    // delegate isn't needed anymore because tableView will be hidden
+    self.tableView.delegate = nil;
+
     [UIView animateKeyframesWithDuration:duration delay:0 options:0 animations:^{
         self.blurredBackgroundView.alpha = 0.0f;
 
@@ -251,7 +254,8 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(void) {
 
         [UIView addKeyframeWithRelativeStartTime:relativeStartTime relativeDuration:relativeDuration animations:^{
             self.cancelButton.frame = cancelButtonHiddenFrame();
-            self.tableView.contentInset = tableViewHiddenEdgeInsets();
+            // use contentOffset for swiping tableView below the screen
+            self.tableView.contentOffset = CGPointMake(0, -CGRectGetHeight(self.frame));
         }];
     } completion:^(BOOL finished) {
         if (completionHandler) {
@@ -312,7 +316,7 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(void) {
         CGRect frame = CGRectMake(0,
                                   statusBarHeight,
                                   CGRectGetWidth(self.frame),
-                                  CGRectGetHeight(self.frame) + self.buttonHeight);
+                                  CGRectGetHeight(self.frame));
         self.tableView = [[UITableView alloc] initWithFrame:frame];
         self.tableView.backgroundColor = [UIColor clearColor];
         self.tableView.showsVerticalScrollIndicator = NO;
