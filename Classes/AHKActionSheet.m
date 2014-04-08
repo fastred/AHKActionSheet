@@ -139,7 +139,7 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(void) {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     AHKActionSheetItem *item = self.items[indexPath.row];
-    [self dismissAnimated:YES completion:item.handler];
+    [self dismissAnimated:YES duration:kFullAnimationLength completion:item.handler];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -152,6 +152,23 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(void) {
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     [self fadeBlurOnScrollToTop];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    static CGFloat autoDismissOffset = 80.0f;
+    static CGFloat flickDownHandlingOffset = 20.0f;
+    static CGFloat flickDownMinVelocity = 2000.0f;
+    CGPoint scrollVelocity = [scrollView.panGestureRecognizer velocityInView:self];
+
+    BOOL viewFlickedDown = scrollVelocity.y > flickDownMinVelocity && scrollView.contentOffset.y < -kTopInset - flickDownHandlingOffset;
+    if (viewFlickedDown) {
+        CGFloat duration = 0.1f;
+        [self dismissAnimated:YES duration:duration completion:nil];
+        self.tableView.hidden = YES; // hide the tableView because animation isn't pretty
+    } else if (scrollView.contentOffset.y < -kTopInset - autoDismissOffset) {
+        [self dismissAnimated:YES duration:kFullAnimationLength completion:nil];
+    }
 }
 
 #pragma mark - Properties
@@ -218,17 +235,21 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(void) {
 
 - (void)dismissAnimated:(BOOL)animated
 {
-    [self dismissAnimated:animated completion:nil];
+    [self dismissAnimated:animated duration:kFullAnimationLength completion:nil];
 }
 
 #pragma mark - Private
 
-- (void)dismissAnimated:(BOOL)animated completion:(AHKActionSheetHandler)completionHandler
+- (void)dismissAnimated:(BOOL)animated duration:(CGFloat)duration completion:(AHKActionSheetHandler)completionHandler
 {
-    [UIView animateKeyframesWithDuration:kFullAnimationLength delay:0 options:0 animations:^{
+    [UIView animateKeyframesWithDuration:duration delay:0 options:0 animations:^{
         self.blurredBackgroundView.alpha = 0.0f;
 
-        [UIView addKeyframeWithRelativeStartTime:0.3f relativeDuration:0.7f animations:^{
+        // do all animations simultaneously when the duration is smaller than the default
+        CGFloat relativeStartTime = duration == kFullAnimationLength ? 0.3f : 0.0f;
+        CGFloat relativeDuration = duration == kFullAnimationLength ? 0.7f : 1.0f;
+
+        [UIView addKeyframeWithRelativeStartTime:relativeStartTime relativeDuration:relativeDuration animations:^{
             self.cancelButton.frame = cancelButtonHiddenFrame();
             self.tableView.contentInset = tableViewHiddenEdgeInsets();
         }];
@@ -260,7 +281,7 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(void) {
 
 - (void)cancelButtonTapped:(id)sender
 {
-    [self dismissAnimated:YES completion:self.cancelHandler];
+    [self dismissAnimated:YES duration:kFullAnimationLength completion:self.cancelHandler];
 }
 
 - (void)setUpCancelButton
