@@ -23,6 +23,7 @@
 		A6BA55DF18F3F7840009AC11 /* AHKActionSheetExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BA55DE18F3F7840009AC11 /* AHKActionSheetExampleTests.m */; };
 		A6BA55EB18F3FD110009AC11 /* AHKActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BA55EA18F3FD110009AC11 /* AHKActionSheet.m */; };
 		A6BA55EE18F3FD270009AC11 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BA55ED18F3FD270009AC11 /* UIImage+ImageEffects.m */; };
+		A6BA55F118F407940009AC11 /* UIView+Snapshots.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BA55F018F407940009AC11 /* UIView+Snapshots.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,8 @@
 		A6BA55EA18F3FD110009AC11 /* AHKActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AHKActionSheet.m; sourceTree = "<group>"; };
 		A6BA55EC18F3FD270009AC11 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		A6BA55ED18F3FD270009AC11 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		A6BA55EF18F407940009AC11 /* UIView+Snapshots.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Snapshots.h"; sourceTree = "<group>"; };
+		A6BA55F018F407940009AC11 /* UIView+Snapshots.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Snapshots.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +169,8 @@
 				A6BA55EA18F3FD110009AC11 /* AHKActionSheet.m */,
 				A6BA55EC18F3FD270009AC11 /* UIImage+ImageEffects.h */,
 				A6BA55ED18F3FD270009AC11 /* UIImage+ImageEffects.m */,
+				A6BA55EF18F407940009AC11 /* UIView+Snapshots.h */,
+				A6BA55F018F407940009AC11 /* UIView+Snapshots.m */,
 			);
 			name = AHKActionSheet;
 			path = ../../Classes;
@@ -273,6 +278,7 @@
 				A6BA55EE18F3FD270009AC11 /* UIImage+ImageEffects.m in Sources */,
 				A6BA55CA18F3F7840009AC11 /* AHKViewController.m in Sources */,
 				A6BA55EB18F3FD110009AC11 /* AHKActionSheet.m in Sources */,
+				A6BA55F118F407940009AC11 /* UIView+Snapshots.m in Sources */,
 				A6BA55C418F3F7840009AC11 /* AHKAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
