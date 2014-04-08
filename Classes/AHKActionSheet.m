@@ -237,15 +237,17 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(void) {
 
 - (void)setUpBlurredBackgroundWithSnapshot:(UIImage *)previousKeyWindowSnapshot
 {
-    UIImage *blurredViewSnapshot = [previousKeyWindowSnapshot
-                                    applyBlurWithRadius:self.blurRadius
-                                    tintColor:self.blurTintColor
-                                    saturationDeltaFactor:self.blurSaturationDeltaFactor
-                                    maskImage:nil];
-    self.blurredBackgroundView = [[UIImageView alloc] initWithImage:blurredViewSnapshot];
-    self.blurredBackgroundView.frame = self.bounds;
-    self.blurredBackgroundView.alpha = 0.0f;
-    [self addSubview:self.blurredBackgroundView];
+    if (!self.blurredBackgroundView) {
+        UIImage *blurredViewSnapshot = [previousKeyWindowSnapshot
+                                        applyBlurWithRadius:self.blurRadius
+                                        tintColor:self.blurTintColor
+                                        saturationDeltaFactor:self.blurSaturationDeltaFactor
+                                        maskImage:nil];
+        self.blurredBackgroundView = [[UIImageView alloc] initWithImage:blurredViewSnapshot];
+        self.blurredBackgroundView.frame = self.bounds;
+        self.blurredBackgroundView.alpha = 0.0f;
+        [self addSubview:self.blurredBackgroundView];
+    }
 }
 
 - (void)cancelButtonTapped:(id)sender
@@ -255,21 +257,23 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(void) {
 
 - (void)setUpCancelButton
 {
-    self.cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [self.cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
-    [self.cancelButton addTarget:self action:@selector(cancelButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    self.cancelButton.frame = cancelButtonHiddenFrame();
-    self.cancelButton.backgroundColor = self.blurTintColor;
-    self.cancelButton.layer.masksToBounds = NO;
+    if (!self.cancelButton) {
+        self.cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        [self.cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
+        [self.cancelButton addTarget:self action:@selector(cancelButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        self.cancelButton.frame = cancelButtonHiddenFrame();
+        self.cancelButton.backgroundColor = self.blurTintColor;
+        self.cancelButton.layer.masksToBounds = NO;
 
-    // setup a glow on top of the button
-    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:self.cancelButton.layer.bounds];
-    self.cancelButton.layer.shadowColor = self.blurTintColor.CGColor;
-    self.cancelButton.layer.shadowOffset = CGSizeMake(0.0f, -5.0f);
-    self.cancelButton.layer.shadowOpacity = 1.0f;
-    self.cancelButton.layer.shadowPath = shadowPath.CGPath;
+        // setup a glow on top of the button
+        UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:self.cancelButton.layer.bounds];
+        self.cancelButton.layer.shadowColor = self.blurTintColor.CGColor;
+        self.cancelButton.layer.shadowOffset = CGSizeMake(0.0f, -5.0f);
+        self.cancelButton.layer.shadowOpacity = 1.0f;
+        self.cancelButton.layer.shadowPath = shadowPath.CGPath;
 
-    [self addSubview:self.cancelButton];
+        [self addSubview:self.cancelButton];
+    }
 }
 
 - (void)setUpTableView
