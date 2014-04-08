@@ -48,6 +48,7 @@
 static CGFloat const kCancelButtonHeight = 44.0f;
 static CGFloat const kFullAnimationLength = 0.5f;
 static CGFloat const kTopInset = 200.0f;
+static CGFloat kBlurFadeRangeSize = 200.0f;
 static NSString * const kCellIdentifier = @"Cell";
 
 static CGRect cancelButtonVisibleFrame(void) {
@@ -144,6 +145,13 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(void) {
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return self.buttonHeight;
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self fadeBlurOnScrollToTop];
 }
 
 #pragma mark - Properties
@@ -291,6 +299,14 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(void) {
         self.tableView.dataSource = self;
         [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
         [self insertSubview:self.tableView aboveSubview:self.blurredBackgroundView];
+    }
+}
+
+- (void)fadeBlurOnScrollToTop
+{
+    if (self.tableView.isDragging || self.tableView.isDecelerating) {
+        CGFloat alpha = 1.0f - ( -(kTopInset + self.tableView.contentOffset.y) / kBlurFadeRangeSize);
+        self.blurredBackgroundView.alpha = alpha;
     }
 }
 
