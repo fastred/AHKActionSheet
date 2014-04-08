@@ -21,7 +21,7 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 @property (nonatomic) CGFloat blurRadius;
 @property (strong, nonatomic) UIColor *blurTintColor;
 @property (nonatomic) CGFloat blurSaturationDeltaFactor;
-@property (nonatomic) CGFloat topInset;
+@property (nonatomic) CGFloat buttonHeight;
 @property (strong, nonatomic) AHKActionSheetHandler cancelHandler;
 
 - (instancetype)initWithTitle:(NSString *)title;

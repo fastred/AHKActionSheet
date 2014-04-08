@@ -24,6 +24,7 @@
     [super viewDidLoad];
 
     self.view = self.actionSheet;
+    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 - (BOOL)shouldAutorotate
@@ -46,6 +47,8 @@
 
 static CGFloat const kCancelButtonHeight = 44.0f;
 static CGFloat const kFullAnimationLength = 0.5f;
+static CGFloat const kTopInset = 200.0f;
+static NSString * const kCellIdentifier = @"Cell";
 
 static CGRect cancelButtonVisibleFrame(void) {
     return CGRectMake(0,
@@ -61,12 +64,17 @@ static CGRect cancelButtonHiddenFrame(void) {
                       kCancelButtonHeight);
 }
 
-@interface AHKActionSheet()
+static UIEdgeInsets tableViewHiddenEdgeInsets(void) {
+    return UIEdgeInsetsMake(CGRectGetHeight([UIScreen mainScreen].bounds), 0, 0, 0);
+}
+
+@interface AHKActionSheet() <UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) NSMutableArray *items;
 @property (copy, nonatomic) NSString *title;
 @property (weak, nonatomic) UIWindow *previousKeyWindow;
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UIImageView *blurredBackgroundView;
+@property (strong, nonatomic) UITableView *tableView;
 @property (nonatomic, getter = isVisible) BOOL visible;
 @property (strong, nonatomic) UIButton *cancelButton;
 @end
@@ -84,10 +92,16 @@ static CGRect cancelButtonHiddenFrame(void) {
         _blurRadius = 16.0f;
         _blurTintColor = [UIColor colorWithWhite:1.0f alpha:0.25f];
         _blurSaturationDeltaFactor = 1.8f;
-        _topInset = 200.0f;
+        _buttonHeight = 60.0f;
     }
 
     return self;
+}
+
+- (void)dealloc
+{
+    self.tableView.dataSource = nil;
+    self.tableView.delegate = nil;
 }
 
 #pragma mark - UIView
@@ -95,6 +109,41 @@ static CGRect cancelButtonHiddenFrame(void) {
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+}
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.items count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
+    AHKActionSheetItem *item = self.items[indexPath.row];
+    cell.textLabel.text = item.title;
+    cell.backgroundColor = [UIColor clearColor];
+
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    AHKActionSheetItem *item = self.items[indexPath.row];
+    [self dismissAnimated:YES completion:item.handler];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return self.buttonHeight;
 }
 
 #pragma mark - Properties
@@ -144,33 +193,47 @@ static CGRect cancelButtonHiddenFrame(void) {
 
     [self setUpBlurredBackgroundWithSnapshot:previousKeyWindowSnapshot];
     [self setUpCancelButton];
+    [self setUpTableView];
+
+
+    self.tableView.contentInset = tableViewHiddenEdgeInsets();
 
     [UIView animateKeyframesWithDuration:kFullAnimationLength delay:0 options:0 animations:^{
         self.blurredBackgroundView.alpha = 1.0f;
 
         [UIView addKeyframeWithRelativeStartTime:0.3f relativeDuration:0.7f animations:^{
             self.cancelButton.frame = cancelButtonVisibleFrame();
+            self.tableView.contentInset = UIEdgeInsetsMake(kTopInset, 0, 0, 0);
         }];
     } completion:nil];
 }
 
 - (void)dismissAnimated:(BOOL)animated
 {
+    [self dismissAnimated:animated completion:nil];
+}
+
+#pragma mark - Private
+
+- (void)dismissAnimated:(BOOL)animated completion:(AHKActionSheetHandler)completionHandler
+{
     [UIView animateKeyframesWithDuration:kFullAnimationLength delay:0 options:0 animations:^{
         self.blurredBackgroundView.alpha = 0.0f;
 
         [UIView addKeyframeWithRelativeStartTime:0.3f relativeDuration:0.7f animations:^{
             self.cancelButton.frame = cancelButtonHiddenFrame();
+            self.tableView.contentInset = tableViewHiddenEdgeInsets();
         }];
     } completion:^(BOOL finished) {
+        if (completionHandler) {
+            completionHandler(self);
+        }
         [self.window removeFromSuperview];
         self.window = nil;
 
         [self.previousKeyWindow makeKeyAndVisible];
     }];
 }
-
-#pragma mark - Private
 
 - (void)setUpBlurredBackgroundWithSnapshot:(UIImage *)previousKeyWindowSnapshot
 {
@@ -187,7 +250,7 @@ static CGRect cancelButtonHiddenFrame(void) {
 
 - (void)cancelButtonTapped:(id)sender
 {
-    [self dismissAnimated:YES];
+    [self dismissAnimated:YES completion:self.cancelHandler];
 }
 
 - (void)setUpCancelButton
@@ -207,6 +270,24 @@ static CGRect cancelButtonHiddenFrame(void) {
     self.cancelButton.layer.shadowPath = shadowPath.CGPath;
 
     [self addSubview:self.cancelButton];
+}
+
+- (void)setUpTableView
+{
+    if (!self.tableView) {
+        CGFloat statusBarHeight = CGRectGetHeight([UIApplication sharedApplication].statusBarFrame);
+        CGRect frame = CGRectMake(0,
+                                  statusBarHeight,
+                                  CGRectGetWidth(self.frame),
+                                  CGRectGetHeight(self.frame) + self.buttonHeight);
+        self.tableView = [[UITableView alloc] initWithFrame:frame];
+        self.tableView.backgroundColor = [UIColor clearColor];
+        self.tableView.showsVerticalScrollIndicator = NO;
+        self.tableView.delegate = self;
+        self.tableView.dataSource = self;
+        [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
+        [self insertSubview:self.tableView aboveSubview:self.blurredBackgroundView];
+    }
 }
 
 @end
