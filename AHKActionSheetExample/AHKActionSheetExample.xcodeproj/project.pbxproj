@@ -21,6 +21,8 @@
 		A6BA55D518F3F7840009AC11 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6BA55B718F3F7840009AC11 /* UIKit.framework */; };
 		A6BA55DD18F3F7840009AC11 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A6BA55DB18F3F7840009AC11 /* InfoPlist.strings */; };
 		A6BA55DF18F3F7840009AC11 /* AHKActionSheetExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BA55DE18F3F7840009AC11 /* AHKActionSheetExampleTests.m */; };
+		A6BA55EB18F3FD110009AC11 /* AHKActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BA55EA18F3FD110009AC11 /* AHKActionSheet.m */; };
+		A6BA55EE18F3FD270009AC11 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BA55ED18F3FD270009AC11 /* UIImage+ImageEffects.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,10 @@
 		A6BA55DA18F3F7840009AC11 /* AHKActionSheetExampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AHKActionSheetExampleTests-Info.plist"; sourceTree = "<group>"; };
 		A6BA55DC18F3F7840009AC11 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A6BA55DE18F3F7840009AC11 /* AHKActionSheetExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AHKActionSheetExampleTests.m; sourceTree = "<group>"; };
+		A6BA55E918F3FD110009AC11 /* AHKActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AHKActionSheet.h; sourceTree = "<group>"; };
+		A6BA55EA18F3FD110009AC11 /* AHKActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AHKActionSheet.m; sourceTree = "<group>"; };
+		A6BA55EC18F3FD270009AC11 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		A6BA55ED18F3FD270009AC11 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +118,7 @@
 		A6BA55B918F3F7840009AC11 /* AHKActionSheetExample */ = {
 			isa = PBXGroup;
 			children = (
+				A6BA55E818F3FAC60009AC11 /* AHKActionSheet */,
 				A6BA55C218F3F7840009AC11 /* AHKAppDelegate.h */,
 				A6BA55C318F3F7840009AC11 /* AHKAppDelegate.m */,
 				A6BA55C518F3F7840009AC11 /* Main.storyboard */,
@@ -150,6 +157,18 @@
 				A6BA55DB18F3F7840009AC11 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A6BA55E818F3FAC60009AC11 /* AHKActionSheet */ = {
+			isa = PBXGroup;
+			children = (
+				A6BA55E918F3FD110009AC11 /* AHKActionSheet.h */,
+				A6BA55EA18F3FD110009AC11 /* AHKActionSheet.m */,
+				A6BA55EC18F3FD270009AC11 /* UIImage+ImageEffects.h */,
+				A6BA55ED18F3FD270009AC11 /* UIImage+ImageEffects.m */,
+			);
+			name = AHKActionSheet;
+			path = ../../Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,7 +270,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A6BA55C018F3F7840009AC11 /* main.m in Sources */,
+				A6BA55EE18F3FD270009AC11 /* UIImage+ImageEffects.m in Sources */,
 				A6BA55CA18F3F7840009AC11 /* AHKViewController.m in Sources */,
+				A6BA55EB18F3FD110009AC11 /* AHKActionSheet.m in Sources */,
 				A6BA55C418F3F7840009AC11 /* AHKAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
