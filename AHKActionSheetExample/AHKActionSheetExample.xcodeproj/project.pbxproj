@@ -1,0 +1,472 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A6BA55B418F3F7840009AC11 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6BA55B318F3F7840009AC11 /* Foundation.framework */; };
+		A6BA55B618F3F7840009AC11 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6BA55B518F3F7840009AC11 /* CoreGraphics.framework */; };
+		A6BA55B818F3F7840009AC11 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6BA55B718F3F7840009AC11 /* UIKit.framework */; };
+		A6BA55BE18F3F7840009AC11 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A6BA55BC18F3F7840009AC11 /* InfoPlist.strings */; };
+		A6BA55C018F3F7840009AC11 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BA55BF18F3F7840009AC11 /* main.m */; };
+		A6BA55C418F3F7840009AC11 /* AHKAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BA55C318F3F7840009AC11 /* AHKAppDelegate.m */; };
+		A6BA55C718F3F7840009AC11 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A6BA55C518F3F7840009AC11 /* Main.storyboard */; };
+		A6BA55CA18F3F7840009AC11 /* AHKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BA55C918F3F7840009AC11 /* AHKViewController.m */; };
+		A6BA55CC18F3F7840009AC11 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A6BA55CB18F3F7840009AC11 /* Images.xcassets */; };
+		A6BA55D318F3F7840009AC11 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6BA55D218F3F7840009AC11 /* XCTest.framework */; };
+		A6BA55D418F3F7840009AC11 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6BA55B318F3F7840009AC11 /* Foundation.framework */; };
+		A6BA55D518F3F7840009AC11 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6BA55B718F3F7840009AC11 /* UIKit.framework */; };
+		A6BA55DD18F3F7840009AC11 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A6BA55DB18F3F7840009AC11 /* InfoPlist.strings */; };
+		A6BA55DF18F3F7840009AC11 /* AHKActionSheetExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BA55DE18F3F7840009AC11 /* AHKActionSheetExampleTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A6BA55D618F3F7840009AC11 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A6BA55A818F3F7840009AC11 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A6BA55AF18F3F7840009AC11;
+			remoteInfo = AHKActionSheetExample;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A6BA55B018F3F7840009AC11 /* AHKActionSheetExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AHKActionSheetExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6BA55B318F3F7840009AC11 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A6BA55B518F3F7840009AC11 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		A6BA55B718F3F7840009AC11 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		A6BA55BB18F3F7840009AC11 /* AHKActionSheetExample-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AHKActionSheetExample-Info.plist"; sourceTree = "<group>"; };
+		A6BA55BD18F3F7840009AC11 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A6BA55BF18F3F7840009AC11 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A6BA55C118F3F7840009AC11 /* AHKActionSheetExample-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AHKActionSheetExample-Prefix.pch"; sourceTree = "<group>"; };
+		A6BA55C218F3F7840009AC11 /* AHKAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AHKAppDelegate.h; sourceTree = "<group>"; };
+		A6BA55C318F3F7840009AC11 /* AHKAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AHKAppDelegate.m; sourceTree = "<group>"; };
+		A6BA55C618F3F7840009AC11 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A6BA55C818F3F7840009AC11 /* AHKViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AHKViewController.h; sourceTree = "<group>"; };
+		A6BA55C918F3F7840009AC11 /* AHKViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AHKViewController.m; sourceTree = "<group>"; };
+		A6BA55CB18F3F7840009AC11 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		A6BA55D118F3F7840009AC11 /* AHKActionSheetExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AHKActionSheetExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6BA55D218F3F7840009AC11 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		A6BA55DA18F3F7840009AC11 /* AHKActionSheetExampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AHKActionSheetExampleTests-Info.plist"; sourceTree = "<group>"; };
+		A6BA55DC18F3F7840009AC11 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A6BA55DE18F3F7840009AC11 /* AHKActionSheetExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AHKActionSheetExampleTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A6BA55AD18F3F7840009AC11 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6BA55B618F3F7840009AC11 /* CoreGraphics.framework in Frameworks */,
+				A6BA55B818F3F7840009AC11 /* UIKit.framework in Frameworks */,
+				A6BA55B418F3F7840009AC11 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A6BA55CE18F3F7840009AC11 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6BA55D318F3F7840009AC11 /* XCTest.framework in Frameworks */,
+				A6BA55D518F3F7840009AC11 /* UIKit.framework in Frameworks */,
+				A6BA55D418F3F7840009AC11 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A6BA55A718F3F7840009AC11 = {
+			isa = PBXGroup;
+			children = (
+				A6BA55B918F3F7840009AC11 /* AHKActionSheetExample */,
+				A6BA55D818F3F7840009AC11 /* AHKActionSheetExampleTests */,
+				A6BA55B218F3F7840009AC11 /* Frameworks */,
+				A6BA55B118F3F7840009AC11 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A6BA55B118F3F7840009AC11 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A6BA55B018F3F7840009AC11 /* AHKActionSheetExample.app */,
+				A6BA55D118F3F7840009AC11 /* AHKActionSheetExampleTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A6BA55B218F3F7840009AC11 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A6BA55B318F3F7840009AC11 /* Foundation.framework */,
+				A6BA55B518F3F7840009AC11 /* CoreGraphics.framework */,
+				A6BA55B718F3F7840009AC11 /* UIKit.framework */,
+				A6BA55D218F3F7840009AC11 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A6BA55B918F3F7840009AC11 /* AHKActionSheetExample */ = {
+			isa = PBXGroup;
+			children = (
+				A6BA55C218F3F7840009AC11 /* AHKAppDelegate.h */,
+				A6BA55C318F3F7840009AC11 /* AHKAppDelegate.m */,
+				A6BA55C518F3F7840009AC11 /* Main.storyboard */,
+				A6BA55C818F3F7840009AC11 /* AHKViewController.h */,
+				A6BA55C918F3F7840009AC11 /* AHKViewController.m */,
+				A6BA55CB18F3F7840009AC11 /* Images.xcassets */,
+				A6BA55BA18F3F7840009AC11 /* Supporting Files */,
+			);
+			path = AHKActionSheetExample;
+			sourceTree = "<group>";
+		};
+		A6BA55BA18F3F7840009AC11 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A6BA55BB18F3F7840009AC11 /* AHKActionSheetExample-Info.plist */,
+				A6BA55BC18F3F7840009AC11 /* InfoPlist.strings */,
+				A6BA55BF18F3F7840009AC11 /* main.m */,
+				A6BA55C118F3F7840009AC11 /* AHKActionSheetExample-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A6BA55D818F3F7840009AC11 /* AHKActionSheetExampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				A6BA55DE18F3F7840009AC11 /* AHKActionSheetExampleTests.m */,
+				A6BA55D918F3F7840009AC11 /* Supporting Files */,
+			);
+			path = AHKActionSheetExampleTests;
+			sourceTree = "<group>";
+		};
+		A6BA55D918F3F7840009AC11 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A6BA55DA18F3F7840009AC11 /* AHKActionSheetExampleTests-Info.plist */,
+				A6BA55DB18F3F7840009AC11 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A6BA55AF18F3F7840009AC11 /* AHKActionSheetExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A6BA55E218F3F7840009AC11 /* Build configuration list for PBXNativeTarget "AHKActionSheetExample" */;
+			buildPhases = (
+				A6BA55AC18F3F7840009AC11 /* Sources */,
+				A6BA55AD18F3F7840009AC11 /* Frameworks */,
+				A6BA55AE18F3F7840009AC11 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AHKActionSheetExample;
+			productName = AHKActionSheetExample;
+			productReference = A6BA55B018F3F7840009AC11 /* AHKActionSheetExample.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A6BA55D018F3F7840009AC11 /* AHKActionSheetExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A6BA55E518F3F7840009AC11 /* Build configuration list for PBXNativeTarget "AHKActionSheetExampleTests" */;
+			buildPhases = (
+				A6BA55CD18F3F7840009AC11 /* Sources */,
+				A6BA55CE18F3F7840009AC11 /* Frameworks */,
+				A6BA55CF18F3F7840009AC11 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A6BA55D718F3F7840009AC11 /* PBXTargetDependency */,
+			);
+			name = AHKActionSheetExampleTests;
+			productName = AHKActionSheetExampleTests;
+			productReference = A6BA55D118F3F7840009AC11 /* AHKActionSheetExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A6BA55A818F3F7840009AC11 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = AHK;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Arkadiusz Holko";
+				TargetAttributes = {
+					A6BA55D018F3F7840009AC11 = {
+						TestTargetID = A6BA55AF18F3F7840009AC11;
+					};
+				};
+			};
+			buildConfigurationList = A6BA55AB18F3F7840009AC11 /* Build configuration list for PBXProject "AHKActionSheetExample" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A6BA55A718F3F7840009AC11;
+			productRefGroup = A6BA55B118F3F7840009AC11 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A6BA55AF18F3F7840009AC11 /* AHKActionSheetExample */,
+				A6BA55D018F3F7840009AC11 /* AHKActionSheetExampleTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A6BA55AE18F3F7840009AC11 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6BA55CC18F3F7840009AC11 /* Images.xcassets in Resources */,
+				A6BA55BE18F3F7840009AC11 /* InfoPlist.strings in Resources */,
+				A6BA55C718F3F7840009AC11 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A6BA55CF18F3F7840009AC11 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6BA55DD18F3F7840009AC11 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A6BA55AC18F3F7840009AC11 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6BA55C018F3F7840009AC11 /* main.m in Sources */,
+				A6BA55CA18F3F7840009AC11 /* AHKViewController.m in Sources */,
+				A6BA55C418F3F7840009AC11 /* AHKAppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A6BA55CD18F3F7840009AC11 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6BA55DF18F3F7840009AC11 /* AHKActionSheetExampleTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A6BA55D718F3F7840009AC11 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A6BA55AF18F3F7840009AC11 /* AHKActionSheetExample */;
+			targetProxy = A6BA55D618F3F7840009AC11 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A6BA55BC18F3F7840009AC11 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A6BA55BD18F3F7840009AC11 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A6BA55C518F3F7840009AC11 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A6BA55C618F3F7840009AC11 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A6BA55DB18F3F7840009AC11 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A6BA55DC18F3F7840009AC11 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A6BA55E018F3F7840009AC11 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		A6BA55E118F3F7840009AC11 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A6BA55E318F3F7840009AC11 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AHKActionSheetExample/AHKActionSheetExample-Prefix.pch";
+				INFOPLIST_FILE = "AHKActionSheetExample/AHKActionSheetExample-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A6BA55E418F3F7840009AC11 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AHKActionSheetExample/AHKActionSheetExample-Prefix.pch";
+				INFOPLIST_FILE = "AHKActionSheetExample/AHKActionSheetExample-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		A6BA55E618F3F7840009AC11 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/AHKActionSheetExample.app/AHKActionSheetExample";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AHKActionSheetExample/AHKActionSheetExample-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "AHKActionSheetExampleTests/AHKActionSheetExampleTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		A6BA55E718F3F7840009AC11 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/AHKActionSheetExample.app/AHKActionSheetExample";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AHKActionSheetExample/AHKActionSheetExample-Prefix.pch";
+				INFOPLIST_FILE = "AHKActionSheetExampleTests/AHKActionSheetExampleTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A6BA55AB18F3F7840009AC11 /* Build configuration list for PBXProject "AHKActionSheetExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A6BA55E018F3F7840009AC11 /* Debug */,
+				A6BA55E118F3F7840009AC11 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A6BA55E218F3F7840009AC11 /* Build configuration list for PBXNativeTarget "AHKActionSheetExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A6BA55E318F3F7840009AC11 /* Debug */,
+				A6BA55E418F3F7840009AC11 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		A6BA55E518F3F7840009AC11 /* Build configuration list for PBXNativeTarget "AHKActionSheetExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A6BA55E618F3F7840009AC11 /* Debug */,
+				A6BA55E718F3F7840009AC11 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A6BA55A818F3F7840009AC11 /* Project object */;
+}
