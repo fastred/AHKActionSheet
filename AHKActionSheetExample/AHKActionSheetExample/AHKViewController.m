@@ -7,6 +7,7 @@
 //
 
 #import "AHKViewController.h"
+#import "AHKActionSheet.h"
 
 @interface AHKViewController ()
 
@@ -26,7 +27,14 @@
 
 - (IBAction)showActionSheetTapped:(id)sender
 {
+    AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:NSLocalizedString(@"Test test", nil)];
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"Button 1", nil)
+                               type:AHKActionSheetButtonTypeDefault
+                            handler:^(AHKActionSheet *actionSheet) {
+                                NSLog(@"Button 1 tapped");
+                            }];
 
+    [actionSheet show];
 }
 
 @end
