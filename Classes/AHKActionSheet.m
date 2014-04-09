@@ -276,13 +276,6 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(void) {
         self.cancelButton.backgroundColor = self.blurTintColor;
         self.cancelButton.layer.masksToBounds = NO;
 
-        // setup a glow on top of the button
-        UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:self.cancelButton.layer.bounds];
-        self.cancelButton.layer.shadowColor = self.blurTintColor.CGColor;
-        self.cancelButton.layer.shadowOffset = CGSizeMake(0.0f, -5.0f);
-        self.cancelButton.layer.shadowOpacity = 1.0f;
-        self.cancelButton.layer.shadowPath = shadowPath.CGPath;
-
         [self addSubview:self.cancelButton];
     }
 }
