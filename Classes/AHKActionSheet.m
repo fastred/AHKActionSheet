@@ -8,31 +8,9 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "AHKActionSheet.h"
+#import "AHKActionSheetViewController.h"
 #import "UIView+Snapshots.h"
 #import "UIImage+ImageEffects.h"
-
-@interface AHKActionSheetViewController : UIViewController
-@property (strong, nonatomic) AHKActionSheet *actionSheet;
-@end
-
-@implementation AHKActionSheetViewController
-
-#pragma mark - UIViewController
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-
-    self.view = self.actionSheet;
-    self.automaticallyAdjustsScrollViewInsets = NO;
-}
-
-- (BOOL)shouldAutorotate
-{
-    return NO;
-}
-
-@end
 
 
 @interface AHKActionSheetItem : NSObject

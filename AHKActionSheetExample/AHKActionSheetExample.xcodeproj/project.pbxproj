@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A67A09F318F5665C0085FA8D /* AHKActionSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A67A09F218F5665B0085FA8D /* AHKActionSheetViewController.m */; };
 		A6BA55B418F3F7840009AC11 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6BA55B318F3F7840009AC11 /* Foundation.framework */; };
 		A6BA55B618F3F7840009AC11 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6BA55B518F3F7840009AC11 /* CoreGraphics.framework */; };
 		A6BA55B818F3F7840009AC11 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6BA55B718F3F7840009AC11 /* UIKit.framework */; };
@@ -37,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A67A09F118F5665B0085FA8D /* AHKActionSheetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AHKActionSheetViewController.h; sourceTree = "<group>"; };
+		A67A09F218F5665B0085FA8D /* AHKActionSheetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AHKActionSheetViewController.m; sourceTree = "<group>"; };
 		A6BA55B018F3F7840009AC11 /* AHKActionSheetExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AHKActionSheetExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6BA55B318F3F7840009AC11 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A6BA55B518F3F7840009AC11 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -167,6 +170,8 @@
 			children = (
 				A6BA55E918F3FD110009AC11 /* AHKActionSheet.h */,
 				A6BA55EA18F3FD110009AC11 /* AHKActionSheet.m */,
+				A67A09F118F5665B0085FA8D /* AHKActionSheetViewController.h */,
+				A67A09F218F5665B0085FA8D /* AHKActionSheetViewController.m */,
 				A6BA55EC18F3FD270009AC11 /* UIImage+ImageEffects.h */,
 				A6BA55ED18F3FD270009AC11 /* UIImage+ImageEffects.m */,
 				A6BA55EF18F407940009AC11 /* UIView+Snapshots.h */,
@@ -276,6 +281,7 @@
 			files = (
 				A6BA55C018F3F7840009AC11 /* main.m in Sources */,
 				A6BA55EE18F3FD270009AC11 /* UIImage+ImageEffects.m in Sources */,
+				A67A09F318F5665C0085FA8D /* AHKActionSheetViewController.m in Sources */,
 				A6BA55CA18F3F7840009AC11 /* AHKViewController.m in Sources */,
 				A6BA55EB18F3FD110009AC11 /* AHKActionSheet.m in Sources */,
 				A6BA55F118F407940009AC11 /* UIView+Snapshots.m in Sources */,
@@ -484,6 +490,7 @@
 				A6BA55E418F3F7840009AC11 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A6BA55E518F3F7840009AC11 /* Build configuration list for PBXNativeTarget "AHKActionSheetExampleTests" */ = {
 			isa = XCConfigurationList;
@@ -492,6 +499,7 @@
 				A6BA55E718F3F7840009AC11 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
