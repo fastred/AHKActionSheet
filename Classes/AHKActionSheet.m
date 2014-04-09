@@ -308,7 +308,9 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(void) {
 - (void)fadeBlurOnScrollToTop
 {
     if (self.tableView.isDragging || self.tableView.isDecelerating) {
-        CGFloat alpha = 1.0f - ( -(kTopInset + self.tableView.contentOffset.y) / kBlurFadeRangeSize);
+        CGFloat alphaWithoutBounds = 1.0f - ( -(kTopInset + self.tableView.contentOffset.y) / kBlurFadeRangeSize);
+        // limit alpha to the interval [0, 1]
+        CGFloat alpha = MAX(MIN(alphaWithoutBounds, 1.0f), 0.0f);
         self.blurredBackgroundView.alpha = alpha;
     }
 }
