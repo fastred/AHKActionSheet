@@ -142,7 +142,7 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(UIView *view) {
 
     BOOL viewFlickedDown = scrollVelocity.y > flickDownMinVelocity && scrollView.contentOffset.y < -self.tableView.contentInset.top - flickDownHandlingOffset;
     if (viewFlickedDown) {
-        CGFloat duration = 0.1f;
+        CGFloat duration = 0.2f;
         [self dismissAnimated:YES duration:duration completion:nil];
     } else if (scrollView.contentOffset.y < -self.tableView.contentInset.top - autoDismissOffset) {
         [self dismissAnimated:YES duration:kFullAnimationLength completion:nil];
