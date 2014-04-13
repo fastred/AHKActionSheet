@@ -180,7 +180,7 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(UIView *view) {
     }
 
     self.previousKeyWindow = [UIApplication sharedApplication].keyWindow;
-    UIImage *previousKeyWindowSnapshot = [self.previousKeyWindow snapshotImage];
+    UIImage *previousKeyWindowSnapshot = [self.previousKeyWindow.rootViewController.view snapshotImage];
 
     AHKActionSheetViewController *actionSheetVC = [[AHKActionSheetViewController alloc] initWithNibName:nil bundle:nil];
     actionSheetVC.actionSheet = self;
