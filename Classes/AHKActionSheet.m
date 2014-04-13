@@ -287,9 +287,6 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(UIView *view) {
         [self.cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
         [self.cancelButton addTarget:self action:@selector(cancelButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         self.cancelButton.frame = cancelButtonHiddenFrame(self);
-        self.cancelButton.backgroundColor = self.blurTintColor;
-        self.cancelButton.layer.masksToBounds = NO;
-
         [self addSubview:self.cancelButton];
     }
 }
