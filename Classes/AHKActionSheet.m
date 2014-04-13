@@ -239,22 +239,16 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(UIView *view) {
     self.tableView.scrollEnabled = NO;
     self.tableView.contentInset = UIEdgeInsetsMake(-self.tableView.contentOffset.y, 0, 0, 0);
 
-    [UIView animateKeyframesWithDuration:duration delay:0 options:0 animations:^{
+    [UIView animateWithDuration:duration animations:^{
         self.blurredBackgroundView.alpha = 0.0f;
+        self.cancelButton.frame = cancelButtonHiddenFrame(self);
 
-        // do all animations simultaneously when the duration is smaller than the default
-        CGFloat relativeStartTime = duration == kFullAnimationLength ? 0.3f : 0.0f;
-        CGFloat relativeDuration = duration == kFullAnimationLength ? 0.7f : 1.0f;
+        // shortest change of position to hide all tableView contents under the bottom
+        CGRect frameBelow = self.tableView.frame;
+        CGFloat moveDownRange = MIN(CGRectGetHeight(self.frame) + self.tableView.contentOffset.y, CGRectGetHeight(self.frame));
+        frameBelow.origin = CGPointMake(0, moveDownRange);
+        self.tableView.frame = frameBelow;
 
-        [UIView addKeyframeWithRelativeStartTime:relativeStartTime relativeDuration:relativeDuration animations:^{
-            self.cancelButton.frame = cancelButtonHiddenFrame(self);
-
-            // shortest move to hide all contents of the tableView
-            CGRect frameBelow = self.tableView.frame;
-            CGFloat moveDownRange = MIN(CGRectGetHeight(self.frame) + self.tableView.contentOffset.y, CGRectGetHeight(self.frame));
-            frameBelow.origin = CGPointMake(0, moveDownRange);
-            self.tableView.frame = frameBelow;
-        }];
     } completion:^(BOOL finished) {
         if (completionHandler) {
             completionHandler(self);
