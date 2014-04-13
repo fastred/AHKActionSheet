@@ -239,17 +239,7 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(UIView *view) {
     self.tableView.scrollEnabled = NO;
     self.tableView.contentInset = UIEdgeInsetsMake(-self.tableView.contentOffset.y, 0, 0, 0);
 
-    [UIView animateWithDuration:duration animations:^{
-        self.blurredBackgroundView.alpha = 0.0f;
-        self.cancelButton.frame = cancelButtonHiddenFrame(self);
-
-        // shortest change of position to hide all tableView contents under the bottom
-        CGRect frameBelow = self.tableView.frame;
-        CGFloat moveDownRange = MIN(CGRectGetHeight(self.frame) + self.tableView.contentOffset.y, CGRectGetHeight(self.frame));
-        frameBelow.origin = CGPointMake(0, moveDownRange);
-        self.tableView.frame = frameBelow;
-
-    } completion:^(BOOL finished) {
+    void(^tearDownView)(void) = ^(void) {
         if (completionHandler) {
             completionHandler(self);
         }
@@ -257,7 +247,25 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(UIView *view) {
         self.window = nil;
 
         [self.previousKeyWindow makeKeyAndVisible];
-    }];
+    };
+
+    if (animated) {
+        [UIView animateWithDuration:duration animations:^{
+            self.blurredBackgroundView.alpha = 0.0f;
+            self.cancelButton.frame = cancelButtonHiddenFrame(self);
+
+            // shortest change of position to hide all tableView contents under the bottom
+            CGRect frameBelow = self.tableView.frame;
+            CGFloat moveDownRange = MIN(CGRectGetHeight(self.frame) + self.tableView.contentOffset.y, CGRectGetHeight(self.frame));
+            frameBelow.origin = CGPointMake(0, moveDownRange);
+            self.tableView.frame = frameBelow;
+
+        } completion:^(BOOL finished) {
+            tearDownView();
+        }];
+    } else {
+        tearDownView();
+    }
 }
 
 - (void)setUpBlurredBackgroundWithSnapshot:(UIImage *)previousKeyWindowSnapshot
