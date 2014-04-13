@@ -25,7 +25,6 @@
 
 static CGFloat const kCancelButtonHeight = 44.0f;
 static CGFloat const kFullAnimationLength = 0.5f;
-static CGFloat const kTopInset = 200.0f;
 static CGFloat kBlurFadeRangeSize = 200.0f;
 static NSString * const kCellIdentifier = @"Cell";
 
@@ -141,11 +140,11 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(UIView *view) {
     static CGFloat flickDownMinVelocity = 2000.0f;
     CGPoint scrollVelocity = [scrollView.panGestureRecognizer velocityInView:self];
 
-    BOOL viewFlickedDown = scrollVelocity.y > flickDownMinVelocity && scrollView.contentOffset.y < -kTopInset - flickDownHandlingOffset;
+    BOOL viewFlickedDown = scrollVelocity.y > flickDownMinVelocity && scrollView.contentOffset.y < -self.tableView.contentInset.top - flickDownHandlingOffset;
     if (viewFlickedDown) {
         CGFloat duration = 0.1f;
         [self dismissAnimated:YES duration:duration completion:nil];
-    } else if (scrollView.contentOffset.y < -kTopInset - autoDismissOffset) {
+    } else if (scrollView.contentOffset.y < -self.tableView.contentInset.top - autoDismissOffset) {
         [self dismissAnimated:YES duration:kFullAnimationLength completion:nil];
     }
 }
@@ -207,7 +206,20 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(UIView *view) {
 
         [UIView addKeyframeWithRelativeStartTime:0.3f relativeDuration:0.7f animations:^{
             self.cancelButton.frame = cancelButtonVisibleFrame(self);
-            self.tableView.contentInset = UIEdgeInsetsMake(kTopInset, 0, 0, 0);
+
+#warning TODO: include table header
+            static CGFloat topSpaceMarginPercentage = 1.0/3.0;
+            CGFloat tableContentHeight = [self.items count] * self.buttonHeight;
+
+            CGFloat topInset;
+            if (tableContentHeight < CGRectGetHeight(self.tableView.frame) * (1.0 - topSpaceMarginPercentage)) {
+                // show all buttons if there isn't many
+                topInset = CGRectGetHeight(self.tableView.frame) - tableContentHeight;
+            } else {
+                // leave an empty space on the top. to make the control look similar to UIActionSheet
+                topInset = CGRectGetHeight(self.tableView.frame) * topSpaceMarginPercentage;
+            }
+            self.tableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0);
         }];
     } completion:nil];
 }
@@ -309,7 +321,7 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(UIView *view) {
 - (void)fadeBlurOnScrollToTop
 {
     if (self.tableView.isDragging || self.tableView.isDecelerating) {
-        CGFloat alphaWithoutBounds = 1.0f - ( -(kTopInset + self.tableView.contentOffset.y) / kBlurFadeRangeSize);
+        CGFloat alphaWithoutBounds = 1.0f - ( -(self.tableView.contentInset.top + self.tableView.contentOffset.y) / kBlurFadeRangeSize);
         // limit alpha to the interval [0, 1]
         CGFloat alpha = MAX(MIN(alphaWithoutBounds, 1.0f), 0.0f);
         self.blurredBackgroundView.alpha = alpha;
