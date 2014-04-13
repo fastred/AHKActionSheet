@@ -29,22 +29,22 @@ static CGFloat const kTopInset = 200.0f;
 static CGFloat kBlurFadeRangeSize = 200.0f;
 static NSString * const kCellIdentifier = @"Cell";
 
-static CGRect cancelButtonVisibleFrame(void) {
+static CGRect cancelButtonVisibleFrame(UIView *view) {
     return CGRectMake(0,
-                      CGRectGetMaxY([UIScreen mainScreen].bounds) - kCancelButtonHeight,
-                      CGRectGetWidth([UIScreen mainScreen].bounds),
+                      CGRectGetMaxY(view.bounds) - kCancelButtonHeight,
+                      CGRectGetWidth(view.bounds),
                       kCancelButtonHeight);
 }
 
-static CGRect cancelButtonHiddenFrame(void) {
+static CGRect cancelButtonHiddenFrame(UIView *view) {
     return CGRectMake(0,
-                      CGRectGetMaxY([UIScreen mainScreen].bounds),
-                      CGRectGetWidth([UIScreen mainScreen].bounds),
+                      CGRectGetMaxY(view.bounds),
+                      CGRectGetWidth(view.bounds),
                       kCancelButtonHeight);
 }
 
-static UIEdgeInsets tableViewHiddenEdgeInsets(void) {
-    return UIEdgeInsetsMake(CGRectGetHeight([UIScreen mainScreen].bounds), 0, 0, 0);
+static UIEdgeInsets tableViewHiddenEdgeInsets(UIView *view) {
+    return UIEdgeInsetsMake(CGRectGetHeight(view.bounds), 0, 0, 0);
 }
 
 @interface AHKActionSheet() <UITableViewDataSource, UITableViewDelegate>
@@ -88,6 +88,8 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(void) {
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+
+    self.blurredBackgroundView.frame = self.bounds;
 }
 
 #pragma mark - UITableViewDataSource
@@ -143,7 +145,6 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(void) {
     if (viewFlickedDown) {
         CGFloat duration = 0.1f;
         [self dismissAnimated:YES duration:duration completion:nil];
-        self.tableView.hidden = YES; // hide the tableView because animation isn't pretty
     } else if (scrollView.contentOffset.y < -kTopInset - autoDismissOffset) {
         [self dismissAnimated:YES duration:kFullAnimationLength completion:nil];
     }
@@ -199,13 +200,13 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(void) {
     [self setUpTableView];
 
 
-    self.tableView.contentInset = tableViewHiddenEdgeInsets();
+    self.tableView.contentInset = tableViewHiddenEdgeInsets(self);
 
     [UIView animateKeyframesWithDuration:kFullAnimationLength delay:0 options:0 animations:^{
         self.blurredBackgroundView.alpha = 1.0f;
 
         [UIView addKeyframeWithRelativeStartTime:0.3f relativeDuration:0.7f animations:^{
-            self.cancelButton.frame = cancelButtonVisibleFrame();
+            self.cancelButton.frame = cancelButtonVisibleFrame(self);
             self.tableView.contentInset = UIEdgeInsetsMake(kTopInset, 0, 0, 0);
         }];
     } completion:nil];
@@ -222,6 +223,9 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(void) {
 {
     // delegate isn't needed anymore because tableView will be hidden
     self.tableView.delegate = nil;
+    self.tableView.userInteractionEnabled = NO;
+    self.tableView.scrollEnabled = NO;
+    self.tableView.contentInset = UIEdgeInsetsMake(-self.tableView.contentOffset.y, 0, 0, 0);
 
     [UIView animateKeyframesWithDuration:duration delay:0 options:0 animations:^{
         self.blurredBackgroundView.alpha = 0.0f;
@@ -231,9 +235,13 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(void) {
         CGFloat relativeDuration = duration == kFullAnimationLength ? 0.7f : 1.0f;
 
         [UIView addKeyframeWithRelativeStartTime:relativeStartTime relativeDuration:relativeDuration animations:^{
-            self.cancelButton.frame = cancelButtonHiddenFrame();
-            // use contentOffset for swiping tableView below the screen
-            self.tableView.contentOffset = CGPointMake(0, -CGRectGetHeight(self.frame));
+            self.cancelButton.frame = cancelButtonHiddenFrame(self);
+
+            // shortest move to hide all contents of the tableView
+            CGRect frameBelow = self.tableView.frame;
+            CGFloat moveDownRange = MIN(CGRectGetHeight(self.frame) + self.tableView.contentOffset.y, CGRectGetHeight(self.frame));
+            frameBelow.origin = CGPointMake(0, moveDownRange);
+            self.tableView.frame = frameBelow;
         }];
     } completion:^(BOOL finished) {
         if (completionHandler) {
@@ -272,7 +280,7 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(void) {
         self.cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
         [self.cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
         [self.cancelButton addTarget:self action:@selector(cancelButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        self.cancelButton.frame = cancelButtonHiddenFrame();
+        self.cancelButton.frame = cancelButtonHiddenFrame(self);
         self.cancelButton.backgroundColor = self.blurTintColor;
         self.cancelButton.layer.masksToBounds = NO;
 
@@ -286,8 +294,8 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(void) {
         CGFloat statusBarHeight = CGRectGetHeight([UIApplication sharedApplication].statusBarFrame);
         CGRect frame = CGRectMake(0,
                                   statusBarHeight,
-                                  CGRectGetWidth(self.frame),
-                                  CGRectGetHeight(self.frame));
+                                  CGRectGetWidth(self.bounds),
+                                  CGRectGetHeight(self.bounds) - statusBarHeight - kCancelButtonHeight);
         self.tableView = [[UITableView alloc] initWithFrame:frame];
         self.tableView.backgroundColor = [UIColor clearColor];
         self.tableView.showsVerticalScrollIndicator = NO;
