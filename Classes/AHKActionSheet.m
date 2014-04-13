@@ -302,7 +302,8 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(UIView *view) {
 - (void)setUpTableView
 {
     if (!self.tableView) {
-        CGFloat statusBarHeight = CGRectGetHeight([UIApplication sharedApplication].statusBarFrame);
+        CGRect statusBarViewRect = [self convertRect:[UIApplication sharedApplication].statusBarFrame fromView:nil];
+        CGFloat statusBarHeight = CGRectGetHeight(statusBarViewRect);
         CGRect frame = CGRectMake(0,
                                   statusBarHeight,
                                   CGRectGetWidth(self.bounds),
