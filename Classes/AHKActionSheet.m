@@ -216,9 +216,9 @@ static NSString * const kCellIdentifier = @"Cell";
                                                  CGRectGetWidth(self.bounds),
                                                  kCancelButtonHeight);
 
-#warning TODO: include table header
             static CGFloat topSpaceMarginPercentage = 1.0/3.0;
-            CGFloat tableContentHeight = [self.items count] * self.buttonHeight;
+            // manual calculation of table's contentSize.height
+            CGFloat tableContentHeight = [self.items count] * self.buttonHeight + CGRectGetHeight(self.tableView.tableHeaderView.frame);
 
             CGFloat topInset;
             if (tableContentHeight < CGRectGetHeight(self.tableView.frame) * (1.0 - topSpaceMarginPercentage)) {
@@ -326,6 +326,7 @@ static NSString * const kCellIdentifier = @"Cell";
         self.tableView = [[UITableView alloc] initWithFrame:frame];
         self.tableView.backgroundColor = [UIColor clearColor];
         self.tableView.showsVerticalScrollIndicator = NO;
+        self.tableView.separatorInset = UIEdgeInsetsZero;
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
@@ -348,6 +349,8 @@ static NSString * const kCellIdentifier = @"Cell";
             UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), labelSize.height + 2*topBottomPadding)];
             [headerView addSubview:label];
             self.tableView.tableHeaderView = headerView;
+        } else if (self.headerView) {
+            self.tableView.tableHeaderView = self.headerView;
         }
 
         // add separator between the tableHeaderView and a first row
