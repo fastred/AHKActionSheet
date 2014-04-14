@@ -152,11 +152,13 @@ static NSString * const kCellIdentifier = @"Cell";
     static CGFloat flickDownMinVelocity = 2000.0f;
     CGPoint scrollVelocity = [scrollView.panGestureRecognizer velocityInView:self];
 
-    BOOL viewFlickedDown = scrollVelocity.y > flickDownMinVelocity && scrollView.contentOffset.y < -self.tableView.contentInset.top - flickDownHandlingOffset;
-    if (viewFlickedDown) {
+    BOOL viewWasFlickedDown = scrollVelocity.y > flickDownMinVelocity && scrollView.contentOffset.y < -self.tableView.contentInset.top - flickDownHandlingOffset;
+    BOOL shouldSlideDown = scrollView.contentOffset.y < -self.tableView.contentInset.top - autoDismissOffset;
+    if (viewWasFlickedDown) {
+        // use shorter duration for a flick down animation
         CGFloat duration = 0.2f;
         [self dismissAnimated:YES duration:duration completion:self.cancelHandler];
-    } else if (scrollView.contentOffset.y < -self.tableView.contentInset.top - autoDismissOffset) {
+    } else if (shouldSlideDown) {
         [self dismissAnimated:YES duration:kFullAnimationLength completion:self.cancelHandler];
     }
 }
@@ -206,6 +208,7 @@ static NSString * const kCellIdentifier = @"Cell";
     [self setUpTableView];
     self.visible = YES;
 
+    // Animate sliding in tableView and cancel button with keyframe animation for a nicer effect.
     [UIView animateKeyframesWithDuration:kFullAnimationLength delay:0 options:0 animations:^{
         self.blurredBackgroundView.alpha = 1.0f;
 
@@ -215,16 +218,17 @@ static NSString * const kCellIdentifier = @"Cell";
                                                  CGRectGetWidth(self.bounds),
                                                  kCancelButtonHeight);
 
-            static CGFloat topSpaceMarginPercentage = 1.0/3.0;
+            static CGFloat topSpaceMarginPercentage = 0.333f;
             // manual calculation of table's contentSize.height
             CGFloat tableContentHeight = [self.items count] * self.buttonHeight + CGRectGetHeight(self.tableView.tableHeaderView.frame);
 
             CGFloat topInset;
-            if (tableContentHeight < CGRectGetHeight(self.tableView.frame) * (1.0 - topSpaceMarginPercentage)) {
+            BOOL buttonsFitInWithoutScrolling = tableContentHeight < CGRectGetHeight(self.tableView.frame) * (1.0 - topSpaceMarginPercentage);
+            if (buttonsFitInWithoutScrolling) {
                 // show all buttons if there isn't many
                 topInset = CGRectGetHeight(self.tableView.frame) - tableContentHeight;
             } else {
-                // leave an empty space on the top. to make the control look similar to UIActionSheet
+                // leave an empty space on the top to make the control look similar to UIActionSheet
                 topInset = CGRectGetHeight(self.tableView.frame) * topSpaceMarginPercentage;
             }
             self.tableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0);
@@ -241,10 +245,10 @@ static NSString * const kCellIdentifier = @"Cell";
 
 - (void)dismissAnimated:(BOOL)animated duration:(CGFloat)duration completion:(AHKActionSheetHandler)completionHandler
 {
-    // delegate isn't needed anymore because tableView will be hidden
+    // delegate isn't needed anymore because tableView will be hidden (and we don't want delegate methods to be called now)
     self.tableView.delegate = nil;
     self.tableView.userInteractionEnabled = NO;
-    self.tableView.scrollEnabled = NO;
+    // keep the table from scrolling up
     self.tableView.contentInset = UIEdgeInsetsMake(-self.tableView.contentOffset.y, 0, 0, 0);
 
     void(^tearDownView)(void) = ^(void) {
@@ -269,10 +273,10 @@ static NSString * const kCellIdentifier = @"Cell";
             self.blurredBackgroundView.alpha = 0.0f;
             self.cancelButton.transform = CGAffineTransformTranslate(self.cancelButton.transform, 0, kCancelButtonHeight);
 
-            // shortest change of position to hide all tableView contents under the bottom
+            // shortest change of position to hide all tableView contents below the bottom margin
             CGRect frameBelow = self.tableView.frame;
-            CGFloat moveDownRange = MIN(CGRectGetHeight(self.frame) + self.tableView.contentOffset.y, CGRectGetHeight(self.frame));
-            frameBelow.origin = CGPointMake(0, moveDownRange);
+            CGFloat slideDownMinOffset = MIN(CGRectGetHeight(self.frame) + self.tableView.contentOffset.y, CGRectGetHeight(self.frame));
+            frameBelow.origin = CGPointMake(0, slideDownMinOffset);
             self.tableView.frame = frameBelow;
 
         } completion:^(BOOL finished) {
@@ -380,11 +384,12 @@ static NSString * const kCellIdentifier = @"Cell";
         UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), labelSize.height + 2*topBottomPadding)];
         [headerView addSubview:label];
         self.tableView.tableHeaderView = headerView;
+
     } else if (self.headerView) {
         self.tableView.tableHeaderView = self.headerView;
     }
 
-    // add separator between the tableHeaderView and a first row
+    // add a separator between the tableHeaderView and a first row
     if (self.tableView.tableHeaderView && self.tableView.separatorStyle != UITableViewCellSeparatorStyleNone) {
         static CGFloat separatorHeight = 0.5f;
         CGRect separatorFrame = CGRectMake(self.tableView.separatorInset.left,
