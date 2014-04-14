@@ -16,16 +16,21 @@ typedef NS_ENUM(NSInteger, AHKActionSheetButtonType) {
 @class AHKActionSheet;
 typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 
+
 @interface AHKActionSheet : UIView <UIAppearanceContainer>
 
 // Appearance
+
 @property (nonatomic) CGFloat blurRadius UI_APPEARANCE_SELECTOR;
 @property (strong, nonatomic) UIColor *blurTintColor UI_APPEARANCE_SELECTOR;
 @property (nonatomic) CGFloat blurSaturationDeltaFactor UI_APPEARANCE_SELECTOR;
+/// Height of the button (internally it's a UITableViewCell)
 @property (nonatomic) CGFloat buttonHeight UI_APPEARANCE_SELECTOR;
-// enabled when value is equal to @YES (enabled by default)
+/// Set to @YES to enable (enabled by default)
 @property (strong, nonatomic) NSNumber *automaticallyTintButtonImages UI_APPEARANCE_SELECTOR;
+/// Color of the separator between buttons.
 @property (strong, nonatomic) UIColor *separatorColor UI_APPEARANCE_SELECTOR;
+/// Background color of the button when it's tapped (internally it's a UITableViewCell)
 @property (strong, nonatomic) UIColor *selectedBackgroundColor UI_APPEARANCE_SELECTOR;
 @property (strong, nonatomic) NSDictionary *titleTextAttributes UI_APPEARANCE_SELECTOR;
 @property (strong, nonatomic) NSDictionary *buttonTextAttributes UI_APPEARANCE_SELECTOR;
@@ -35,10 +40,11 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 /// Called on every type of dismissal (tapping on "Cancel" or swipe down or flick down).
 @property (strong, nonatomic) AHKActionSheetHandler cancelHandler;
 @property (strong, nonatomic) NSString *cancelButtonTitle;
+/// Action sheet title shown above the buttons.
 @property (copy, nonatomic) NSString *title;
-/// Will be shown above the first button (if the title isn't set).
+/// View shown above the first button (only if the title isn't set).
 @property (strong, nonatomic) UIView *headerView;
-
+/// Window visible before the actionSheet was presented.
 @property (weak, nonatomic, readonly) UIWindow *previousKeyWindow;
 
 - (instancetype)initWithTitle:(NSString *)title;
