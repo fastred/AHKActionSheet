@@ -68,6 +68,11 @@ static NSString * const kCellIdentifier = @"Cell";
     return self;
 }
 
+- (instancetype)init
+{
+    return [self initWithTitle:nil];
+}
+
 - (void)dealloc
 {
     self.tableView.dataSource = nil;
