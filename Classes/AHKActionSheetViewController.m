@@ -8,6 +8,7 @@
 
 #import "AHKActionSheetViewController.h"
 #import "AHKActionSheet.h"
+#import "UIWindow+AHKAdditions.h"
 
 @interface AHKActionSheetViewController ()
 @property (nonatomic) BOOL viewAlreadyAppear;
@@ -48,6 +49,24 @@
 - (NSUInteger)supportedInterfaceOrientations
 {
     return UIInterfaceOrientationMaskAll;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    UIWindow *window = self.actionSheet.previousKeyWindow;
+    if (!window) {
+        window = [UIApplication sharedApplication].windows[0];
+    }
+    return [[window viewControllerForStatusBarStyle] preferredStatusBarStyle];
+}
+
+- (BOOL)prefersStatusBarHidden
+{
+    UIWindow *window = self.actionSheet.previousKeyWindow;
+    if (!window) {
+        window = [UIApplication sharedApplication].windows[0];
+    }
+    return [[window viewControllerForStatusBarHidden] prefersStatusBarHidden];
 }
 
 @end

@@ -23,6 +23,7 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 @property (nonatomic) CGFloat blurSaturationDeltaFactor;
 @property (nonatomic) CGFloat buttonHeight;
 @property (strong, nonatomic) AHKActionSheetHandler cancelHandler;
+@property (weak, nonatomic, readonly) UIWindow *previousKeyWindow;
 
 - (instancetype)initWithTitle:(NSString *)title;
 - (void)addButtonWithTitle:(NSString *)title type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler;

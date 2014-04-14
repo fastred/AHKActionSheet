@@ -36,7 +36,7 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(UIView *view) {
 @interface AHKActionSheet() <UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) NSMutableArray *items;
 @property (copy, nonatomic) NSString *title;
-@property (weak, nonatomic) UIWindow *previousKeyWindow;
+@property (weak, nonatomic, readwrite) UIWindow *previousKeyWindow;
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UIImageView *blurredBackgroundView;
 @property (strong, nonatomic) UITableView *tableView;
