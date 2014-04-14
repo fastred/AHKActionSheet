@@ -28,19 +28,6 @@ static CGFloat const kFullAnimationLength = 0.5f;
 static CGFloat kBlurFadeRangeSize = 200.0f;
 static NSString * const kCellIdentifier = @"Cell";
 
-static CGRect cancelButtonVisibleFrame(UIView *view) {
-    return CGRectMake(0,
-                      CGRectGetMaxY(view.bounds) - kCancelButtonHeight,
-                      CGRectGetWidth(view.bounds),
-                      kCancelButtonHeight);
-}
-
-static CGRect cancelButtonHiddenFrame(UIView *view) {
-    return CGRectMake(0,
-                      CGRectGetMaxY(view.bounds),
-                      CGRectGetWidth(view.bounds),
-                      kCancelButtonHeight);
-}
 
 static UIEdgeInsets tableViewHiddenEdgeInsets(UIView *view) {
     return UIEdgeInsetsMake(CGRectGetHeight(view.bounds), 0, 0, 0);
@@ -205,7 +192,10 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(UIView *view) {
         self.blurredBackgroundView.alpha = 1.0f;
 
         [UIView addKeyframeWithRelativeStartTime:0.3f relativeDuration:0.7f animations:^{
-            self.cancelButton.frame = cancelButtonVisibleFrame(self);
+            self.cancelButton.frame = CGRectMake(0,
+                                                 CGRectGetMaxY(self.bounds) - kCancelButtonHeight,
+                                                 CGRectGetWidth(self.bounds),
+                                                 kCancelButtonHeight);
 
 #warning TODO: include table header
             static CGFloat topSpaceMarginPercentage = 1.0/3.0;
@@ -252,7 +242,7 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(UIView *view) {
     if (animated) {
         [UIView animateWithDuration:duration animations:^{
             self.blurredBackgroundView.alpha = 0.0f;
-            self.cancelButton.frame = cancelButtonHiddenFrame(self);
+            self.cancelButton.transform = CGAffineTransformTranslate(self.cancelButton.transform, 0, kCancelButtonHeight);
 
             // shortest change of position to hide all tableView contents under the bottom
             CGRect frameBelow = self.tableView.frame;
@@ -294,7 +284,11 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(UIView *view) {
         self.cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
         [self.cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
         [self.cancelButton addTarget:self action:@selector(cancelButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        self.cancelButton.frame = cancelButtonHiddenFrame(self);
+        self.cancelButton.frame = CGRectMake(0,
+                                             CGRectGetMaxY(self.bounds) - kCancelButtonHeight,
+                                             CGRectGetWidth(self.bounds),
+                                             kCancelButtonHeight);
+        self.cancelButton.transform = CGAffineTransformMakeTranslation(0, kCancelButtonHeight);
         [self addSubview:self.cancelButton];
     }
 }
