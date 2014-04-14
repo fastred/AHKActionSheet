@@ -363,7 +363,7 @@ static NSString * const kCellIdentifier = @"Cell";
 - (void)setUpTableViewHeader
 {
     if (self.title) {
-        static CGFloat leftRightPadding = 16.0f;
+        static CGFloat leftRightPadding = 15.0f;
         static CGFloat topBottomPadding = 8.0f;
         CGFloat labelWidth = CGRectGetWidth(self.bounds) - 2*leftRightPadding;
 
