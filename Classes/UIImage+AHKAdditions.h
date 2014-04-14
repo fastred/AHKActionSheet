@@ -95,13 +95,13 @@
 
 @import UIKit;
 
-@interface UIImage (ImageEffects)
+@interface UIImage (AHKAdditions)
 
-- (UIImage *)applyLightEffect;
-- (UIImage *)applyExtraLightEffect;
-- (UIImage *)applyDarkEffect;
-- (UIImage *)applyTintEffectWithColor:(UIColor *)tintColor;
+- (UIImage *)AHKapplyLightEffect;
+- (UIImage *)AHKapplyExtraLightEffect;
+- (UIImage *)AHKapplyDarkEffect;
+- (UIImage *)AHKapplyTintEffectWithColor:(UIColor *)tintColor;
 
-- (UIImage *)applyBlurWithRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor maskImage:(UIImage *)maskImage;
+- (UIImage *)AHKapplyBlurWithRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor maskImage:(UIImage *)maskImage;
 
 @end

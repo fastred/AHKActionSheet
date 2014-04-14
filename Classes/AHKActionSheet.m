@@ -10,7 +10,7 @@
 #import "AHKActionSheet.h"
 #import "AHKActionSheetViewController.h"
 #import "UIView+Snapshots.h"
-#import "UIImage+ImageEffects.h"
+#import "UIImage+AHKAdditions.h"
 
 
 @interface AHKActionSheetItem : NSObject
@@ -304,7 +304,7 @@ static NSString * const kCellIdentifier = @"Cell";
 {
     if (!self.blurredBackgroundView) {
         UIImage *blurredViewSnapshot = [previousKeyWindowSnapshot
-                                        applyBlurWithRadius:self.blurRadius
+                                        AHKapplyBlurWithRadius:self.blurRadius
                                         tintColor:self.blurTintColor
                                         saturationDeltaFactor:self.blurSaturationDeltaFactor
                                         maskImage:nil];
