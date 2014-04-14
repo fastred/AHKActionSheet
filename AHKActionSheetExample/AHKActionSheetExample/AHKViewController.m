@@ -26,7 +26,7 @@
 
 #pragma mark - Actions
 
-- (IBAction)showDefaultTapped:(id)sender
+- (IBAction)basicExampleTapped:(id)sender
 {
     AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:NSLocalizedString(@"Lorem ipsum dolor sit amet, consectetur adipiscing elit?", nil)];
 
@@ -61,7 +61,7 @@
     [actionSheet show];
 }
 
-- (IBAction)showCustomizedTapped:(id)sender
+- (IBAction)advancedExampleTapped:(id)sender
 {
     AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:nil];
 

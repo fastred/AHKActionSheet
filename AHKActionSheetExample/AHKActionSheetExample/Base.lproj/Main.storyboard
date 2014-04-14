@@ -24,23 +24,23 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XZX-0J-Ecs">
-                                <rect key="frame" x="35" y="269" width="92" height="30"/>
+                                <rect key="frame" x="35" y="269" width="102" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Show Default">
+                                <state key="normal" title="Basic Example">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="showDefaultTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="8iw-rL-7KI"/>
+                                    <action selector="basicExampleTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="om4-ug-PK0"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCe-m3-XCq">
-                                <rect key="frame" x="160" y="269" width="125" height="30"/>
+                                <rect key="frame" x="153" y="269" width="132" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Show Customized">
+                                <state key="normal" title="Advanced example">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="showCustomizedTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="fCQ-qT-Wnr"/>
+                                    <action selector="advancedExampleTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="iD5-W2-wcJ"/>
                                 </connections>
                             </button>
                         </subviews>
