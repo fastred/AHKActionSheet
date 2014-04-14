@@ -29,6 +29,8 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 @property (nonatomic) CGFloat cancelButtonHeight UI_APPEARANCE_SELECTOR;
 /// Boxed (@YES, @NO) boolean value (enabled by default)
 @property (strong, nonatomic) NSNumber *automaticallyTintButtonImages UI_APPEARANCE_SELECTOR;
+/// Boxed boolean value. Useful when adding buttons without images (in that case text looks better centered). Disabled by default.
+@property (strong, nonatomic) NSNumber *buttonTextCenteringEnabled UI_APPEARANCE_SELECTOR;
 /// Color of the separator between buttons.
 @property (strong, nonatomic) UIColor *separatorColor UI_APPEARANCE_SELECTOR;
 /// Background color of the button when it's tapped (internally it's a UITableViewCell)
