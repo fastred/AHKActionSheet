@@ -10,7 +10,7 @@
 #import "AHKActionSheet.h"
 
 @interface AHKActionSheetViewController ()
-
+@property (nonatomic) BOOL viewAlreadyAppear;
 @end
 
 @implementation AHKActionSheetViewController
@@ -21,13 +21,33 @@
 {
     [super viewDidLoad];
 
-    self.view = self.actionSheet;
-    self.automaticallyAdjustsScrollViewInsets = NO;
+    [self.view addSubview:self.actionSheet];
+    self.actionSheet.frame = self.view.bounds;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    self.viewAlreadyAppear = YES;
+}
+
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+
+    self.actionSheet.frame = self.view.bounds;
 }
 
 - (BOOL)shouldAutorotate
 {
-    return NO;
+    // doesn't allow autorotation after the view did appear (rotation messes up a blurred background)
+    return !self.viewAlreadyAppear;
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskAll;
 }
 
 @end
