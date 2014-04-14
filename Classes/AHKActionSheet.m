@@ -60,6 +60,8 @@ static NSString * const kCellIdentifier = @"Cell";
     [appearance setButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f]}];
     [appearance setDestructiveButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f],
                                                       NSForegroundColorAttributeName : [UIColor redColor] }];
+    [appearance setTitleTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:14.0f],
+                                                      NSForegroundColorAttributeName : [UIColor grayColor] }];
 }
 
 - (instancetype)initWithTitle:(NSString *)title
@@ -329,6 +331,36 @@ static NSString * const kCellIdentifier = @"Cell";
         [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
         [self insertSubview:self.tableView aboveSubview:self.blurredBackgroundView];
         self.tableView.contentInset = UIEdgeInsetsMake(CGRectGetHeight(self.bounds), 0, 0, 0);
+
+        if (self.title) {
+            static CGFloat leftRightPadding = 16.0f;
+            static CGFloat topBottomPadding = 8.0f;
+            CGFloat labelWidth = CGRectGetWidth(self.bounds) - 2*leftRightPadding;
+
+            NSAttributedString *attrText = [[NSAttributedString alloc] initWithString:self.title attributes:self.titleTextAttributes];
+
+            UILabel *label = [[UILabel alloc] init];
+            label.numberOfLines = 0;
+            [label setAttributedText:attrText];
+            CGSize labelSize = [label sizeThatFits:CGSizeMake(labelWidth, MAXFLOAT)];
+            label.frame = CGRectMake(leftRightPadding, topBottomPadding, labelWidth, labelSize.height);
+
+            UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), labelSize.height + 2*topBottomPadding)];
+            [headerView addSubview:label];
+            self.tableView.tableHeaderView = headerView;
+        }
+
+        // add separator between the tableHeaderView and a first row
+        if (self.tableView.tableHeaderView && self.tableView.separatorStyle != UITableViewCellSeparatorStyleNone) {
+            static CGFloat separatorHeight = 0.5f;
+            CGRect separatorFrame = CGRectMake(self.tableView.separatorInset.left,
+                                               CGRectGetHeight(self.tableView.tableHeaderView.frame) - separatorHeight,
+                                               CGRectGetWidth(self.tableView.tableHeaderView.frame) - (self.tableView.separatorInset.left + self.tableView.separatorInset.right),
+                                               separatorHeight);
+            UIView *separator = [[UIView alloc] initWithFrame:separatorFrame];
+            separator.backgroundColor = self.tableView.separatorColor;
+            [self.tableView.tableHeaderView addSubview:separator];
+        }
     }
 }
 
