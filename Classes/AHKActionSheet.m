@@ -61,7 +61,7 @@ static CGFloat topSpaceMarginPercentage = 0.333f;
 
     AHKActionSheet *appearance = [self appearance];
     [appearance setBlurRadius:16.0f];
-    [appearance setBlurTintColor:[UIColor colorWithWhite:1.0f alpha:0.25f]];
+    [appearance setBlurTintColor:[UIColor colorWithWhite:1.0f alpha:0.5f]];
     [appearance setBlurSaturationDeltaFactor:1.8f];
     [appearance setButtonHeight:60.0f];
     [appearance setCancelButtonHeight:44.0f];
