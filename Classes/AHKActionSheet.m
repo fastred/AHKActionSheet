@@ -37,6 +37,7 @@ static NSString * const kCellIdentifier = @"Cell";
 @property (strong, nonatomic) UITableView *tableView;
 @property (nonatomic, getter = isVisible) BOOL visible;
 @property (strong, nonatomic) UIButton *cancelButton;
+@property (weak, nonatomic) UIView *cancelButtonShadowView;
 @end
 
 @implementation AHKActionSheet
@@ -272,6 +273,7 @@ static NSString * const kCellIdentifier = @"Cell";
         [UIView animateWithDuration:duration animations:^{
             self.blurredBackgroundView.alpha = 0.0f;
             self.cancelButton.transform = CGAffineTransformTranslate(self.cancelButton.transform, 0, self.cancelButtonHeight);
+            self.cancelButtonShadowView.alpha = 0.0f;
 
             // shortest change of position to hide all tableView contents below the bottom margin
             CGRect frameBelow = self.tableView.frame;
@@ -335,6 +337,19 @@ static NSString * const kCellIdentifier = @"Cell";
                                              self.cancelButtonHeight);
         self.cancelButton.transform = CGAffineTransformMakeTranslation(0, self.cancelButtonHeight);
         [self addSubview:self.cancelButton];
+
+        // add a small shadow/glow above the button
+        if (self.cancelButtonShadowColor) {
+            self.cancelButton.clipsToBounds = NO;
+            CGFloat gradientHeight = self.cancelButtonHeight / 3.0f;
+            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, -gradientHeight, CGRectGetWidth(self.bounds), gradientHeight)];
+            CAGradientLayer *gradient = [CAGradientLayer layer];
+            gradient.frame = view.bounds;
+            gradient.colors = @[ (id)[UIColor colorWithWhite:0.0 alpha:0.0].CGColor, (id)[self.blurTintColor colorWithAlphaComponent:0.1f].CGColor ];
+            [view.layer insertSublayer:gradient atIndex:0];
+            [self.cancelButton addSubview:view];
+            self.cancelButtonShadowView = view;
+        }
     }
 }
 
@@ -409,6 +424,7 @@ static NSString * const kCellIdentifier = @"Cell";
         // limit alpha to the interval [0, 1]
         CGFloat alpha = MAX(MIN(alphaWithoutBounds, 1.0f), 0.0f);
         self.blurredBackgroundView.alpha = alpha;
+        self.cancelButtonShadowView.alpha = alpha;
     }
 }
 

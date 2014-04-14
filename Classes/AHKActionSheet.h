@@ -27,6 +27,10 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 /// Height of the button (internally it's a UITableViewCell)
 @property (nonatomic) CGFloat buttonHeight UI_APPEARANCE_SELECTOR;
 @property (nonatomic) CGFloat cancelButtonHeight UI_APPEARANCE_SELECTOR;
+/// If set, a small shadow (a gradient layer) will be drawn above the cancel button to separate it visually from the other buttons.
+/// It's best to use a color similar (but maybe with a lower alpha value) to blurTintColor.
+/// See "Advanced" example in the example project to see it used.
+@property (strong, nonatomic) UIColor *cancelButtonShadowColor UI_APPEARANCE_SELECTOR;
 /// Boxed (@YES, @NO) boolean value (enabled by default)
 @property (strong, nonatomic) NSNumber *automaticallyTintButtonImages UI_APPEARANCE_SELECTOR;
 /// Boxed boolean value. Useful when adding buttons without images (in that case text looks better centered). Disabled by default.
