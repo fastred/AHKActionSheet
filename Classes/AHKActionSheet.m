@@ -56,6 +56,7 @@ static NSString * const kCellIdentifier = @"Cell";
     [appearance setBlurTintColor:[UIColor colorWithWhite:1.0f alpha:0.25f]];
     [appearance setBlurSaturationDeltaFactor:1.8f];
     [appearance setButtonHeight:60.0f];
+    [appearance setAutomaticallyTintButtonImages:@YES];
     [appearance setSelectedBackgroundColor:[UIColor colorWithWhite:0.1 alpha:0.2]];
     [appearance setCancelButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f],
                                                  NSForegroundColorAttributeName : [UIColor darkGrayColor] }];
@@ -119,9 +120,8 @@ static NSString * const kCellIdentifier = @"Cell";
     NSAttributedString *attrTitle = [[NSAttributedString alloc] initWithString:item.title attributes:attributes];
     cell.textLabel.attributedText = attrTitle;
 
-    // use image with template mode with color the same as the text
-    UIImage *imageWithTint = [item.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    cell.imageView.image = imageWithTint;
+    // Use image with template mode with color the same as the text (when enabled).
+    cell.imageView.image = [self.automaticallyTintButtonImages boolValue] ? [item.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] : item.image;
     cell.imageView.tintColor = attributes[NSForegroundColorAttributeName] ? attributes[NSForegroundColorAttributeName] : [UIColor blackColor];
 
     cell.backgroundColor = [UIColor clearColor];

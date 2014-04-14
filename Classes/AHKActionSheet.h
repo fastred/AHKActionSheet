@@ -23,6 +23,8 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 @property (strong, nonatomic) UIColor *blurTintColor UI_APPEARANCE_SELECTOR;
 @property (nonatomic) CGFloat blurSaturationDeltaFactor UI_APPEARANCE_SELECTOR;
 @property (nonatomic) CGFloat buttonHeight UI_APPEARANCE_SELECTOR;
+// enabled when value is equal to @YES (enabled by default)
+@property (strong, nonatomic) NSNumber *automaticallyTintButtonImages UI_APPEARANCE_SELECTOR;
 @property (strong, nonatomic) UIColor *separatorColor UI_APPEARANCE_SELECTOR;
 @property (strong, nonatomic) UIColor *selectedBackgroundColor UI_APPEARANCE_SELECTOR;
 @property (strong, nonatomic) NSDictionary *titleTextAttributes UI_APPEARANCE_SELECTOR;
