@@ -25,10 +25,10 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 @property (nonatomic) CGFloat buttonHeight UI_APPEARANCE_SELECTOR;
 @property (strong, nonatomic) UIColor *separatorColor UI_APPEARANCE_SELECTOR;
 @property (strong, nonatomic) UIColor *selectedBackgroundColor UI_APPEARANCE_SELECTOR;
-@property (nonatomic) NSDictionary *titleTextAttributes UI_APPEARANCE_SELECTOR;
-@property (nonatomic) NSDictionary *buttonTextAttributes UI_APPEARANCE_SELECTOR;
-@property (nonatomic) NSDictionary *destructiveButtonTextAttributes UI_APPEARANCE_SELECTOR;
-@property (nonatomic) NSDictionary *cancelButtonTextAttributes UI_APPEARANCE_SELECTOR;
+@property (strong, nonatomic) NSDictionary *titleTextAttributes UI_APPEARANCE_SELECTOR;
+@property (strong, nonatomic) NSDictionary *buttonTextAttributes UI_APPEARANCE_SELECTOR;
+@property (strong, nonatomic) NSDictionary *destructiveButtonTextAttributes UI_APPEARANCE_SELECTOR;
+@property (strong, nonatomic) NSDictionary *cancelButtonTextAttributes UI_APPEARANCE_SELECTOR;
 
 /// Called on every type of dismissal (tapping on "Cancel" or swipe down or flick down).
 @property (strong, nonatomic) AHKActionSheetHandler cancelHandler;
