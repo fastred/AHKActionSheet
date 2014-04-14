@@ -200,21 +200,11 @@ static NSString * const kCellIdentifier = @"Cell";
     self.previousKeyWindow = [UIApplication sharedApplication].keyWindow;
     UIImage *previousKeyWindowSnapshot = [self.previousKeyWindow.rootViewController.view snapshotImage];
 
-    AHKActionSheetViewController *actionSheetVC = [[AHKActionSheetViewController alloc] initWithNibName:nil bundle:nil];
-    actionSheetVC.actionSheet = self;
-
-    if (!self.window) {
-        self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-        self.window.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        self.window.opaque = NO;
-        self.window.rootViewController = actionSheetVC;
-    }
-    [self.window makeKeyAndVisible];
-    self.visible = YES;
-
+    [self setUpNewWindow];
     [self setUpBlurredBackgroundWithSnapshot:previousKeyWindowSnapshot];
     [self setUpCancelButton];
     [self setUpTableView];
+    self.visible = YES;
 
     [UIView animateKeyframesWithDuration:kFullAnimationLength delay:0 options:0 animations:^{
         self.blurredBackgroundView.alpha = 1.0f;
@@ -291,6 +281,20 @@ static NSString * const kCellIdentifier = @"Cell";
     } else {
         tearDownView();
     }
+}
+
+- (void)setUpNewWindow
+{
+    AHKActionSheetViewController *actionSheetVC = [[AHKActionSheetViewController alloc] initWithNibName:nil bundle:nil];
+    actionSheetVC.actionSheet = self;
+
+    if (!self.window) {
+        self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        self.window.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        self.window.opaque = NO;
+        self.window.rootViewController = actionSheetVC;
+    }
+    [self.window makeKeyAndVisible];
 }
 
 - (void)setUpBlurredBackgroundWithSnapshot:(UIImage *)previousKeyWindowSnapshot
