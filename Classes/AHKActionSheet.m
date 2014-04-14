@@ -336,9 +336,14 @@ static NSString * const kCellIdentifier = @"Cell";
                                   CGRectGetWidth(self.bounds),
                                   CGRectGetHeight(self.bounds) - statusBarHeight - kCancelButtonHeight);
         self.tableView = [[UITableView alloc] initWithFrame:frame];
+
         self.tableView.backgroundColor = [UIColor clearColor];
         self.tableView.showsVerticalScrollIndicator = NO;
         self.tableView.separatorInset = UIEdgeInsetsZero;
+        if (self.separatorColor) {
+            self.tableView.separatorColor = self.separatorColor;
+        }
+
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
