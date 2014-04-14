@@ -32,7 +32,6 @@ static NSString * const kCellIdentifier = @"Cell";
 
 @interface AHKActionSheet() <UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) NSMutableArray *items;
-@property (copy, nonatomic) NSString *title;
 @property (weak, nonatomic, readwrite) UIWindow *previousKeyWindow;
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UIImageView *blurredBackgroundView;

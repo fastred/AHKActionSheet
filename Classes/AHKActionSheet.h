@@ -35,6 +35,7 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 /// Called on every type of dismissal (tapping on "Cancel" or swipe down or flick down).
 @property (strong, nonatomic) AHKActionSheetHandler cancelHandler;
 @property (strong, nonatomic) NSString *cancelButtonTitle;
+@property (copy, nonatomic) NSString *title;
 /// Will be shown above the first button (if the title isn't set).
 @property (strong, nonatomic) UIView *headerView;
 
