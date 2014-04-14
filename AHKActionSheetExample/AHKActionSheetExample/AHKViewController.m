@@ -5,6 +5,7 @@
 //  Created by Arkadiusz on 08-04-14.
 //  Copyright (c) 2014 Arkadiusz Holko. All rights reserved.
 //
+// Example icons' source: http://icons8.com/
 
 #import "AHKViewController.h"
 #import "AHKActionSheet.h"
