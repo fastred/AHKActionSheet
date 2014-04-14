@@ -26,7 +26,8 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 @property (nonatomic) CGFloat blurSaturationDeltaFactor UI_APPEARANCE_SELECTOR;
 /// Height of the button (internally it's a UITableViewCell)
 @property (nonatomic) CGFloat buttonHeight UI_APPEARANCE_SELECTOR;
-/// Set to @YES to enable (enabled by default)
+@property (nonatomic) CGFloat cancelButtonHeight UI_APPEARANCE_SELECTOR;
+/// Boxed (@YES, @NO) boolean value (enabled by default)
 @property (strong, nonatomic) NSNumber *automaticallyTintButtonImages UI_APPEARANCE_SELECTOR;
 /// Color of the separator between buttons.
 @property (strong, nonatomic) UIColor *separatorColor UI_APPEARANCE_SELECTOR;

@@ -24,7 +24,6 @@
 @end
 
 
-static CGFloat const kCancelButtonHeight = 44.0f;
 static CGFloat const kFullAnimationLength = 0.5f;
 static CGFloat kBlurFadeRangeSize = 200.0f;
 static NSString * const kCellIdentifier = @"Cell";
@@ -55,6 +54,7 @@ static NSString * const kCellIdentifier = @"Cell";
     [appearance setBlurTintColor:[UIColor colorWithWhite:1.0f alpha:0.25f]];
     [appearance setBlurSaturationDeltaFactor:1.8f];
     [appearance setButtonHeight:60.0f];
+    [appearance setCancelButtonHeight:44.0f];
     [appearance setAutomaticallyTintButtonImages:@YES];
     [appearance setSelectedBackgroundColor:[UIColor colorWithWhite:0.1 alpha:0.2]];
     [appearance setCancelButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f],
@@ -213,9 +213,9 @@ static NSString * const kCellIdentifier = @"Cell";
 
         [UIView addKeyframeWithRelativeStartTime:0.3f relativeDuration:0.7f animations:^{
             self.cancelButton.frame = CGRectMake(0,
-                                                 CGRectGetMaxY(self.bounds) - kCancelButtonHeight,
+                                                 CGRectGetMaxY(self.bounds) - self.cancelButtonHeight,
                                                  CGRectGetWidth(self.bounds),
-                                                 kCancelButtonHeight);
+                                                 self.cancelButtonHeight);
 
             static CGFloat topSpaceMarginPercentage = 0.333f;
             // manual calculation of table's contentSize.height
@@ -270,7 +270,7 @@ static NSString * const kCellIdentifier = @"Cell";
     if (animated) {
         [UIView animateWithDuration:duration animations:^{
             self.blurredBackgroundView.alpha = 0.0f;
-            self.cancelButton.transform = CGAffineTransformTranslate(self.cancelButton.transform, 0, kCancelButtonHeight);
+            self.cancelButton.transform = CGAffineTransformTranslate(self.cancelButton.transform, 0, self.cancelButtonHeight);
 
             // shortest change of position to hide all tableView contents below the bottom margin
             CGRect frameBelow = self.tableView.frame;
@@ -329,10 +329,10 @@ static NSString * const kCellIdentifier = @"Cell";
         [self.cancelButton setAttributedTitle:attrTitle forState:UIControlStateNormal];
         [self.cancelButton addTarget:self action:@selector(cancelButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         self.cancelButton.frame = CGRectMake(0,
-                                             CGRectGetMaxY(self.bounds) - kCancelButtonHeight,
+                                             CGRectGetMaxY(self.bounds) - self.cancelButtonHeight,
                                              CGRectGetWidth(self.bounds),
-                                             kCancelButtonHeight);
-        self.cancelButton.transform = CGAffineTransformMakeTranslation(0, kCancelButtonHeight);
+                                             self.cancelButtonHeight);
+        self.cancelButton.transform = CGAffineTransformMakeTranslation(0, self.cancelButtonHeight);
         [self addSubview:self.cancelButton];
     }
 }
@@ -345,7 +345,7 @@ static NSString * const kCellIdentifier = @"Cell";
         CGRect frame = CGRectMake(0,
                                   statusBarHeight,
                                   CGRectGetWidth(self.bounds),
-                                  CGRectGetHeight(self.bounds) - statusBarHeight - kCancelButtonHeight);
+                                  CGRectGetHeight(self.bounds) - statusBarHeight - self.cancelButtonHeight);
         self.tableView = [[UITableView alloc] initWithFrame:frame];
 
         self.tableView.backgroundColor = [UIColor clearColor];
