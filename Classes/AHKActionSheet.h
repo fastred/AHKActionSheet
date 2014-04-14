@@ -23,6 +23,7 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 @property (nonatomic) CGFloat blurSaturationDeltaFactor UI_APPEARANCE_SELECTOR;
 @property (nonatomic) CGFloat buttonHeight UI_APPEARANCE_SELECTOR;
 
+/// Called on every type of dismissal (tapping on "Cancel" or swipe down or flick down).
 @property (strong, nonatomic) AHKActionSheetHandler cancelHandler;
 @property (weak, nonatomic, readonly) UIWindow *previousKeyWindow;
 

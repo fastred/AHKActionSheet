@@ -140,9 +140,9 @@ static NSString * const kCellIdentifier = @"Cell";
     BOOL viewFlickedDown = scrollVelocity.y > flickDownMinVelocity && scrollView.contentOffset.y < -self.tableView.contentInset.top - flickDownHandlingOffset;
     if (viewFlickedDown) {
         CGFloat duration = 0.2f;
-        [self dismissAnimated:YES duration:duration completion:nil];
+        [self dismissAnimated:YES duration:duration completion:self.cancelHandler];
     } else if (scrollView.contentOffset.y < -self.tableView.contentInset.top - autoDismissOffset) {
-        [self dismissAnimated:YES duration:kFullAnimationLength completion:nil];
+        [self dismissAnimated:YES duration:kFullAnimationLength completion:self.cancelHandler];
     }
 }
 
@@ -223,7 +223,7 @@ static NSString * const kCellIdentifier = @"Cell";
 
 - (void)dismissAnimated:(BOOL)animated
 {
-    [self dismissAnimated:animated duration:kFullAnimationLength completion:nil];
+    [self dismissAnimated:animated duration:kFullAnimationLength completion:self.cancelHandler];
 }
 
 #pragma mark - Private
@@ -237,13 +237,13 @@ static NSString * const kCellIdentifier = @"Cell";
     self.tableView.contentInset = UIEdgeInsetsMake(-self.tableView.contentOffset.y, 0, 0, 0);
 
     void(^tearDownView)(void) = ^(void) {
-        if (completionHandler) {
-            completionHandler(self);
-        }
         [self.window removeFromSuperview];
         self.window = nil;
 
         [self.previousKeyWindow makeKeyAndVisible];
+        if (completionHandler) {
+            completionHandler(self);
+        }
     };
 
     if (animated) {
