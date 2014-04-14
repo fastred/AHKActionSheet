@@ -55,6 +55,11 @@ static NSString * const kCellIdentifier = @"Cell";
     [appearance setBlurTintColor:[UIColor colorWithWhite:1.0f alpha:0.25f]];
     [appearance setBlurSaturationDeltaFactor:1.8f];
     [appearance setButtonHeight:60.0f];
+    [appearance setCancelButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f],
+                                                 NSForegroundColorAttributeName : [UIColor darkGrayColor] }];
+    [appearance setButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f]}];
+    [appearance setDestructiveButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f],
+                                                      NSForegroundColorAttributeName : [UIColor redColor] }];
 }
 
 - (instancetype)initWithTitle:(NSString *)title
@@ -63,6 +68,7 @@ static NSString * const kCellIdentifier = @"Cell";
 
     if (self) {
         _title = title;
+        _cancelButtonTitle = @"Cancel";
     }
 
     return self;
@@ -104,7 +110,11 @@ static NSString * const kCellIdentifier = @"Cell";
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
     AHKActionSheetItem *item = self.items[indexPath.row];
-    cell.textLabel.text = item.title;
+
+    NSDictionary *attributes = item.type == AHKActionSheetButtonTypeDefault ? self.buttonTextAttributes : self.destructiveButtonTextAttributes;
+    NSAttributedString *attrTitle = [[NSAttributedString alloc] initWithString:item.title attributes:attributes];
+    cell.textLabel.attributedText = attrTitle;
+
     cell.backgroundColor = [UIColor clearColor];
 
     return cell;
@@ -289,7 +299,9 @@ static NSString * const kCellIdentifier = @"Cell";
 {
     if (!self.cancelButton) {
         self.cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
-        [self.cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
+        NSAttributedString *attrTitle = [[NSAttributedString alloc] initWithString:self.cancelButtonTitle
+                                                                        attributes:self.cancelButtonTextAttributes];
+        [self.cancelButton setAttributedTitle:attrTitle forState:UIControlStateNormal];
         [self.cancelButton addTarget:self action:@selector(cancelButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         self.cancelButton.frame = CGRectMake(0,
                                              CGRectGetMaxY(self.bounds) - kCancelButtonHeight,

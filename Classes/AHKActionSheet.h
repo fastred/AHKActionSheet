@@ -18,13 +18,19 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 
 @interface AHKActionSheet : UIView <UIAppearanceContainer>
 
+// Appearance
 @property (nonatomic) CGFloat blurRadius UI_APPEARANCE_SELECTOR;
 @property (strong, nonatomic) UIColor *blurTintColor UI_APPEARANCE_SELECTOR;
 @property (nonatomic) CGFloat blurSaturationDeltaFactor UI_APPEARANCE_SELECTOR;
 @property (nonatomic) CGFloat buttonHeight UI_APPEARANCE_SELECTOR;
+@property (nonatomic) NSDictionary *titleTextAttributes UI_APPEARANCE_SELECTOR;
+@property (nonatomic) NSDictionary *buttonTextAttributes UI_APPEARANCE_SELECTOR;
+@property (nonatomic) NSDictionary *destructiveButtonTextAttributes UI_APPEARANCE_SELECTOR;
+@property (nonatomic) NSDictionary *cancelButtonTextAttributes UI_APPEARANCE_SELECTOR;
 
 /// Called on every type of dismissal (tapping on "Cancel" or swipe down or flick down).
 @property (strong, nonatomic) AHKActionSheetHandler cancelHandler;
+@property (strong, nonatomic) NSString *cancelButtonTitle;
 @property (weak, nonatomic, readonly) UIWindow *previousKeyWindow;
 
 - (instancetype)initWithTitle:(NSString *)title;
