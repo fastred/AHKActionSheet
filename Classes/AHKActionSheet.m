@@ -44,16 +44,25 @@ static NSString * const kCellIdentifier = @"Cell";
 
 #pragma mark - Init
 
++ (void)initialize
+{
+    if (self != [AHKActionSheet class]) {
+        return;
+    }
+
+    AHKActionSheet *appearance = [self appearance];
+    [appearance setBlurRadius:16.0f];
+    [appearance setBlurTintColor:[UIColor colorWithWhite:1.0f alpha:0.25f]];
+    [appearance setBlurSaturationDeltaFactor:1.8f];
+    [appearance setButtonHeight:60.0f];
+}
+
 - (instancetype)initWithTitle:(NSString *)title
 {
     self = [super init];
+
     if (self) {
         _title = title;
-
-        _blurRadius = 16.0f;
-        _blurTintColor = [UIColor colorWithWhite:1.0f alpha:0.25f];
-        _blurSaturationDeltaFactor = 1.8f;
-        _buttonHeight = 60.0f;
     }
 
     return self;

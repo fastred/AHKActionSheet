@@ -16,12 +16,13 @@ typedef NS_ENUM(NSInteger, AHKActionSheetButtonType) {
 @class AHKActionSheet;
 typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 
-@interface AHKActionSheet : UIView
+@interface AHKActionSheet : UIView <UIAppearanceContainer>
 
-@property (nonatomic) CGFloat blurRadius;
-@property (strong, nonatomic) UIColor *blurTintColor;
-@property (nonatomic) CGFloat blurSaturationDeltaFactor;
-@property (nonatomic) CGFloat buttonHeight;
+@property (nonatomic) CGFloat blurRadius UI_APPEARANCE_SELECTOR;
+@property (strong, nonatomic) UIColor *blurTintColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic) CGFloat blurSaturationDeltaFactor UI_APPEARANCE_SELECTOR;
+@property (nonatomic) CGFloat buttonHeight UI_APPEARANCE_SELECTOR;
+
 @property (strong, nonatomic) AHKActionSheetHandler cancelHandler;
 @property (weak, nonatomic, readonly) UIWindow *previousKeyWindow;
 
