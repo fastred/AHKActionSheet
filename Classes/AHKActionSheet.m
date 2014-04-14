@@ -271,6 +271,13 @@ static NSString * const kCellIdentifier = @"Cell";
         self.window = nil;
 
         [self.previousKeyWindow makeKeyAndVisible];
+        self.visible = NO;
+        [self.tableView removeFromSuperview];
+        [self.cancelButton removeFromSuperview];
+        [self.blurredBackgroundView removeFromSuperview];
+        self.tableView = nil;
+        self.cancelButton = nil;
+        self.blurredBackgroundView = nil;
         if (completionHandler) {
             completionHandler(self);
         }
