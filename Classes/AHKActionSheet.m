@@ -29,10 +29,6 @@ static CGFloat kBlurFadeRangeSize = 200.0f;
 static NSString * const kCellIdentifier = @"Cell";
 
 
-static UIEdgeInsets tableViewHiddenEdgeInsets(UIView *view) {
-    return UIEdgeInsetsMake(CGRectGetHeight(view.bounds), 0, 0, 0);
-}
-
 @interface AHKActionSheet() <UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) NSMutableArray *items;
 @property (copy, nonatomic) NSString *title;
@@ -185,9 +181,6 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(UIView *view) {
     [self setUpCancelButton];
     [self setUpTableView];
 
-
-    self.tableView.contentInset = tableViewHiddenEdgeInsets(self);
-
     [UIView animateKeyframesWithDuration:kFullAnimationLength delay:0 options:0 animations:^{
         self.blurredBackgroundView.alpha = 1.0f;
 
@@ -309,6 +302,7 @@ static UIEdgeInsets tableViewHiddenEdgeInsets(UIView *view) {
         self.tableView.dataSource = self;
         [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
         [self insertSubview:self.tableView aboveSubview:self.blurredBackgroundView];
+        self.tableView.contentInset = UIEdgeInsetsMake(CGRectGetHeight(self.bounds), 0, 0, 0);
     }
 }
 
