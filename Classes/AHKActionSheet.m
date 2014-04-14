@@ -90,15 +90,6 @@ static NSString * const kCellIdentifier = @"Cell";
     self.tableView.delegate = nil;
 }
 
-#pragma mark - UIView
-
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-
-    self.blurredBackgroundView.frame = self.bounds;
-}
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
