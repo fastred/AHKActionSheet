@@ -55,7 +55,7 @@
 {
     UIWindow *window = self.actionSheet.previousKeyWindow;
     if (!window) {
-        window = [UIApplication sharedApplication].windows[0];
+        window = [[UIApplication sharedApplication].windows firstObject];
     }
     return [[window viewControllerForStatusBarStyle] preferredStatusBarStyle];
 }
@@ -64,7 +64,7 @@
 {
     UIWindow *window = self.actionSheet.previousKeyWindow;
     if (!window) {
-        window = [UIApplication sharedApplication].windows[0];
+        window = [[UIApplication sharedApplication].windows firstObject];
     }
     return [[window viewControllerForStatusBarHidden] prefersStatusBarHidden];
 }
