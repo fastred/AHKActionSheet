@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -24,22 +24,34 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XZX-0J-Ecs">
-                                <rect key="frame" x="95" y="269" width="131" height="30"/>
+                                <rect key="frame" x="35" y="269" width="92" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Show Action Sheet">
+                                <state key="normal" title="Show Default">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="showActionSheetTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="fXs-tp-iQ8"/>
+                                    <action selector="showDefaultTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="8iw-rL-7KI"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCe-m3-XCq">
+                                <rect key="frame" x="160" y="269" width="125" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Show Customized">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showCustomizedTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="fCQ-qT-Wnr"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="XZX-0J-Ecs" firstAttribute="leading" secondItem="E95-1P-nyP" secondAttribute="leading" id="6Nw-Az-Ebm"/>
+                            <constraint firstItem="gCe-m3-XCq" firstAttribute="trailing" secondItem="E95-1P-nyP" secondAttribute="trailing" id="7oi-IM-Upu"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="E95-1P-nyP" secondAttribute="bottom" constant="2" id="DdA-cW-S7t"/>
                             <constraint firstItem="E95-1P-nyP" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="35" id="P2W-f5-qzM"/>
                             <constraint firstAttribute="trailing" secondItem="E95-1P-nyP" secondAttribute="trailing" constant="35" id="hwl-7B-H9s"/>
-                            <constraint firstAttribute="centerX" secondItem="XZX-0J-Ecs" secondAttribute="centerX" id="niZ-vB-OlW"/>
+                            <constraint firstItem="gCe-m3-XCq" firstAttribute="baseline" secondItem="XZX-0J-Ecs" secondAttribute="baseline" id="pCE-rD-uRl"/>
                             <constraint firstAttribute="centerY" secondItem="XZX-0J-Ecs" secondAttribute="centerY" id="zma-nv-cba"/>
                         </constraints>
                     </view>
