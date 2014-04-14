@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Arkadiusz Holko. All rights reserved.
 //
 // Example icons' source: http://icons8.com/
+// Cover image belongs to Tycho.
 
 #import "AHKViewController.h"
 #import "AHKActionSheet.h"
