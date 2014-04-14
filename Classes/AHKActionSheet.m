@@ -13,6 +13,20 @@
 #import "UIImage+AHKAdditions.h"
 
 
+static CGFloat const kDefaultAnimationDuration = 0.5f;
+// Length of the range at which the blurred background is being hidden when the user swipes the tableView to the top.
+static CGFloat kBlurFadeRangeSize = 200.0f;
+static NSString * const kCellIdentifier = @"Cell";
+// How much user has to scroll beyond the end of the tableView for the view to dismiss automatically.
+static CGFloat autoDismissOffset = 80.0f;
+// Offset at which there's a check if the user is flicking the tableView down.
+static CGFloat flickDownHandlingOffset = 20.0f;
+static CGFloat flickDownMinVelocity = 2000.0f;
+// How much free space to leave at the top (above the tableView's contents) when there's a lot of elements. It makes this control look similar to the UIActionSheet.
+static CGFloat topSpaceMarginPercentage = 0.333f;
+
+
+/// Used for keeping button configuration.
 @interface AHKActionSheetItem : NSObject
 @property (copy, nonatomic) NSString *title;
 @property (strong, nonatomic) UIImage *image;
@@ -24,10 +38,6 @@
 @end
 
 
-static CGFloat const kFullAnimationLength = 0.5f;
-static CGFloat kBlurFadeRangeSize = 200.0f;
-static NSString * const kCellIdentifier = @"Cell";
-
 
 @interface AHKActionSheet() <UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) NSMutableArray *items;
@@ -35,7 +45,6 @@ static NSString * const kCellIdentifier = @"Cell";
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UIImageView *blurredBackgroundView;
 @property (strong, nonatomic) UITableView *tableView;
-@property (nonatomic, getter = isVisible) BOOL visible;
 @property (strong, nonatomic) UIButton *cancelButton;
 @property (weak, nonatomic) UIView *cancelButtonShadowView;
 @end
@@ -131,7 +140,7 @@ static NSString * const kCellIdentifier = @"Cell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     AHKActionSheetItem *item = self.items[indexPath.row];
-    [self dismissAnimated:YES duration:kFullAnimationLength completion:item.handler];
+    [self dismissAnimated:YES duration:kDefaultAnimationDuration completion:item.handler];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -143,24 +152,21 @@ static NSString * const kCellIdentifier = @"Cell";
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self fadeBlurOnScrollToTop];
+    [self fadeBlursOnScrollToTop];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    static CGFloat autoDismissOffset = 80.0f;
-    static CGFloat flickDownHandlingOffset = 20.0f;
-    static CGFloat flickDownMinVelocity = 2000.0f;
     CGPoint scrollVelocity = [scrollView.panGestureRecognizer velocityInView:self];
 
     BOOL viewWasFlickedDown = scrollVelocity.y > flickDownMinVelocity && scrollView.contentOffset.y < -self.tableView.contentInset.top - flickDownHandlingOffset;
     BOOL shouldSlideDown = scrollView.contentOffset.y < -self.tableView.contentInset.top - autoDismissOffset;
     if (viewWasFlickedDown) {
-        // use shorter duration for a flick down animation
+        // use a shorter duration for a flick down animation
         CGFloat duration = 0.2f;
         [self dismissAnimated:YES duration:duration completion:self.cancelHandler];
     } else if (shouldSlideDown) {
-        [self dismissAnimated:YES duration:kFullAnimationLength completion:self.cancelHandler];
+        [self dismissAnimated:YES duration:kDefaultAnimationDuration completion:self.cancelHandler];
     }
 }
 
@@ -196,7 +202,8 @@ static NSString * const kCellIdentifier = @"Cell";
 {
     NSAssert([self.items count] > 0, @"Please add some buttons before calling -show.");
 
-    if (self.isVisible) {
+    BOOL actionSheetIsVisible = !!self.window; // action sheet is visible if it's associated with a window
+    if (actionSheetIsVisible) {
         return;
     }
 
@@ -207,10 +214,9 @@ static NSString * const kCellIdentifier = @"Cell";
     [self setUpBlurredBackgroundWithSnapshot:previousKeyWindowSnapshot];
     [self setUpCancelButton];
     [self setUpTableView];
-    self.visible = YES;
 
     // Animate sliding in tableView and cancel button with keyframe animation for a nicer effect.
-    [UIView animateKeyframesWithDuration:kFullAnimationLength delay:0 options:0 animations:^{
+    [UIView animateKeyframesWithDuration:kDefaultAnimationDuration delay:0 options:0 animations:^{
         self.blurredBackgroundView.alpha = 1.0f;
 
         [UIView addKeyframeWithRelativeStartTime:0.3f relativeDuration:0.7f animations:^{
@@ -219,7 +225,6 @@ static NSString * const kCellIdentifier = @"Cell";
                                                  CGRectGetWidth(self.bounds),
                                                  self.cancelButtonHeight);
 
-            static CGFloat topSpaceMarginPercentage = 0.333f;
             // manual calculation of table's contentSize.height
             CGFloat tableContentHeight = [self.items count] * self.buttonHeight + CGRectGetHeight(self.tableView.tableHeaderView.frame);
 
@@ -239,7 +244,7 @@ static NSString * const kCellIdentifier = @"Cell";
 
 - (void)dismissAnimated:(BOOL)animated
 {
-    [self dismissAnimated:animated duration:kFullAnimationLength completion:self.cancelHandler];
+    [self dismissAnimated:animated duration:kDefaultAnimationDuration completion:self.cancelHandler];
 }
 
 #pragma mark - Private
@@ -257,7 +262,6 @@ static NSString * const kCellIdentifier = @"Cell";
         self.window = nil;
 
         [self.previousKeyWindow makeKeyAndVisible];
-        self.visible = NO;
         [self.tableView removeFromSuperview];
         [self.cancelButton removeFromSuperview];
         [self.blurredBackgroundView removeFromSuperview];
@@ -270,12 +274,14 @@ static NSString * const kCellIdentifier = @"Cell";
     };
 
     if (animated) {
+        // animate sliding down tableView and cancelButton.
         [UIView animateWithDuration:duration animations:^{
             self.blurredBackgroundView.alpha = 0.0f;
             self.cancelButton.transform = CGAffineTransformTranslate(self.cancelButton.transform, 0, self.cancelButtonHeight);
             self.cancelButtonShadowView.alpha = 0.0f;
 
-            // shortest change of position to hide all tableView contents below the bottom margin
+            // Shortest shift of position sufficient to hide all tableView contents below the bottom margin.
+            // contentInset isn't used here (unlike in -show) because it caused weird problems with animations in some cases.
             CGRect frameBelow = self.tableView.frame;
             CGFloat slideDownMinOffset = MIN(CGRectGetHeight(self.frame) + self.tableView.contentOffset.y, CGRectGetHeight(self.frame));
             frameBelow.origin = CGPointMake(0, slideDownMinOffset);
@@ -320,7 +326,7 @@ static NSString * const kCellIdentifier = @"Cell";
 
 - (void)cancelButtonTapped:(id)sender
 {
-    [self dismissAnimated:YES duration:kFullAnimationLength completion:self.cancelHandler];
+    [self dismissAnimated:YES duration:kDefaultAnimationDuration completion:self.cancelHandler];
 }
 
 - (void)setUpCancelButton
@@ -335,6 +341,7 @@ static NSString * const kCellIdentifier = @"Cell";
                                              CGRectGetMaxY(self.bounds) - self.cancelButtonHeight,
                                              CGRectGetWidth(self.bounds),
                                              self.cancelButtonHeight);
+        // move the button below the screen (ready to be animated -show)
         self.cancelButton.transform = CGAffineTransformMakeTranslation(0, self.cancelButtonHeight);
         [self addSubview:self.cancelButton];
 
@@ -375,6 +382,7 @@ static NSString * const kCellIdentifier = @"Cell";
         self.tableView.dataSource = self;
         [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
         [self insertSubview:self.tableView aboveSubview:self.blurredBackgroundView];
+        // move the content below the screen, ready to animated in -show
         self.tableView.contentInset = UIEdgeInsetsMake(CGRectGetHeight(self.bounds), 0, 0, 0);
 
         [self setUpTableViewHeader];
@@ -384,12 +392,14 @@ static NSString * const kCellIdentifier = @"Cell";
 - (void)setUpTableViewHeader
 {
     if (self.title) {
+        // paddings similar to those in the UITableViewCell
         static CGFloat leftRightPadding = 15.0f;
         static CGFloat topBottomPadding = 8.0f;
         CGFloat labelWidth = CGRectGetWidth(self.bounds) - 2*leftRightPadding;
 
         NSAttributedString *attrText = [[NSAttributedString alloc] initWithString:self.title attributes:self.titleTextAttributes];
 
+        // create a label and calculate its size
         UILabel *label = [[UILabel alloc] init];
         label.numberOfLines = 0;
         [label setAttributedText:attrText];
@@ -404,7 +414,7 @@ static NSString * const kCellIdentifier = @"Cell";
         self.tableView.tableHeaderView = self.headerView;
     }
 
-    // add a separator between the tableHeaderView and a first row
+    // add a separator between the tableHeaderView and a first row (technically at the bottom of the tableHeaderView)
     if (self.tableView.tableHeaderView && self.tableView.separatorStyle != UITableViewCellSeparatorStyleNone) {
         static CGFloat separatorHeight = 0.5f;
         CGRect separatorFrame = CGRectMake(self.tableView.separatorInset.left,
@@ -417,7 +427,7 @@ static NSString * const kCellIdentifier = @"Cell";
     }
 }
 
-- (void)fadeBlurOnScrollToTop
+- (void)fadeBlursOnScrollToTop
 {
     if (self.tableView.isDragging || self.tableView.isDecelerating) {
         CGFloat alphaWithoutBounds = 1.0f - ( -(self.tableView.contentInset.top + self.tableView.contentOffset.y) / kBlurFadeRangeSize);
