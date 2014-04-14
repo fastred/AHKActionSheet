@@ -10,6 +10,6 @@
 
 @interface UIView (Snapshots)
 
-- (UIImage *)snapshotImage;
+- (UIImage *)AHKsnapshotImage;
 
 @end

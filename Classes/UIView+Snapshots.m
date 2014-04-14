@@ -10,7 +10,7 @@
 
 @implementation UIView (Snapshots)
 
-- (UIImage *)snapshotImage
+- (UIImage *)AHKsnapshotImage
 {
     UIGraphicsBeginImageContextWithOptions(self.frame.size, YES, 0.0f);
     [self drawViewHierarchyInRect:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame)) afterScreenUpdates:YES];

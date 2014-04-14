@@ -199,7 +199,7 @@ static NSString * const kCellIdentifier = @"Cell";
     }
 
     self.previousKeyWindow = [UIApplication sharedApplication].keyWindow;
-    UIImage *previousKeyWindowSnapshot = [self.previousKeyWindow.rootViewController.view snapshotImage];
+    UIImage *previousKeyWindowSnapshot = [self.previousKeyWindow.rootViewController.view AHKsnapshotImage];
 
     [self setUpNewWindow];
     [self setUpBlurredBackgroundWithSnapshot:previousKeyWindowSnapshot];

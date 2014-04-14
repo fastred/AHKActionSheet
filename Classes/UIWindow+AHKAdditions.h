@@ -11,7 +11,7 @@
 
 @interface UIWindow (AHKAdditions)
 
-- (UIViewController *)viewControllerForStatusBarStyle;
-- (UIViewController *)viewControllerForStatusBarHidden;
+- (UIViewController *)AHKviewControllerForStatusBarStyle;
+- (UIViewController *)AHKviewControllerForStatusBarHidden;
 
 @end

@@ -12,7 +12,7 @@
 
 #pragma mark - Public
 
-- (UIViewController *)viewControllerForStatusBarStyle
+- (UIViewController *)AHKviewControllerForStatusBarStyle
 {
     UIViewController *currentViewController = [self currentViewController];
 
@@ -22,7 +22,7 @@
     return currentViewController;
 }
 
-- (UIViewController *)viewControllerForStatusBarHidden
+- (UIViewController *)AHKviewControllerForStatusBarHidden
 {
     UIViewController *currentViewController = [self currentViewController];
 
