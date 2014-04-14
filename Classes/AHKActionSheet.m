@@ -56,6 +56,7 @@ static NSString * const kCellIdentifier = @"Cell";
     [appearance setBlurTintColor:[UIColor colorWithWhite:1.0f alpha:0.25f]];
     [appearance setBlurSaturationDeltaFactor:1.8f];
     [appearance setButtonHeight:60.0f];
+    [appearance setSelectedBackgroundColor:[UIColor colorWithWhite:0.1 alpha:0.2]];
     [appearance setCancelButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f],
                                                  NSForegroundColorAttributeName : [UIColor darkGrayColor] }];
     [appearance setButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f]}];
@@ -124,6 +125,11 @@ static NSString * const kCellIdentifier = @"Cell";
     cell.imageView.tintColor = attributes[NSForegroundColorAttributeName] ? attributes[NSForegroundColorAttributeName] : [UIColor blackColor];
 
     cell.backgroundColor = [UIColor clearColor];
+
+    if (self.selectedBackgroundColor && ![cell.selectedBackgroundView.backgroundColor isEqual:self.selectedBackgroundColor]) {
+        cell.selectedBackgroundView = [[UIView alloc] init];
+        cell.selectedBackgroundView.backgroundColor = self.selectedBackgroundColor;
+    }
 
     return cell;
 }
