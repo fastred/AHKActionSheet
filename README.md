@@ -12,6 +12,7 @@ An alternative to the UIActionSheet with a block-based API and a customizable lo
  * Gesture-driven navigation with two ways to hide the control: either quick flick down or swipe and release (at the position when the blur is starting to fade)
  * Use a simple label or a completely custom view above the buttons
  * Use with or without icons (text can be optionally centered)
+ * Status bar style matches the one from the presenting controller
 
 ## Demo
 
