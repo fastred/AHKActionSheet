@@ -14,10 +14,10 @@
 
 
 static CGFloat const kDefaultAnimationDuration = 0.5f;
-// Length of the range at which the blurred background is being hidden when the user swipes the tableView to the top.
+// Length of the range at which the blurred background is being hidden when the user scrolls the tableView to the top.
 static CGFloat kBlurFadeRangeSize = 200.0f;
 static NSString * const kCellIdentifier = @"Cell";
-// How much user has to scroll beyond the end of the tableView for the view to dismiss automatically.
+// How much user has to scroll beyond the top of the tableView for the view to dismiss automatically.
 static CGFloat autoDismissOffset = 80.0f;
 // Offset at which there's a check if the user is flicking the tableView down.
 static CGFloat flickDownHandlingOffset = 20.0f;
@@ -26,7 +26,7 @@ static CGFloat flickDownMinVelocity = 2000.0f;
 static CGFloat topSpaceMarginPercentage = 0.333f;
 
 
-/// Used for keeping button configuration.
+/// Used for storing button configuration.
 @interface AHKActionSheetItem : NSObject
 @property (copy, nonatomic) NSString *title;
 @property (strong, nonatomic) UIImage *image;
@@ -202,7 +202,7 @@ static CGFloat topSpaceMarginPercentage = 0.333f;
 {
     NSAssert([self.items count] > 0, @"Please add some buttons before calling -show.");
 
-    BOOL actionSheetIsVisible = !!self.window; // action sheet is visible if it's associated with a window
+    BOOL actionSheetIsVisible = !!self.window; // action sheet is visible iff it's associated with a window
     if (actionSheetIsVisible) {
         return;
     }
@@ -379,7 +379,7 @@ static CGFloat topSpaceMarginPercentage = 0.333f;
         self.tableView.dataSource = self;
         [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
         [self insertSubview:self.tableView aboveSubview:self.blurredBackgroundView];
-        // move the content below the screen, ready to animated in -show
+        // move the content below the screen, ready to be animated in -show
         self.tableView.contentInset = UIEdgeInsetsMake(CGRectGetHeight(self.bounds), 0, 0, 0);
 
         [self setUpTableViewHeader];
@@ -403,6 +403,7 @@ static CGFloat topSpaceMarginPercentage = 0.333f;
         CGSize labelSize = [label sizeThatFits:CGSizeMake(labelWidth, MAXFLOAT)];
         label.frame = CGRectMake(leftRightPadding, topBottomPadding, labelWidth, labelSize.height);
 
+        // create and add a header consisting of the label
         UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), labelSize.height + 2*topBottomPadding)];
         [headerView addSubview:label];
         self.tableView.tableHeaderView = headerView;
