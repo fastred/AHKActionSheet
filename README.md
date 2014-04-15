@@ -50,7 +50,11 @@ The view is customizable either directly or through a UIAppearance API. See the 
 
 ## Author
 
-Arkadiusz Holko, [http://holko.pl](http://holko.pl)
+Arkadiusz Holko
+
+[http://holko.pl](http://holko.pl)
+
+[@arekholko](https://twitter.com/arekholko) on Twitter
 
 ## License
 
