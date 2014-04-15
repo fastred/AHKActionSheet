@@ -163,7 +163,7 @@ static CGFloat topSpaceMarginPercentage = 0.333f;
     BOOL shouldSlideDown = scrollView.contentOffset.y < -self.tableView.contentInset.top - autoDismissOffset;
     if (viewWasFlickedDown) {
         // use a shorter duration for a flick down animation
-        CGFloat duration = 0.2f;
+        static CGFloat duration = 0.2f;
         [self dismissAnimated:YES duration:duration completion:self.cancelHandler];
     } else if (shouldSlideDown) {
         [self dismissAnimated:YES duration:kDefaultAnimationDuration completion:self.cancelHandler];
@@ -415,9 +415,9 @@ static CGFloat topSpaceMarginPercentage = 0.333f;
     // add a separator between the tableHeaderView and a first row (technically at the bottom of the tableHeaderView)
     if (self.tableView.tableHeaderView && self.tableView.separatorStyle != UITableViewCellSeparatorStyleNone) {
         static CGFloat separatorHeight = 0.5f;
-        CGRect separatorFrame = CGRectMake(self.tableView.separatorInset.left,
+        CGRect separatorFrame = CGRectMake(0,
                                            CGRectGetHeight(self.tableView.tableHeaderView.frame) - separatorHeight,
-                                           CGRectGetWidth(self.tableView.tableHeaderView.frame) - (self.tableView.separatorInset.left + self.tableView.separatorInset.right),
+                                           CGRectGetWidth(self.tableView.tableHeaderView.frame),
                                            separatorHeight);
         UIView *separator = [[UIView alloc] initWithFrame:separatorFrame];
         separator.backgroundColor = self.tableView.separatorColor;
