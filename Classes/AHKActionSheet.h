@@ -39,14 +39,14 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 @property (strong, nonatomic) UIColor *separatorColor UI_APPEARANCE_SELECTOR;
 /// Background color of the button when it's tapped (internally it's a UITableViewCell)
 @property (strong, nonatomic) UIColor *selectedBackgroundColor UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) NSDictionary *titleTextAttributes UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) NSDictionary *buttonTextAttributes UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) NSDictionary *destructiveButtonTextAttributes UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) NSDictionary *cancelButtonTextAttributes UI_APPEARANCE_SELECTOR;
+@property (copy, nonatomic) NSDictionary *titleTextAttributes UI_APPEARANCE_SELECTOR;
+@property (copy, nonatomic) NSDictionary *buttonTextAttributes UI_APPEARANCE_SELECTOR;
+@property (copy, nonatomic) NSDictionary *destructiveButtonTextAttributes UI_APPEARANCE_SELECTOR;
+@property (copy, nonatomic) NSDictionary *cancelButtonTextAttributes UI_APPEARANCE_SELECTOR;
 
 /// Called on every type of dismissal (tapping on "Cancel" or swipe down or flick down).
 @property (strong, nonatomic) AHKActionSheetHandler cancelHandler;
-@property (strong, nonatomic) NSString *cancelButtonTitle;
+@property (copy, nonatomic) NSString *cancelButtonTitle;
 /// Action sheet title shown above the buttons.
 @property (copy, nonatomic) NSString *title;
 /// View shown above the first button (only if the title isn't set).
