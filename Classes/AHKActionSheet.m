@@ -282,11 +282,8 @@ static CGFloat topSpaceMarginPercentage = 0.333f;
 
             // Shortest shift of position sufficient to hide all tableView contents below the bottom margin.
             // contentInset isn't used here (unlike in -show) because it caused weird problems with animations in some cases.
-            CGRect frameBelow = self.tableView.frame;
             CGFloat slideDownMinOffset = MIN(CGRectGetHeight(self.frame) + self.tableView.contentOffset.y, CGRectGetHeight(self.frame));
-            frameBelow.origin = CGPointMake(0, slideDownMinOffset);
-            self.tableView.frame = frameBelow;
-
+            self.tableView.transform = CGAffineTransformMakeTranslation(0, slideDownMinOffset);
         } completion:^(BOOL finished) {
             tearDownView();
         }];
