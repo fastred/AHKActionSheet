@@ -43,9 +43,9 @@ static CGFloat topSpaceMarginPercentage = 0.333f;
 @property (strong, nonatomic) NSMutableArray *items;
 @property (weak, nonatomic, readwrite) UIWindow *previousKeyWindow;
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) UIImageView *blurredBackgroundView;
-@property (strong, nonatomic) UITableView *tableView;
-@property (strong, nonatomic) UIButton *cancelButton;
+@property (weak, nonatomic) UIImageView *blurredBackgroundView;
+@property (weak, nonatomic) UITableView *tableView;
+@property (weak, nonatomic) UIButton *cancelButton;
 @property (weak, nonatomic) UIView *cancelButtonShadowView;
 @end
 
@@ -260,14 +260,13 @@ static CGFloat topSpaceMarginPercentage = 0.333f;
     void(^tearDownView)(void) = ^(void) {
         [self.window removeFromSuperview];
         self.window = nil;
-
         [self.previousKeyWindow makeKeyAndVisible];
-        [self.tableView removeFromSuperview];
-        [self.cancelButton removeFromSuperview];
-        [self.blurredBackgroundView removeFromSuperview];
-        self.tableView = nil;
-        self.cancelButton = nil;
-        self.blurredBackgroundView = nil;
+
+        // remove the views because it's easiest to just recreate them if the action sheet is shown again
+        for (UIView *view in @[self.tableView, self.cancelButton, self.blurredBackgroundView]) {
+            [view removeFromSuperview];
+        }
+
         if (completionHandler) {
             completionHandler(self);
         }
@@ -314,10 +313,11 @@ static CGFloat topSpaceMarginPercentage = 0.333f;
                                         tintColor:self.blurTintColor
                                         saturationDeltaFactor:self.blurSaturationDeltaFactor
                                         maskImage:nil];
-        self.blurredBackgroundView = [[UIImageView alloc] initWithImage:blurredViewSnapshot];
-        self.blurredBackgroundView.frame = self.bounds;
-        self.blurredBackgroundView.alpha = 0.0f;
-        [self addSubview:self.blurredBackgroundView];
+        UIImageView *backgroundView = [[UIImageView alloc] initWithImage:blurredViewSnapshot];
+        backgroundView.frame = self.bounds;
+        backgroundView.alpha = 0.0f;
+        [self addSubview:backgroundView];
+        self.blurredBackgroundView = backgroundView;
     }
 }
 
@@ -329,18 +329,20 @@ static CGFloat topSpaceMarginPercentage = 0.333f;
 - (void)setUpCancelButton
 {
     if (!self.cancelButton) {
-        self.cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
         NSAttributedString *attrTitle = [[NSAttributedString alloc] initWithString:self.cancelButtonTitle
                                                                         attributes:self.cancelButtonTextAttributes];
-        [self.cancelButton setAttributedTitle:attrTitle forState:UIControlStateNormal];
-        [self.cancelButton addTarget:self action:@selector(cancelButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        self.cancelButton.frame = CGRectMake(0,
+        [cancelButton setAttributedTitle:attrTitle forState:UIControlStateNormal];
+        [cancelButton addTarget:self action:@selector(cancelButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        cancelButton.frame = CGRectMake(0,
                                              CGRectGetMaxY(self.bounds) - self.cancelButtonHeight,
                                              CGRectGetWidth(self.bounds),
                                              self.cancelButtonHeight);
         // move the button below the screen (ready to be animated -show)
-        self.cancelButton.transform = CGAffineTransformMakeTranslation(0, self.cancelButtonHeight);
-        [self addSubview:self.cancelButton];
+        cancelButton.transform = CGAffineTransformMakeTranslation(0, self.cancelButtonHeight);
+        [self addSubview:cancelButton];
+
+        self.cancelButton = cancelButton;
 
         // add a small shadow/glow above the button
         if (self.cancelButtonShadowColor) {
@@ -366,21 +368,23 @@ static CGFloat topSpaceMarginPercentage = 0.333f;
                                   statusBarHeight,
                                   CGRectGetWidth(self.bounds),
                                   CGRectGetHeight(self.bounds) - statusBarHeight - self.cancelButtonHeight);
-        self.tableView = [[UITableView alloc] initWithFrame:frame];
 
-        self.tableView.backgroundColor = [UIColor clearColor];
-        self.tableView.showsVerticalScrollIndicator = NO;
-        self.tableView.separatorInset = UIEdgeInsetsZero;
+        UITableView *tableView = [[UITableView alloc] initWithFrame:frame];
+        tableView.backgroundColor = [UIColor clearColor];
+        tableView.showsVerticalScrollIndicator = NO;
+        tableView.separatorInset = UIEdgeInsetsZero;
         if (self.separatorColor) {
-            self.tableView.separatorColor = self.separatorColor;
+            tableView.separatorColor = self.separatorColor;
         }
 
-        self.tableView.delegate = self;
-        self.tableView.dataSource = self;
-        [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
-        [self insertSubview:self.tableView aboveSubview:self.blurredBackgroundView];
+        tableView.delegate = self;
+        tableView.dataSource = self;
+        [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
+        [self insertSubview:tableView aboveSubview:self.blurredBackgroundView];
         // move the content below the screen, ready to be animated in -show
-        self.tableView.contentInset = UIEdgeInsetsMake(CGRectGetHeight(self.bounds), 0, 0, 0);
+        tableView.contentInset = UIEdgeInsetsMake(CGRectGetHeight(self.bounds), 0, 0, 0);
+
+        self.tableView = tableView;
 
         [self setUpTableViewHeader];
     }
