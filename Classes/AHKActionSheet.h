@@ -64,8 +64,8 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 
 // Designated initializer.
 - (instancetype)initWithTitle:(NSString *)title;
-- (void)addButtonWithTitle:(NSString *)title image:(UIImage *)image type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler;
 - (void)addButtonWithTitle:(NSString *)title type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler;
+- (void)addButtonWithTitle:(NSString *)title image:(UIImage *)image type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler;
 - (void)show;
 - (void)dismissAnimated:(BOOL)animated;
 

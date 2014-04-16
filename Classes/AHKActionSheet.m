@@ -181,6 +181,13 @@ static CGFloat topSpaceMarginPercentage = 0.333f;
     return _items;
 }
 
+#pragma mark - Actions
+
+- (void)cancelButtonTapped:(id)sender
+{
+    [self dismissAnimated:YES duration:kDefaultAnimationDuration completion:self.cancelHandler];
+}
+
 #pragma mark - Public
 
 - (void)addButtonWithTitle:(NSString *)title type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler
@@ -314,11 +321,6 @@ static CGFloat topSpaceMarginPercentage = 0.333f;
     backgroundView.alpha = 0.0f;
     [self addSubview:backgroundView];
     self.blurredBackgroundView = backgroundView;
-}
-
-- (void)cancelButtonTapped:(id)sender
-{
-    [self dismissAnimated:YES duration:kDefaultAnimationDuration completion:self.cancelHandler];
 }
 
 - (void)setUpCancelButton
