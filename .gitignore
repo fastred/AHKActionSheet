@@ -18,4 +18,5 @@ profile
 DerivedData
 *.hmap
 *.ipa
+Rakefile
 
