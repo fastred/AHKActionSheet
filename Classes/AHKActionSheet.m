@@ -242,7 +242,7 @@ static CGFloat topSpaceMarginPercentage = 0.333f;
                 topInset = CGRectGetHeight(self.tableView.frame) - tableContentHeight;
             } else {
                 // leave an empty space on the top to make the control look similar to UIActionSheet
-                topInset = CGRectGetHeight(self.tableView.frame) * topSpaceMarginPercentage;
+                topInset = round(CGRectGetHeight(self.tableView.frame) * topSpaceMarginPercentage);
             }
             self.tableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0);
         }];
@@ -343,7 +343,7 @@ static CGFloat topSpaceMarginPercentage = 0.333f;
     // add a small shadow/glow above the button
     if (self.cancelButtonShadowColor) {
         self.cancelButton.clipsToBounds = NO;
-        CGFloat gradientHeight = self.cancelButtonHeight / 3.0f;
+        CGFloat gradientHeight = round(self.cancelButtonHeight / 3.0f);
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, -gradientHeight, CGRectGetWidth(self.bounds), gradientHeight)];
         CAGradientLayer *gradient = [CAGradientLayer layer];
         gradient.frame = view.bounds;
@@ -411,7 +411,7 @@ static CGFloat topSpaceMarginPercentage = 0.333f;
 
     // add a separator between the tableHeaderView and a first row (technically at the bottom of the tableHeaderView)
     if (self.tableView.tableHeaderView && self.tableView.separatorStyle != UITableViewCellSeparatorStyleNone) {
-        static CGFloat separatorHeight = 0.5f;
+        CGFloat separatorHeight = 1.0f / [UIScreen mainScreen].scale;
         CGRect separatorFrame = CGRectMake(0,
                                            CGRectGetHeight(self.tableView.tableHeaderView.frame) - separatorHeight,
                                            CGRectGetWidth(self.tableView.tableHeaderView.frame),
