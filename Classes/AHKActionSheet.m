@@ -23,7 +23,7 @@ static CGFloat autoDismissOffset = 80.0f;
 static CGFloat flickDownHandlingOffset = 20.0f;
 static CGFloat flickDownMinVelocity = 2000.0f;
 // How much free space to leave at the top (above the tableView's contents) when there's a lot of elements. It makes this control look similar to the UIActionSheet.
-static CGFloat topSpaceMarginPercentage = 0.333f;
+static CGFloat topSpaceMarginFraction = 0.333f;
 
 
 /// Used for storing button configuration.
@@ -236,13 +236,13 @@ static CGFloat topSpaceMarginPercentage = 0.333f;
             CGFloat tableContentHeight = [self.items count] * self.buttonHeight + CGRectGetHeight(self.tableView.tableHeaderView.frame);
 
             CGFloat topInset;
-            BOOL buttonsFitInWithoutScrolling = tableContentHeight < CGRectGetHeight(self.tableView.frame) * (1.0 - topSpaceMarginPercentage);
+            BOOL buttonsFitInWithoutScrolling = tableContentHeight < CGRectGetHeight(self.tableView.frame) * (1.0 - topSpaceMarginFraction);
             if (buttonsFitInWithoutScrolling) {
                 // show all buttons if there isn't many
                 topInset = CGRectGetHeight(self.tableView.frame) - tableContentHeight;
             } else {
                 // leave an empty space on the top to make the control look similar to UIActionSheet
-                topInset = round(CGRectGetHeight(self.tableView.frame) * topSpaceMarginPercentage);
+                topInset = round(CGRectGetHeight(self.tableView.frame) * topSpaceMarginFraction);
             }
             self.tableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0);
         }];
