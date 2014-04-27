@@ -46,7 +46,7 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 @property (strong, nonatomic) UIColor *separatorColor UI_APPEARANCE_SELECTOR;
 /// Background color of the button when it's tapped (internally it's a UITableViewCell)
 @property (strong, nonatomic) UIColor *selectedBackgroundColor UI_APPEARANCE_SELECTOR;
-/// Text attributes of the title (passed in the initializer or set via `title` property)
+/// Text attributes of the title (passed in initWithTitle: or set via `title` property)
 @property (copy, nonatomic) NSDictionary *titleTextAttributes UI_APPEARANCE_SELECTOR;
 @property (copy, nonatomic) NSDictionary *buttonTextAttributes UI_APPEARANCE_SELECTOR;
 @property (copy, nonatomic) NSDictionary *destructiveButtonTextAttributes UI_APPEARANCE_SELECTOR;
@@ -66,7 +66,9 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 
 // Designated initializer.
 - (instancetype)initWithTitle:(NSString *)title;
+// Add a button without an image. Has to be called before showing the action sheet.
 - (void)addButtonWithTitle:(NSString *)title type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler;
+// As above but with an image. Has to be called before showing the action sheet.
 - (void)addButtonWithTitle:(NSString *)title image:(UIImage *)image type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler;
 - (void)show;
 - (void)dismissAnimated:(BOOL)animated;
