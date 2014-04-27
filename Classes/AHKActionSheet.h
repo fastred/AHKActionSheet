@@ -19,7 +19,7 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 
 @interface AHKActionSheet : UIView <UIAppearanceContainer>
 
-// Appearance
+// Appearance - all of the following properties should be set before showing the action sheet.
 
 /**
  *  See UIImage+AHKAdditions.h/.m to learn how these three properties are used.
