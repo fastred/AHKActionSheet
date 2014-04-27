@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "AHKActionSheet"
-  s.version          = "0.1.0"
+  s.version          = "0.1.1"
   s.summary          = "An alternative to the UIActionSheet with a block-based API and a modern, customizable look."
   s.homepage         = "https://github.com/fastred/AHKActionSheet"
   s.license          = 'MIT'
