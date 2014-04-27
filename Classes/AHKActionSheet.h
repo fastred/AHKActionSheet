@@ -52,6 +52,7 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 @property (copy, nonatomic) NSDictionary *destructiveButtonTextAttributes UI_APPEARANCE_SELECTOR;
 @property (copy, nonatomic) NSDictionary *cancelButtonTextAttributes UI_APPEARANCE_SELECTOR;
 
+
 /// Called on every type of dismissal (tapping on "Cancel" or swipe down or flick down).
 @property (strong, nonatomic) AHKActionSheetHandler cancelHandler;
 @property (copy, nonatomic) NSString *cancelButtonTitle;
@@ -61,6 +62,7 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 @property (strong, nonatomic) UIView *headerView;
 /// Window visible before the actionSheet was presented.
 @property (weak, nonatomic, readonly) UIWindow *previousKeyWindow;
+
 
 // Designated initializer.
 - (instancetype)initWithTitle:(NSString *)title;
