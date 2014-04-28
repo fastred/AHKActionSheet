@@ -1,4 +1,7 @@
 # AHKActionSheet
+[![Twitter: @arekholko](https://img.shields.io/badge/contact-@arekholko-red.svg?style=flat)](https://twitter.com/arekholko)
+[![License: MIT](https://img.shields.io/badge/license-MIT-red.svg?style=flat)](https://github.com/fastred/AHKActionSheet/blob/master/LICENSE)
+[![CocoaPods](https://img.shields.io/cocoapods/v/AHKActionSheet.svg?style=flat)](https://github.com/fastred/AHKActionSheet)
 
 An alternative to the UIActionSheet with a block-based API and a customizable look. Inspired by the Spotify app. It looks a lot better live than on the GIF (because compression).
 
@@ -48,16 +51,3 @@ AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:nil];
 ```
 
 The view is customizable either directly or through a UIAppearance API. See the header file (`Classes/AHKActionSheet.h`) and the example project to learn more.
-
-## Author
-
-Arkadiusz Holko
-
-[http://holko.pl](http://holko.pl)
-
-[@arekholko](https://twitter.com/arekholko) on Twitter
-
-## License
-
-AHKActionSheet is available under the MIT license. See the LICENSE file for more info.
-
