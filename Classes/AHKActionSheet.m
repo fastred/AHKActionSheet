@@ -9,8 +9,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "AHKActionSheet.h"
 #import "AHKActionSheetViewController.h"
-#import "UIView+Snapshots.h"
 #import "UIImage+AHKAdditions.h"
+#import "UIWindow+AHKAdditions.h"
 
 
 static CGFloat const kDefaultAnimationDuration = 0.5f;
@@ -215,7 +215,7 @@ static CGFloat topSpaceMarginFraction = 0.333f;
     }
 
     self.previousKeyWindow = [UIApplication sharedApplication].keyWindow;
-    UIImage *previousKeyWindowSnapshot = [self.previousKeyWindow.rootViewController.view AHKsnapshotImage];
+    UIImage *previousKeyWindowSnapshot = [self.previousKeyWindow AHKSnapshot];
 
     [self setUpNewWindow];
     [self setUpBlurredBackgroundWithSnapshot:previousKeyWindowSnapshot];

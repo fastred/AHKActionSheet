@@ -13,5 +13,6 @@
 
 - (UIViewController *)AHKviewControllerForStatusBarStyle;
 - (UIViewController *)AHKviewControllerForStatusBarHidden;
+- (UIImage *)AHKSnapshot;
 
 @end
