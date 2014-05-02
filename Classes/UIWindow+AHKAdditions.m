@@ -12,7 +12,7 @@
 
 #pragma mark - Public
 
-- (UIViewController *)AHKviewControllerForStatusBarStyle
+- (UIViewController *)ahk_viewControllerForStatusBarStyle
 {
     UIViewController *currentViewController = [self currentViewController];
 
@@ -22,7 +22,7 @@
     return currentViewController;
 }
 
-- (UIViewController *)AHKviewControllerForStatusBarHidden
+- (UIViewController *)ahk_viewControllerForStatusBarHidden
 {
     UIViewController *currentViewController = [self currentViewController];
 
@@ -32,7 +32,7 @@
     return currentViewController;
 }
 
-- (UIImage *)AHKSnapshot
+- (UIImage *)ahk_snapshot
 {
     // source (under MIT license): https://github.com/shinydevelopment/SDScreenshotCapture/blob/master/SDScreenshotCapture/SDScreenshotCapture.m#L35
 

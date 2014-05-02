@@ -102,28 +102,28 @@
 @implementation UIImage (AHKAdditions)
 
 
-- (UIImage *)AHKapplyLightEffect
+- (UIImage *)ahk_applyLightEffect
 {
     UIColor *tintColor = [UIColor colorWithWhite:1.0 alpha:0.3f];
-    return [self AHKapplyBlurWithRadius:30 tintColor:tintColor saturationDeltaFactor:1.8f maskImage:nil];
+    return [self ahk_applyBlurWithRadius:30 tintColor:tintColor saturationDeltaFactor:1.8f maskImage:nil];
 }
 
 
-- (UIImage *)AHKapplyExtraLightEffect
+- (UIImage *)ahk_applyExtraLightEffect
 {
     UIColor *tintColor = [UIColor colorWithWhite:0.97f alpha:0.82f];
-    return [self AHKapplyBlurWithRadius:20 tintColor:tintColor saturationDeltaFactor:1.8f maskImage:nil];
+    return [self ahk_applyBlurWithRadius:20 tintColor:tintColor saturationDeltaFactor:1.8f maskImage:nil];
 }
 
 
-- (UIImage *)AHKapplyDarkEffect
+- (UIImage *)ahk_applyDarkEffect
 {
     UIColor *tintColor = [UIColor colorWithWhite:0.11f alpha:0.73f];
-    return [self AHKapplyBlurWithRadius:20 tintColor:tintColor saturationDeltaFactor:1.8f maskImage:nil];
+    return [self ahk_applyBlurWithRadius:20 tintColor:tintColor saturationDeltaFactor:1.8f maskImage:nil];
 }
 
 
-- (UIImage *)AHKapplyTintEffectWithColor:(UIColor *)tintColor
+- (UIImage *)ahk_applyTintEffectWithColor:(UIColor *)tintColor
 {
     const CGFloat EffectColorAlpha = 0.6f;
     UIColor *effectColor = tintColor;
@@ -140,11 +140,11 @@
             effectColor = [UIColor colorWithRed:r green:g blue:b alpha:EffectColorAlpha];
         }
     }
-    return [self AHKapplyBlurWithRadius:10 tintColor:effectColor saturationDeltaFactor:-1.0 maskImage:nil];
+    return [self ahk_applyBlurWithRadius:10 tintColor:effectColor saturationDeltaFactor:-1.0 maskImage:nil];
 }
 
 
-- (UIImage *)AHKapplyBlurWithRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor maskImage:(UIImage *)maskImage
+- (UIImage *)ahk_applyBlurWithRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor maskImage:(UIImage *)maskImage
 {
     // Check pre-conditions.
     if (self.size.width < 1 || self.size.height < 1) {

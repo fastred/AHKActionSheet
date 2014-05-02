@@ -57,7 +57,7 @@
     if (!window) {
         window = [[UIApplication sharedApplication].windows firstObject];
     }
-    return [[window AHKviewControllerForStatusBarStyle] preferredStatusBarStyle];
+    return [[window ahk_viewControllerForStatusBarStyle] preferredStatusBarStyle];
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -66,7 +66,7 @@
     if (!window) {
         window = [[UIApplication sharedApplication].windows firstObject];
     }
-    return [[window AHKviewControllerForStatusBarHidden] prefersStatusBarHidden];
+    return [[window ahk_viewControllerForStatusBarHidden] prefersStatusBarHidden];
 }
 
 @end

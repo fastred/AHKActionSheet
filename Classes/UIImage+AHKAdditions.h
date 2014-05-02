@@ -97,11 +97,11 @@
 
 @interface UIImage (AHKAdditions)
 
-- (UIImage *)AHKapplyLightEffect;
-- (UIImage *)AHKapplyExtraLightEffect;
-- (UIImage *)AHKapplyDarkEffect;
-- (UIImage *)AHKapplyTintEffectWithColor:(UIColor *)tintColor;
+- (UIImage *)ahk_applyLightEffect;
+- (UIImage *)ahk_applyExtraLightEffect;
+- (UIImage *)ahk_applyDarkEffect;
+- (UIImage *)ahk_applyTintEffectWithColor:(UIColor *)tintColor;
 
-- (UIImage *)AHKapplyBlurWithRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor maskImage:(UIImage *)maskImage;
+- (UIImage *)ahk_applyBlurWithRadius:(CGFloat)blurRadius tintColor:(UIColor *)tintColor saturationDeltaFactor:(CGFloat)saturationDeltaFactor maskImage:(UIImage *)maskImage;
 
 @end

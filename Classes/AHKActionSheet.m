@@ -215,7 +215,7 @@ static CGFloat topSpaceMarginFraction = 0.333f;
     }
 
     self.previousKeyWindow = [UIApplication sharedApplication].keyWindow;
-    UIImage *previousKeyWindowSnapshot = [self.previousKeyWindow AHKSnapshot];
+    UIImage *previousKeyWindowSnapshot = [self.previousKeyWindow ahk_snapshot];
 
     [self setUpNewWindow];
     [self setUpBlurredBackgroundWithSnapshot:previousKeyWindowSnapshot];
@@ -312,7 +312,7 @@ static CGFloat topSpaceMarginFraction = 0.333f;
 - (void)setUpBlurredBackgroundWithSnapshot:(UIImage *)previousKeyWindowSnapshot
 {
     UIImage *blurredViewSnapshot = [previousKeyWindowSnapshot
-                                    AHKapplyBlurWithRadius:self.blurRadius
+                                    ahk_applyBlurWithRadius:self.blurRadius
                                     tintColor:self.blurTintColor
                                     saturationDeltaFactor:self.blurSaturationDeltaFactor
                                     maskImage:nil];
