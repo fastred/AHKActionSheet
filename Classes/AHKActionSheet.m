@@ -66,7 +66,7 @@ static CGFloat topSpaceMarginFraction = 0.333f;
     [appearance setButtonHeight:60.0f];
     [appearance setCancelButtonHeight:44.0f];
     [appearance setAutomaticallyTintButtonImages:@YES];
-    [appearance setSelectedBackgroundColor:[UIColor colorWithWhite:0.1 alpha:0.2]];
+    [appearance setSelectedBackgroundColor:[UIColor colorWithWhite:0.1f alpha:0.2f]];
     [appearance setCancelButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f],
                                                  NSForegroundColorAttributeName : [UIColor darkGrayColor] }];
     [appearance setButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f]}];
@@ -108,13 +108,13 @@ static CGFloat topSpaceMarginFraction = 0.333f;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.items count];
+    return (NSInteger)[self.items count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
-    AHKActionSheetItem *item = self.items[indexPath.row];
+    AHKActionSheetItem *item = self.items[(NSUInteger)indexPath.row];
 
     NSDictionary *attributes = item.type == AHKActionSheetButtonTypeDefault ? self.buttonTextAttributes : self.destructiveButtonTextAttributes;
     NSAttributedString *attrTitle = [[NSAttributedString alloc] initWithString:item.title attributes:attributes];
@@ -139,7 +139,7 @@ static CGFloat topSpaceMarginFraction = 0.333f;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    AHKActionSheetItem *item = self.items[indexPath.row];
+    AHKActionSheetItem *item = self.items[(NSUInteger)indexPath.row];
     [self dismissAnimated:YES duration:kDefaultAnimationDuration completion:item.handler];
 }
 
@@ -242,7 +242,7 @@ static CGFloat topSpaceMarginFraction = 0.333f;
                 topInset = CGRectGetHeight(self.tableView.frame) - tableContentHeight;
             } else {
                 // leave an empty space on the top to make the control look similar to UIActionSheet
-                topInset = round(CGRectGetHeight(self.tableView.frame) * topSpaceMarginFraction);
+                topInset = (CGFloat)round(CGRectGetHeight(self.tableView.frame) * topSpaceMarginFraction);
             }
             self.tableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0);
         }];
@@ -343,7 +343,7 @@ static CGFloat topSpaceMarginFraction = 0.333f;
     // add a small shadow/glow above the button
     if (self.cancelButtonShadowColor) {
         self.cancelButton.clipsToBounds = NO;
-        CGFloat gradientHeight = round(self.cancelButtonHeight / 3.0f);
+        CGFloat gradientHeight = (CGFloat)round(self.cancelButtonHeight / 3.0f);
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, -gradientHeight, CGRectGetWidth(self.bounds), gradientHeight)];
         CAGradientLayer *gradient = [CAGradientLayer layer];
         gradient.frame = view.bounds;

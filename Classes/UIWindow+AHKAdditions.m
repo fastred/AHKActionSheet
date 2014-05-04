@@ -54,13 +54,13 @@
 
     // correct for the screen orientation
     if (orientation == UIInterfaceOrientationLandscapeLeft) {
-        CGContextRotateCTM(context, M_PI_2);
+        CGContextRotateCTM(context, (CGFloat)M_PI_2);
         CGContextTranslateCTM(context, 0, -imageSize.width);
     } else if (orientation == UIInterfaceOrientationLandscapeRight) {
-        CGContextRotateCTM(context, -M_PI_2);
+        CGContextRotateCTM(context, (CGFloat)-M_PI_2);
         CGContextTranslateCTM(context, -imageSize.height, 0);
     } else if (orientation == UIInterfaceOrientationPortraitUpsideDown) {
-        CGContextRotateCTM(context, M_PI);
+        CGContextRotateCTM(context, (CGFloat)M_PI);
         CGContextTranslateCTM(context, -imageSize.width, -imageSize.height);
     }
 
