@@ -13,7 +13,7 @@
 #import "UIWindow+AHKAdditions.h"
 
 
-static CGFloat const kDefaultAnimationDuration = 0.5f;
+static NSTimeInterval const kDefaultAnimationDuration = 0.5f;
 // Length of the range at which the blurred background is being hidden when the user scrolls the tableView to the top.
 static CGFloat kBlurFadeRangeSize = 200.0f;
 static NSString * const kCellIdentifier = @"Cell";
@@ -163,7 +163,7 @@ static CGFloat topSpaceMarginFraction = 0.333f;
     BOOL shouldSlideDown = scrollView.contentOffset.y < -self.tableView.contentInset.top - autoDismissOffset;
     if (viewWasFlickedDown) {
         // use a shorter duration for a flick down animation
-        static CGFloat duration = 0.2f;
+        static NSTimeInterval duration = 0.2f;
         [self dismissAnimated:YES duration:duration completion:self.cancelHandler];
     } else if (shouldSlideDown) {
         [self dismissAnimated:YES duration:kDefaultAnimationDuration completion:self.cancelHandler];
@@ -256,7 +256,7 @@ static CGFloat topSpaceMarginFraction = 0.333f;
 
 #pragma mark - Private
 
-- (void)dismissAnimated:(BOOL)animated duration:(CGFloat)duration completion:(AHKActionSheetHandler)completionHandler
+- (void)dismissAnimated:(BOOL)animated duration:(NSTimeInterval)duration completion:(AHKActionSheetHandler)completionHandler
 {
     // delegate isn't needed anymore because tableView will be hidden (and we don't want delegate methods to be called now)
     self.tableView.delegate = nil;
