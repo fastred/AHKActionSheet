@@ -44,7 +44,7 @@ A simple example:
 #import "AHKActionSheet.h"
 ...
 AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:nil];
-[actionSheet addButtonWithTitle:@"Test" type:AHKActionSheetButtonTypeDefault handler:^(AHKActionSheet *actionSheet) {
+[actionSheet addButtonWithTitle:@"Test" type:AHKActionSheetButtonTypeDefault handler:^(AHKActionSheet *as) {
     NSLog(@"Test tapped");
 }];
 [actionSheet show];
