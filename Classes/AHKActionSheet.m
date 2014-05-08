@@ -18,14 +18,14 @@ static const NSTimeInterval kDefaultAnimationDuration = 0.5f;
 static const CGFloat kBlurFadeRangeSize = 200.0f;
 static NSString * const kCellIdentifier = @"Cell";
 // How much user has to scroll beyond the top of the tableView for the view to dismiss automatically.
-static const CGFloat autoDismissOffset = 80.0f;
+static const CGFloat kAutoDismissOffset = 80.0f;
 // Offset at which there's a check if the user is flicking the tableView down.
-static const CGFloat flickDownHandlingOffset = 20.0f;
-static const CGFloat flickDownMinVelocity = 2000.0f;
+static const CGFloat kFlickDownHandlingOffset = 20.0f;
+static const CGFloat kFlickDownMinVelocity = 2000.0f;
 // How much free space to leave at the top (above the tableView's contents) when there's a lot of elements. It makes this control look similar to the UIActionSheet.
-static const CGFloat topSpaceMarginFraction = 0.333f;
+static const CGFloat kTopSpaceMarginFraction = 0.333f;
 // cancelButton's shadow height as the ratio to the cancelButton's height
-static const CGFloat cancelButtonShadowHeightRatio = 0.333f;
+static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
 
 /// Used for storing button configuration.
@@ -161,8 +161,8 @@ static const CGFloat cancelButtonShadowHeightRatio = 0.333f;
 {
     CGPoint scrollVelocity = [scrollView.panGestureRecognizer velocityInView:self];
 
-    BOOL viewWasFlickedDown = scrollVelocity.y > flickDownMinVelocity && scrollView.contentOffset.y < -self.tableView.contentInset.top - flickDownHandlingOffset;
-    BOOL shouldSlideDown = scrollView.contentOffset.y < -self.tableView.contentInset.top - autoDismissOffset;
+    BOOL viewWasFlickedDown = scrollVelocity.y > kFlickDownMinVelocity && scrollView.contentOffset.y < -self.tableView.contentInset.top - kFlickDownHandlingOffset;
+    BOOL shouldSlideDown = scrollView.contentOffset.y < -self.tableView.contentInset.top - kAutoDismissOffset;
     if (viewWasFlickedDown) {
         // use a shorter duration for a flick down animation
         static const NSTimeInterval duration = 0.2f;
@@ -238,13 +238,13 @@ static const CGFloat cancelButtonShadowHeightRatio = 0.333f;
             CGFloat tableContentHeight = [self.items count] * self.buttonHeight + CGRectGetHeight(self.tableView.tableHeaderView.frame);
 
             CGFloat topInset;
-            BOOL buttonsFitInWithoutScrolling = tableContentHeight < CGRectGetHeight(self.tableView.frame) * (1.0 - topSpaceMarginFraction);
+            BOOL buttonsFitInWithoutScrolling = tableContentHeight < CGRectGetHeight(self.tableView.frame) * (1.0 - kTopSpaceMarginFraction);
             if (buttonsFitInWithoutScrolling) {
                 // show all buttons if there isn't many
                 topInset = CGRectGetHeight(self.tableView.frame) - tableContentHeight;
             } else {
                 // leave an empty space on the top to make the control look similar to UIActionSheet
-                topInset = (CGFloat)round(CGRectGetHeight(self.tableView.frame) * topSpaceMarginFraction);
+                topInset = (CGFloat)round(CGRectGetHeight(self.tableView.frame) * kTopSpaceMarginFraction);
             }
             self.tableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0);
         }];
@@ -345,7 +345,7 @@ static const CGFloat cancelButtonShadowHeightRatio = 0.333f;
     // add a small shadow/glow above the button
     if (self.cancelButtonShadowColor) {
         self.cancelButton.clipsToBounds = NO;
-        CGFloat gradientHeight = (CGFloat)round(self.cancelButtonHeight * cancelButtonShadowHeightRatio);
+        CGFloat gradientHeight = (CGFloat)round(self.cancelButtonHeight * kCancelButtonShadowHeightRatio);
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, -gradientHeight, CGRectGetWidth(self.bounds), gradientHeight)];
         CAGradientLayer *gradient = [CAGradientLayer layer];
         gradient.frame = view.bounds;
