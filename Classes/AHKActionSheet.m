@@ -24,6 +24,8 @@ static const CGFloat flickDownHandlingOffset = 20.0f;
 static const CGFloat flickDownMinVelocity = 2000.0f;
 // How much free space to leave at the top (above the tableView's contents) when there's a lot of elements. It makes this control look similar to the UIActionSheet.
 static const CGFloat topSpaceMarginFraction = 0.333f;
+// cancelButton's shadow height as the ratio to the cancelButton's height
+static const CGFloat cancelButtonShadowHeightRatio = 0.333f;
 
 
 /// Used for storing button configuration.
@@ -343,7 +345,7 @@ static const CGFloat topSpaceMarginFraction = 0.333f;
     // add a small shadow/glow above the button
     if (self.cancelButtonShadowColor) {
         self.cancelButton.clipsToBounds = NO;
-        CGFloat gradientHeight = (CGFloat)round(self.cancelButtonHeight / 3.0f);
+        CGFloat gradientHeight = (CGFloat)round(self.cancelButtonHeight * cancelButtonShadowHeightRatio);
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, -gradientHeight, CGRectGetWidth(self.bounds), gradientHeight)];
         CAGradientLayer *gradient = [CAGradientLayer layer];
         gradient.frame = view.bounds;
