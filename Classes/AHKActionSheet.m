@@ -13,17 +13,17 @@
 #import "UIWindow+AHKAdditions.h"
 
 
-static NSTimeInterval const kDefaultAnimationDuration = 0.5f;
+static const NSTimeInterval kDefaultAnimationDuration = 0.5f;
 // Length of the range at which the blurred background is being hidden when the user scrolls the tableView to the top.
-static CGFloat kBlurFadeRangeSize = 200.0f;
+static const CGFloat kBlurFadeRangeSize = 200.0f;
 static NSString * const kCellIdentifier = @"Cell";
 // How much user has to scroll beyond the top of the tableView for the view to dismiss automatically.
-static CGFloat autoDismissOffset = 80.0f;
+static const CGFloat autoDismissOffset = 80.0f;
 // Offset at which there's a check if the user is flicking the tableView down.
-static CGFloat flickDownHandlingOffset = 20.0f;
-static CGFloat flickDownMinVelocity = 2000.0f;
+static const CGFloat flickDownHandlingOffset = 20.0f;
+static const CGFloat flickDownMinVelocity = 2000.0f;
 // How much free space to leave at the top (above the tableView's contents) when there's a lot of elements. It makes this control look similar to the UIActionSheet.
-static CGFloat topSpaceMarginFraction = 0.333f;
+static const CGFloat topSpaceMarginFraction = 0.333f;
 
 
 /// Used for storing button configuration.
@@ -163,7 +163,7 @@ static CGFloat topSpaceMarginFraction = 0.333f;
     BOOL shouldSlideDown = scrollView.contentOffset.y < -self.tableView.contentInset.top - autoDismissOffset;
     if (viewWasFlickedDown) {
         // use a shorter duration for a flick down animation
-        static NSTimeInterval duration = 0.2f;
+        static const NSTimeInterval duration = 0.2f;
         [self dismissAnimated:YES duration:duration completion:self.cancelHandler];
     } else if (shouldSlideDown) {
         [self dismissAnimated:YES duration:kDefaultAnimationDuration completion:self.cancelHandler];
@@ -387,8 +387,8 @@ static CGFloat topSpaceMarginFraction = 0.333f;
 {
     if (self.title) {
         // paddings similar to those in the UITableViewCell
-        static CGFloat leftRightPadding = 15.0f;
-        static CGFloat topBottomPadding = 8.0f;
+        static const CGFloat leftRightPadding = 15.0f;
+        static const CGFloat topBottomPadding = 8.0f;
         CGFloat labelWidth = CGRectGetWidth(self.bounds) - 2*leftRightPadding;
 
         NSAttributedString *attrText = [[NSAttributedString alloc] initWithString:self.title attributes:self.titleTextAttributes];
