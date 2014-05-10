@@ -83,7 +83,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     self = [super init];
 
     if (self) {
-        _title = title;
+        _title = [title copy];
         _cancelButtonTitle = @"Cancel";
     }
 
