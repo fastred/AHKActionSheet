@@ -51,3 +51,22 @@ AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:nil];
 ```
 
 The view is customizable either directly or through a UIAppearance API. See the header file (`Classes/AHKActionSheet.h`) and the example project to learn more.
+
+## Changelog
+
+0.1.3
+
+* Adjusted to projects with [more warnings](https://github.com/boredzo/Warnings-xcconfig/wiki/Warnings-Explained) enabled
+
+0.1.2
+
+* `UIWindow` is now snapshotted instead of `UIViewController's` `view`
+
+0.1.1
+
+* Refactorings
+* Bug fixes
+
+0.1.0
+
+* Initial release
