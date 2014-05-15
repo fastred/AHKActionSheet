@@ -68,9 +68,9 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 
 // Designated initializer.
 - (instancetype)initWithTitle:(NSString *)title;
-// Add a button without an image. Has to be called before showing the action sheet.
+/// Add a button without an image. Has to be called before showing the action sheet.
 - (void)addButtonWithTitle:(NSString *)title type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler;
-// As above but with an image. Has to be called before showing the action sheet.
+/// Add a button with an image. Has to be called before showing the action sheet.
 - (void)addButtonWithTitle:(NSString *)title image:(UIImage *)image type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler;
 - (void)show;
 - (void)dismissAnimated:(BOOL)animated;
