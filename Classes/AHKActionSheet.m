@@ -76,6 +76,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
                                                       NSForegroundColorAttributeName : [UIColor redColor] }];
     [appearance setTitleTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:14.0f],
                                                       NSForegroundColorAttributeName : [UIColor grayColor] }];
+    [appearance setAnimationDuration:kDefaultAnimationDuration];
 }
 
 - (instancetype)initWithTitle:(NSString *)title
@@ -85,7 +86,6 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     if (self) {
         _title = [title copy];
         _cancelButtonTitle = @"Cancel";
-        _animationDuration = kDefaultAnimationDuration;
     }
 
     return self;
