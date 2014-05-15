@@ -85,6 +85,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     if (self) {
         _title = [title copy];
         _cancelButtonTitle = @"Cancel";
+        _animationDuration = kDefaultAnimationDuration;
     }
 
     return self;
@@ -142,7 +143,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     AHKActionSheetItem *item = self.items[(NSUInteger)indexPath.row];
-    [self dismissAnimated:YES duration:kDefaultAnimationDuration completion:item.handler];
+    [self dismissAnimated:YES duration:self.animationDuration completion:item.handler];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -168,7 +169,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
         static const NSTimeInterval duration = 0.2f;
         [self dismissAnimated:YES duration:duration completion:self.cancelHandler];
     } else if (shouldSlideDown) {
-        [self dismissAnimated:YES duration:kDefaultAnimationDuration completion:self.cancelHandler];
+        [self dismissAnimated:YES duration:self.animationDuration completion:self.cancelHandler];
     }
 }
 
@@ -187,7 +188,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
 - (void)cancelButtonTapped:(id)sender
 {
-    [self dismissAnimated:YES duration:kDefaultAnimationDuration completion:self.cancelHandler];
+    [self dismissAnimated:YES duration:self.animationDuration completion:self.cancelHandler];
 }
 
 #pragma mark - Public
@@ -225,7 +226,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     [self setUpTableView];
 
     // Animate sliding in tableView and cancel button with keyframe animation for a nicer effect.
-    [UIView animateKeyframesWithDuration:kDefaultAnimationDuration delay:0 options:0 animations:^{
+    [UIView animateKeyframesWithDuration:self.animationDuration delay:0 options:0 animations:^{
         self.blurredBackgroundView.alpha = 1.0f;
 
         [UIView addKeyframeWithRelativeStartTime:0.3f relativeDuration:0.7f animations:^{
@@ -253,7 +254,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
 - (void)dismissAnimated:(BOOL)animated
 {
-    [self dismissAnimated:animated duration:kDefaultAnimationDuration completion:self.cancelHandler];
+    [self dismissAnimated:animated duration:self.animationDuration completion:self.cancelHandler];
 }
 
 #pragma mark - Private

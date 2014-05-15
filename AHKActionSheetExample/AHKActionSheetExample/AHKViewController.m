@@ -70,6 +70,7 @@
     actionSheet.blurRadius = 8.0f;
     actionSheet.buttonHeight = 50.0f;
     actionSheet.cancelButtonHeight = 50.0f;
+    actionSheet.animationDuration = 0.5f;
     actionSheet.cancelButtonShadowColor = [UIColor colorWithWhite:0.0f alpha:0.1f];
     actionSheet.separatorColor = [UIColor colorWithWhite:1.0f alpha:0.3f];
     actionSheet.selectedBackgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
