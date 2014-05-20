@@ -52,6 +52,8 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 @property (copy, nonatomic) NSDictionary *buttonTextAttributes UI_APPEARANCE_SELECTOR;
 @property (copy, nonatomic) NSDictionary *destructiveButtonTextAttributes UI_APPEARANCE_SELECTOR;
 @property (copy, nonatomic) NSDictionary *cancelButtonTextAttributes UI_APPEARANCE_SELECTOR;
+/// Duration of the show/dismiss animations. Defaults to 0.5.
+@property (nonatomic) NSTimeInterval animationDuration UI_APPEARANCE_SELECTOR;
 
 
 /// A handler called on every type of dismissal (tapping on "Cancel" or swipe down or flick down).
@@ -63,8 +65,6 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 @property (strong, nonatomic) UIView *headerView;
 /// Window visible before the actionSheet was presented.
 @property (weak, nonatomic, readonly) UIWindow *previousKeyWindow;
-/// Duration of the show/dismiss animations. Defaults to 0.5.
-@property (nonatomic) NSTimeInterval animationDuration UI_APPEARANCE_SELECTOR;
 
 
 /**
