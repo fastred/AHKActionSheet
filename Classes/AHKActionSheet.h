@@ -68,7 +68,7 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 
 
 /**
- *  Initializes an action sheet with a specified title. `headerView` can be used if a string is insufficient for the title; set `title` as `nil` in this case.
+ *  Initializes the action sheet with a specified title. `headerView` can be used if a string is insufficient for the title; set `title` as `nil` in this case.
  *
  *  It's the designated initializer.
  *
@@ -93,10 +93,10 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
  */
 - (void)addButtonWithTitle:(NSString *)title image:(UIImage *)image type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler;
 
-/// Displays an action sheet.
+/// Displays the action sheet.
 - (void)show;
 
-/// Dismisses an action sheet with an optional animation.
+/// Dismisses the action sheet with an optional animation.
 - (void)dismissAnimated:(BOOL)animated;
 
 @end
