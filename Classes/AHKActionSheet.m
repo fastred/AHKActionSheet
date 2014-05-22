@@ -290,7 +290,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
             // Shortest shift of position sufficient to hide all tableView contents below the bottom margin.
             // contentInset isn't used here (unlike in -show) because it caused weird problems with animations in some cases.
-            CGFloat slideDownMinOffset = MIN(CGRectGetHeight(self.frame) + self.tableView.contentOffset.y, CGRectGetHeight(self.frame));
+            CGFloat slideDownMinOffset = (CGFloat)fmin(CGRectGetHeight(self.frame) + self.tableView.contentOffset.y, CGRectGetHeight(self.frame));
             self.tableView.transform = CGAffineTransformMakeTranslation(0, slideDownMinOffset);
         } completion:^(BOOL finished) {
             tearDownView();
@@ -430,7 +430,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     if (self.tableView.isDragging || self.tableView.isDecelerating) {
         CGFloat alphaWithoutBounds = 1.0f - ( -(self.tableView.contentInset.top + self.tableView.contentOffset.y) / kBlurFadeRangeSize);
         // limit alpha to the interval [0, 1]
-        CGFloat alpha = MAX(MIN(alphaWithoutBounds, 1.0f), 0.0f);
+        CGFloat alpha = (CGFloat)fmax(fmin(alphaWithoutBounds, 1.0f), 0.0f);
         self.blurredBackgroundView.alpha = alpha;
         self.cancelButtonShadowView.alpha = alpha;
     }
