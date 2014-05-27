@@ -56,7 +56,7 @@ The view is customizable either directly or through a UIAppearance API. See the 
 
 0.1.3
 
-* Adjusted to projects with [more warnings](https://github.com/boredzo/Warnings-xcconfig/wiki/Warnings-Explained) enabled
+* Ready for projects with [more warnings](https://github.com/boredzo/Warnings-xcconfig/wiki/Warnings-Explained) enabled
 
 0.1.2
 
