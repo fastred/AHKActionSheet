@@ -54,6 +54,12 @@ The view is customizable either directly or through a UIAppearance API. See the 
 
 ## Changelog
 
+0.2.0
+
+* Added `animationDuration` property
+* Added some basic unit tests
+* Improved comments in the header file
+
 0.1.3
 
 * Ready for projects with [more warnings](https://github.com/boredzo/Warnings-xcconfig/wiki/Warnings-Explained) enabled
