@@ -64,7 +64,12 @@
         CGContextTranslateCTM(context, -imageSize.width, -imageSize.height);
     }
 
-    [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:YES];
+    
+    if([self isios6])
+        [self.layer renderInContext:UIGraphicsGetCurrentContext()];
+    else
+        [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:YES];
+
     CGContextRestoreGState(context);
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -73,6 +78,14 @@
 }
 
 #pragma mark - Private
+- (BOOL)isios6{
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0){
+        return NO;
+    }else{
+        return YES;
+    }
+    
+}
 
 - (UIViewController *)currentViewController
 {
