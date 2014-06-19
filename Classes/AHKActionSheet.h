@@ -14,7 +14,10 @@ typedef NS_ENUM(NSInteger, AHKActionSheetButtonType) {
 };
 
 @class AHKActionSheet;
+@class AHKActionSheetItem;
 typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
+typedef void(^AHKActionSheetItemHandler)(id actionSheetitem);
+
 
 
 /// A block-based alternative to the `UIAlertView`.
@@ -67,6 +70,7 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 @property (weak, nonatomic, readonly) UIWindow *previousKeyWindow;
 
 
+
 /**
  *  Initializes the action sheet with a specified title. `headerView` can be used if a string is insufficient for the title; set `title` as `nil` in this case.
  *
@@ -84,6 +88,8 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
  *  @param handler The block called after the button has been tapped.
  */
 - (void)addButtonWithTitle:(NSString *)title type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler;
+
+- (void)addButtonWithTitles:(NSArray *)titles type:(AHKActionSheetButtonType)type handler:(AHKActionSheetItemHandler)handler;
 
 /**
  *  Adds a button with an image. Has to be called before showing the action sheet.

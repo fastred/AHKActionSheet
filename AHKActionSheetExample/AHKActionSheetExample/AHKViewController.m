@@ -26,6 +26,17 @@
 }
 
 #pragma mark - Actions
+- (IBAction)btnClick:(id)sender {
+    
+    AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:NSLocalizedString(@"Lorem ipsum dolor sit amet, consectetur adipiscing elit?", nil)];
+    
+    [actionSheet addButtonWithTitles:@[@"test1",@"test2"] type:AHKActionSheetButtonTypeDefault handler:^(id action) {
+        
+        NSLog(@"%@",action);
+    }];
+    [actionSheet show];
+
+}
 
 - (IBAction)basicExampleTapped:(id)sender
 {

@@ -33,7 +33,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 @property (copy, nonatomic) NSString *title;
 @property (strong, nonatomic) UIImage *image;
 @property (nonatomic) AHKActionSheetButtonType type;
-@property (strong, nonatomic) AHKActionSheetHandler handler;
+@property (strong, nonatomic) AHKActionSheetItemHandler handler;
 @end
 
 @implementation AHKActionSheetItem
@@ -42,13 +42,14 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
 
 @interface AHKActionSheet() <UITableViewDataSource, UITableViewDelegate>
-@property (strong, nonatomic) NSMutableArray *items;
 @property (weak, nonatomic, readwrite) UIWindow *previousKeyWindow;
 @property (strong, nonatomic) UIWindow *window;
 @property (weak, nonatomic) UIImageView *blurredBackgroundView;
 @property (weak, nonatomic) UITableView *tableView;
 @property (weak, nonatomic) UIButton *cancelButton;
 @property (weak, nonatomic) UIView *cancelButtonShadowView;
+@property (nonatomic, strong)NSMutableArray *items;
+@property (nonatomic, copy) AHKActionSheetItemHandler customHandler;
 @end
 
 @implementation AHKActionSheet
@@ -153,7 +154,11 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     AHKActionSheetItem *item = self.items[(NSUInteger)indexPath.row];
-    [self dismissAnimated:YES duration:self.animationDuration completion:item.handler];
+    if(self.customHandler){
+        self.customHandler(item.title);
+        [self dismissAnimated:YES];
+    }else
+        [self dismissAnimated:YES duration:self.animationDuration completion:item.handler];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -202,7 +207,18 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 }
 
 #pragma mark - Public
-
+- (void)addButtonWithTitles:(NSArray *)titles type:(AHKActionSheetButtonType)type handler:(AHKActionSheetItemHandler)handler{
+    
+    self.customHandler=handler;
+    for (NSString *title in titles) {
+        AHKActionSheetItem *item = [[AHKActionSheetItem alloc] init];
+        item.title = title;
+        item.image = nil;
+        item.type = type;
+        item.handler = handler;
+        [self.items addObject:item];
+    }
+}
 - (void)addButtonWithTitle:(NSString *)title type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler
 {
     [self addButtonWithTitle:title image:nil type:type handler:handler];
