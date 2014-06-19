@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9E2390BA195359D100D440E8 /* AHKActionSheet.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9E2390B9195359D100D440E8 /* AHKActionSheet.podspec */; };
 		A618482818FBDC2F005EA537 /* UIWindow+AHKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A618482718FBDC2F005EA537 /* UIWindow+AHKAdditions.m */; };
 		A67A09F318F5665C0085FA8D /* AHKActionSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A67A09F218F5665B0085FA8D /* AHKActionSheetViewController.m */; };
 		A6BA55B418F3F7840009AC11 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6BA55B318F3F7840009AC11 /* Foundation.framework */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9E2390B9195359D100D440E8 /* AHKActionSheet.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = AHKActionSheet.podspec; path = ../../AHKActionSheet.podspec; sourceTree = "<group>"; };
 		A618482618FBDC2F005EA537 /* UIWindow+AHKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+AHKAdditions.h"; sourceTree = "<group>"; };
 		A618482718FBDC2F005EA537 /* UIWindow+AHKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+AHKAdditions.m"; sourceTree = "<group>"; };
 		A67A09F118F5665B0085FA8D /* AHKActionSheetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AHKActionSheetViewController.h; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 		A6BA55B918F3F7840009AC11 /* AHKActionSheetExample */ = {
 			isa = PBXGroup;
 			children = (
+				9E2390B9195359D100D440E8 /* AHKActionSheet.podspec */,
 				A6BA55E818F3FAC60009AC11 /* AHKActionSheet */,
 				A6BA55C218F3F7840009AC11 /* AHKAppDelegate.h */,
 				A6BA55C318F3F7840009AC11 /* AHKAppDelegate.m */,
@@ -259,6 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A6BA55CC18F3F7840009AC11 /* Images.xcassets in Resources */,
+				9E2390BA195359D100D440E8 /* AHKActionSheet.podspec in Resources */,
 				A6BA55BE18F3F7840009AC11 /* InfoPlist.strings in Resources */,
 				A6BA55C718F3F7840009AC11 /* Main.storyboard in Resources */,
 			);
