@@ -64,7 +64,12 @@
         CGContextTranslateCTM(context, -imageSize.width, -imageSize.height);
     }
 
-    [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:YES];
+    if([self respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)]) {
+        [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:YES];
+    } else {
+        [self.layer renderInContext:UIGraphicsGetCurrentContext()];
+    }
+
     CGContextRestoreGState(context);
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();

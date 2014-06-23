@@ -39,7 +39,7 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
  *  See "Advanced" example in the example project to see it used.
  */
 @property (strong, nonatomic) UIColor *cancelButtonShadowColor UI_APPEARANCE_SELECTOR;
-/// Boxed (@YES, @NO) boolean value (enabled by default)
+/// Boxed (@YES, @NO) boolean value (enabled by default). Isn't supported on iOS 6.
 @property (strong, nonatomic) NSNumber *automaticallyTintButtonImages UI_APPEARANCE_SELECTOR;
 /// Boxed boolean value. Useful when adding buttons without images (in that case text looks better centered). Disabled by default.
 @property (strong, nonatomic) NSNumber *buttonTextCenteringEnabled UI_APPEARANCE_SELECTOR;
