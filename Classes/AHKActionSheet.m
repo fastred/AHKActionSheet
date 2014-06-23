@@ -102,15 +102,6 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     self.tableView.delegate = nil;
 }
 
-- (BOOL)isios6{
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0){
-        return NO;
-    }else{
-        return YES;
-    }
-
-}
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -133,11 +124,14 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     cell.textLabel.attributedText = attrTitle;
     cell.textLabel.textAlignment = [self.buttonTextCenteringEnabled boolValue] ? NSTextAlignmentCenter : NSTextAlignmentLeft;
 
-    if(![self isios6]){
     // Use image with template mode with color the same as the text (when enabled).
-        cell.imageView.image = [self.automaticallyTintButtonImages boolValue] ? [item.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] : item.image;
+    BOOL useTemplateMode = [UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)] && [self.automaticallyTintButtonImages boolValue];
+    cell.imageView.image = useTemplateMode ? [item.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] : item.image;
+
+    if ([UIImageView instancesRespondToSelector:@selector(tintColor)]){
         cell.imageView.tintColor = attributes[NSForegroundColorAttributeName] ? attributes[NSForegroundColorAttributeName] : [UIColor blackColor];
     }
+
     cell.backgroundColor = [UIColor clearColor];
 
     if (self.selectedBackgroundColor && ![cell.selectedBackgroundView.backgroundColor isEqual:self.selectedBackgroundColor]) {
@@ -236,47 +230,19 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     [self setUpTableView];
 
     // Animate sliding in tableView and cancel button with keyframe animation for a nicer effect.
-    
-    if([self isios6]){
-        [UIView animateWithDuration:self.animationDuration animations:^{
-            self.blurredBackgroundView.alpha = 1.0f;
-            
-            [UIView animateWithDuration:0.3 animations:^{
-                self.cancelButton.frame = CGRectMake(0,
-                                                     CGRectGetMaxY(self.bounds) - self.cancelButtonHeight,
-                                                     CGRectGetWidth(self.bounds),
-                                                     self.cancelButtonHeight);
-                
-                // manual calculation of table's contentSize.height
-                CGFloat tableContentHeight = [self.items count] * self.buttonHeight + CGRectGetHeight(self.tableView.tableHeaderView.frame);
-                
-                CGFloat topInset;
-                BOOL buttonsFitInWithoutScrolling = tableContentHeight < CGRectGetHeight(self.tableView.frame) * (1.0 - kTopSpaceMarginFraction);
-                if (buttonsFitInWithoutScrolling) {
-                    // show all buttons if there isn't many
-                    topInset = CGRectGetHeight(self.tableView.frame) - tableContentHeight;
-                } else {
-                    // leave an empty space on the top to make the control look similar to UIActionSheet
-                    topInset = (CGFloat)round(CGRectGetHeight(self.tableView.frame) * kTopSpaceMarginFraction);
-                }
-                self.tableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0);
-                
-            }];
-        }];
-    }else{
-        
+    if([UIView respondsToSelector:@selector(animateKeyframesWithDuration:delay:options:animations:completion:)]){
         [UIView animateKeyframesWithDuration:self.animationDuration delay:0 options:0 animations:^{
             self.blurredBackgroundView.alpha = 1.0f;
-            
+
             [UIView addKeyframeWithRelativeStartTime:0.3f relativeDuration:0.7f animations:^{
                 self.cancelButton.frame = CGRectMake(0,
                                                      CGRectGetMaxY(self.bounds) - self.cancelButtonHeight,
                                                      CGRectGetWidth(self.bounds),
                                                      self.cancelButtonHeight);
-                
+
                 // manual calculation of table's contentSize.height
                 CGFloat tableContentHeight = [self.items count] * self.buttonHeight + CGRectGetHeight(self.tableView.tableHeaderView.frame);
-                
+
                 CGFloat topInset;
                 BOOL buttonsFitInWithoutScrolling = tableContentHeight < CGRectGetHeight(self.tableView.frame) * (1.0 - kTopSpaceMarginFraction);
                 if (buttonsFitInWithoutScrolling) {
@@ -289,6 +255,33 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
                 self.tableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0);
             }];
         } completion:nil];
+    }else{
+        [UIView animateWithDuration:self.animationDuration animations:^{
+            self.blurredBackgroundView.alpha = 1.0f;
+
+            [UIView animateWithDuration:0.3 animations:^{
+                self.cancelButton.frame = CGRectMake(0,
+                                                     CGRectGetMaxY(self.bounds) - self.cancelButtonHeight,
+                                                     CGRectGetWidth(self.bounds),
+                                                     self.cancelButtonHeight);
+
+                // manual calculation of table's contentSize.height
+                CGFloat tableContentHeight = [self.items count] * self.buttonHeight + CGRectGetHeight(self.tableView.tableHeaderView.frame);
+
+                CGFloat topInset;
+                BOOL buttonsFitInWithoutScrolling = tableContentHeight < CGRectGetHeight(self.tableView.frame) * (1.0 - kTopSpaceMarginFraction);
+                if (buttonsFitInWithoutScrolling) {
+                    // show all buttons if there isn't many
+                    topInset = CGRectGetHeight(self.tableView.frame) - tableContentHeight;
+                } else {
+                    // leave an empty space on the top to make the control look similar to UIActionSheet
+                    topInset = (CGFloat)round(CGRectGetHeight(self.tableView.frame) * kTopSpaceMarginFraction);
+                }
+                self.tableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0);
+
+            }];
+        }];
+
     }
 }
 
@@ -369,10 +362,12 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 - (void)setUpCancelButton
 {
     UIButton *cancelButton;
-    if(![self isios6])
+    // It's hard to check if UIButtonTypeSystem enumeration exists, so we're checking existence of another method that was introduced in iOS 7.
+    if([UIView instancesRespondToSelector:@selector(tintAdjustmentMode)]) {
         cancelButton= [UIButton buttonWithType:UIButtonTypeSystem];
-    else
-       cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    } else {
+        cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    }
     
     NSAttributedString *attrTitle = [[NSAttributedString alloc] initWithString:self.cancelButtonTitle
                                                                     attributes:self.cancelButtonTextAttributes];
@@ -414,9 +409,11 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     UITableView *tableView = [[UITableView alloc] initWithFrame:frame];
     tableView.backgroundColor = [UIColor clearColor];
     tableView.showsVerticalScrollIndicator = NO;
-    if(![self isios6])
+
+    if ([UITableView instancesRespondToSelector:@selector(setSeparatorInset:)]) {
         tableView.separatorInset = UIEdgeInsetsZero;
-    
+    }
+
     if (self.separatorColor) {
         tableView.separatorColor = self.separatorColor;
     }

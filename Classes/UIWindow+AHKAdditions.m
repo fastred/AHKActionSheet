@@ -65,10 +65,11 @@
     }
 
     
-    if([self isios6])
-        [self.layer renderInContext:UIGraphicsGetCurrentContext()];
-    else
+    if([self respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)]) {
         [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:YES];
+    } else {
+        [self.layer renderInContext:UIGraphicsGetCurrentContext()];
+    }
 
     CGContextRestoreGState(context);
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
@@ -78,14 +79,6 @@
 }
 
 #pragma mark - Private
-- (BOOL)isios6{
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0){
-        return NO;
-    }else{
-        return YES;
-    }
-    
-}
 
 - (UIViewController *)currentViewController
 {
