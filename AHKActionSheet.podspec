@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.source_files = 'Classes'
   s.public_header_files = 'Classes/*.h'
-  s.platform = :ios, '7.0'
-  s.ios.deployment_target = '7.0'
+  s.platform = :ios, '6.0'
+  s.ios.deployment_target = '6.0'
   s.frameworks = ['QuartzCore']
 end

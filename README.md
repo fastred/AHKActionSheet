@@ -23,7 +23,7 @@ Build and run the `AHKActionSheetExample` project in Xcode. `AHKViewController.m
 
 ## Requirements
 
- * iOS 7.0 and above
+ * iOS 6.0 and above
  * ARC
  * Optimized for iPhone
 
@@ -53,6 +53,10 @@ AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:nil];
 The view is customizable either directly or through a UIAppearance API. See the header file (`Classes/AHKActionSheet.h`) and the example project to learn more.
 
 ## Changelog
+
+0.3.0
+
+* Added iOS 6 support
 
 0.2.0
 
