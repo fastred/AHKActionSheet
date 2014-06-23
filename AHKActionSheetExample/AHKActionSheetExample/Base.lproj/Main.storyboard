@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
+        <deployment defaultVersion="1552" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
@@ -33,7 +34,7 @@
                                     <action selector="basicExampleTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="om4-ug-PK0"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCe-m3-XCq">
+                            <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="748" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCe-m3-XCq">
                                 <rect key="frame" x="153" y="269" width="132" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Advanced example">
@@ -46,10 +47,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="XZX-0J-Ecs" firstAttribute="leading" secondItem="E95-1P-nyP" secondAttribute="leading" id="6Nw-Az-Ebm"/>
-                            <constraint firstItem="gCe-m3-XCq" firstAttribute="trailing" secondItem="E95-1P-nyP" secondAttribute="trailing" id="7oi-IM-Upu"/>
+                            <constraint firstItem="XZX-0J-Ecs" firstAttribute="leading" secondItem="E95-1P-nyP" secondAttribute="leading" priority="999" id="6Nw-Az-Ebm"/>
+                            <constraint firstItem="gCe-m3-XCq" firstAttribute="trailing" secondItem="E95-1P-nyP" secondAttribute="trailing" priority="999" id="7oi-IM-Upu"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="E95-1P-nyP" secondAttribute="bottom" constant="2" id="DdA-cW-S7t"/>
                             <constraint firstItem="E95-1P-nyP" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="35" id="P2W-f5-qzM"/>
+                            <constraint firstItem="gCe-m3-XCq" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="XZX-0J-Ecs" secondAttribute="trailing" constant="10" id="QaU-SA-17M"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gCe-m3-XCq" secondAttribute="trailing" id="Qdj-yi-N6V"/>
+                            <constraint firstItem="XZX-0J-Ecs" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="kh9-bI-dsS" secondAttribute="leading" id="aGH-uD-OYo"/>
                             <constraint firstAttribute="trailing" secondItem="E95-1P-nyP" secondAttribute="trailing" constant="35" id="hwl-7B-H9s"/>
                             <constraint firstItem="gCe-m3-XCq" firstAttribute="baseline" secondItem="XZX-0J-Ecs" secondAttribute="baseline" id="pCE-rD-uRl"/>
                             <constraint firstAttribute="centerY" secondItem="XZX-0J-Ecs" secondAttribute="centerY" id="zma-nv-cba"/>
