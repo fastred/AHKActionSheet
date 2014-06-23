@@ -229,59 +229,47 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     [self setUpCancelButton];
     [self setUpTableView];
 
-    // Animate sliding in tableView and cancel button with keyframe animation for a nicer effect.
+    void(^immediateAnimations)(void) = ^(void) {
+        self.blurredBackgroundView.alpha = 1.0f;
+    };
+
+    void(^delayedAnimations)(void) = ^(void) {
+        self.cancelButton.frame = CGRectMake(0,
+                                             CGRectGetMaxY(self.bounds) - self.cancelButtonHeight,
+                                             CGRectGetWidth(self.bounds),
+                                             self.cancelButtonHeight);
+
+        // manual calculation of table's contentSize.height
+        CGFloat tableContentHeight = [self.items count] * self.buttonHeight + CGRectGetHeight(self.tableView.tableHeaderView.frame);
+
+        CGFloat topInset;
+        BOOL buttonsFitInWithoutScrolling = tableContentHeight < CGRectGetHeight(self.tableView.frame) * (1.0 - kTopSpaceMarginFraction);
+        if (buttonsFitInWithoutScrolling) {
+            // show all buttons if there isn't many
+            topInset = CGRectGetHeight(self.tableView.frame) - tableContentHeight;
+        } else {
+            // leave an empty space on the top to make the control look similar to UIActionSheet
+            topInset = (CGFloat)round(CGRectGetHeight(self.tableView.frame) * kTopSpaceMarginFraction);
+        }
+        self.tableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0);
+    };
+
     if([UIView respondsToSelector:@selector(animateKeyframesWithDuration:delay:options:animations:completion:)]){
+        // Animate sliding in tableView and cancel button with keyframe animation for a nicer effect.
         [UIView animateKeyframesWithDuration:self.animationDuration delay:0 options:0 animations:^{
-            self.blurredBackgroundView.alpha = 1.0f;
+            immediateAnimations();
 
             [UIView addKeyframeWithRelativeStartTime:0.3f relativeDuration:0.7f animations:^{
-                self.cancelButton.frame = CGRectMake(0,
-                                                     CGRectGetMaxY(self.bounds) - self.cancelButtonHeight,
-                                                     CGRectGetWidth(self.bounds),
-                                                     self.cancelButtonHeight);
-
-                // manual calculation of table's contentSize.height
-                CGFloat tableContentHeight = [self.items count] * self.buttonHeight + CGRectGetHeight(self.tableView.tableHeaderView.frame);
-
-                CGFloat topInset;
-                BOOL buttonsFitInWithoutScrolling = tableContentHeight < CGRectGetHeight(self.tableView.frame) * (1.0 - kTopSpaceMarginFraction);
-                if (buttonsFitInWithoutScrolling) {
-                    // show all buttons if there isn't many
-                    topInset = CGRectGetHeight(self.tableView.frame) - tableContentHeight;
-                } else {
-                    // leave an empty space on the top to make the control look similar to UIActionSheet
-                    topInset = (CGFloat)round(CGRectGetHeight(self.tableView.frame) * kTopSpaceMarginFraction);
-                }
-                self.tableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0);
+                delayedAnimations();
             }];
         } completion:nil];
-    }else{
+
+    } else {
+
         [UIView animateWithDuration:self.animationDuration animations:^{
-            self.blurredBackgroundView.alpha = 1.0f;
-
-            [UIView animateWithDuration:0.3 animations:^{
-                self.cancelButton.frame = CGRectMake(0,
-                                                     CGRectGetMaxY(self.bounds) - self.cancelButtonHeight,
-                                                     CGRectGetWidth(self.bounds),
-                                                     self.cancelButtonHeight);
-
-                // manual calculation of table's contentSize.height
-                CGFloat tableContentHeight = [self.items count] * self.buttonHeight + CGRectGetHeight(self.tableView.tableHeaderView.frame);
-
-                CGFloat topInset;
-                BOOL buttonsFitInWithoutScrolling = tableContentHeight < CGRectGetHeight(self.tableView.frame) * (1.0 - kTopSpaceMarginFraction);
-                if (buttonsFitInWithoutScrolling) {
-                    // show all buttons if there isn't many
-                    topInset = CGRectGetHeight(self.tableView.frame) - tableContentHeight;
-                } else {
-                    // leave an empty space on the top to make the control look similar to UIActionSheet
-                    topInset = (CGFloat)round(CGRectGetHeight(self.tableView.frame) * kTopSpaceMarginFraction);
-                }
-                self.tableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0);
-
-            }];
+            immediateAnimations();
+            delayedAnimations();
         }];
-
     }
 }
 
