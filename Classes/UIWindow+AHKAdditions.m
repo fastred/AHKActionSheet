@@ -64,7 +64,6 @@
         CGContextTranslateCTM(context, -imageSize.width, -imageSize.height);
     }
 
-    
     if([self respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)]) {
         [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:YES];
     } else {

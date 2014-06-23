@@ -254,7 +254,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
         self.tableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0);
     };
 
-    if([UIView respondsToSelector:@selector(animateKeyframesWithDuration:delay:options:animations:completion:)]){
+    if ([UIView respondsToSelector:@selector(animateKeyframesWithDuration:delay:options:animations:completion:)]){
         // Animate sliding in tableView and cancel button with keyframe animation for a nicer effect.
         [UIView animateKeyframesWithDuration:self.animationDuration delay:0 options:0 animations:^{
             immediateAnimations();
@@ -351,12 +351,12 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 {
     UIButton *cancelButton;
     // It's hard to check if UIButtonTypeSystem enumeration exists, so we're checking existence of another method that was introduced in iOS 7.
-    if([UIView instancesRespondToSelector:@selector(tintAdjustmentMode)]) {
+    if ([UIView instancesRespondToSelector:@selector(tintAdjustmentMode)]) {
         cancelButton= [UIButton buttonWithType:UIButtonTypeSystem];
     } else {
         cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
     }
-    
+
     NSAttributedString *attrTitle = [[NSAttributedString alloc] initWithString:self.cancelButtonTitle
                                                                     attributes:self.cancelButtonTextAttributes];
     [cancelButton setAttributedTitle:attrTitle forState:UIControlStateNormal];
