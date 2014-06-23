@@ -122,6 +122,7 @@
     label1.text = @"Some helpful description";
     label1.textColor = [UIColor whiteColor];
     label1.font = [UIFont fontWithName:@"Avenir" size:17.0f];
+    label1.backgroundColor = [UIColor clearColor];
     [headerView addSubview:label1];
 
     return  headerView;
