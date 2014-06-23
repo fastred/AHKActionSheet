@@ -33,7 +33,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 @property (copy, nonatomic) NSString *title;
 @property (strong, nonatomic) UIImage *image;
 @property (nonatomic) AHKActionSheetButtonType type;
-@property (strong, nonatomic) AHKActionSheetHandler handler;
+@property (strong, nonatomic) AHKActionSheetItemHandler handler;
 @end
 
 @implementation AHKActionSheetItem
@@ -42,13 +42,14 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
 
 @interface AHKActionSheet() <UITableViewDataSource, UITableViewDelegate>
-@property (strong, nonatomic) NSMutableArray *items;
 @property (weak, nonatomic, readwrite) UIWindow *previousKeyWindow;
 @property (strong, nonatomic) UIWindow *window;
 @property (weak, nonatomic) UIImageView *blurredBackgroundView;
 @property (weak, nonatomic) UITableView *tableView;
 @property (weak, nonatomic) UIButton *cancelButton;
 @property (weak, nonatomic) UIView *cancelButtonShadowView;
+@property (nonatomic, strong)NSMutableArray *items;
+@property (nonatomic, copy) AHKActionSheetItemHandler customHandler;
 @end
 
 @implementation AHKActionSheet
@@ -102,6 +103,15 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     self.tableView.delegate = nil;
 }
 
+- (BOOL)isios6{
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0){
+        return NO;
+    }else{
+        return YES;
+    }
+
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -124,10 +134,11 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     cell.textLabel.attributedText = attrTitle;
     cell.textLabel.textAlignment = [self.buttonTextCenteringEnabled boolValue] ? NSTextAlignmentCenter : NSTextAlignmentLeft;
 
+    if(![self isios6]){
     // Use image with template mode with color the same as the text (when enabled).
-    cell.imageView.image = [self.automaticallyTintButtonImages boolValue] ? [item.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] : item.image;
-    cell.imageView.tintColor = attributes[NSForegroundColorAttributeName] ? attributes[NSForegroundColorAttributeName] : [UIColor blackColor];
-
+        cell.imageView.image = [self.automaticallyTintButtonImages boolValue] ? [item.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] : item.image;
+        cell.imageView.tintColor = attributes[NSForegroundColorAttributeName] ? attributes[NSForegroundColorAttributeName] : [UIColor blackColor];
+    }
     cell.backgroundColor = [UIColor clearColor];
 
     if (self.selectedBackgroundColor && ![cell.selectedBackgroundView.backgroundColor isEqual:self.selectedBackgroundColor]) {
@@ -143,7 +154,11 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     AHKActionSheetItem *item = self.items[(NSUInteger)indexPath.row];
-    [self dismissAnimated:YES duration:self.animationDuration completion:item.handler];
+    if(self.customHandler){
+        self.customHandler(item.title);
+        [self dismissAnimated:YES];
+    }else
+        [self dismissAnimated:YES duration:self.animationDuration completion:item.handler];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -192,7 +207,18 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 }
 
 #pragma mark - Public
-
+- (void)addButtonWithTitles:(NSArray *)titles type:(AHKActionSheetButtonType)type handler:(AHKActionSheetItemHandler)handler{
+    
+    self.customHandler=handler;
+    for (NSString *title in titles) {
+        AHKActionSheetItem *item = [[AHKActionSheetItem alloc] init];
+        item.title = title;
+        item.image = nil;
+        item.type = type;
+        item.handler = handler;
+        [self.items addObject:item];
+    }
+}
 - (void)addButtonWithTitle:(NSString *)title type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler
 {
     [self addButtonWithTitle:title image:nil type:type handler:handler];
@@ -226,30 +252,60 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     [self setUpTableView];
 
     // Animate sliding in tableView and cancel button with keyframe animation for a nicer effect.
-    [UIView animateKeyframesWithDuration:self.animationDuration delay:0 options:0 animations:^{
-        self.blurredBackgroundView.alpha = 1.0f;
-
-        [UIView addKeyframeWithRelativeStartTime:0.3f relativeDuration:0.7f animations:^{
-            self.cancelButton.frame = CGRectMake(0,
-                                                 CGRectGetMaxY(self.bounds) - self.cancelButtonHeight,
-                                                 CGRectGetWidth(self.bounds),
-                                                 self.cancelButtonHeight);
-
-            // manual calculation of table's contentSize.height
-            CGFloat tableContentHeight = [self.items count] * self.buttonHeight + CGRectGetHeight(self.tableView.tableHeaderView.frame);
-
-            CGFloat topInset;
-            BOOL buttonsFitInWithoutScrolling = tableContentHeight < CGRectGetHeight(self.tableView.frame) * (1.0 - kTopSpaceMarginFraction);
-            if (buttonsFitInWithoutScrolling) {
-                // show all buttons if there isn't many
-                topInset = CGRectGetHeight(self.tableView.frame) - tableContentHeight;
-            } else {
-                // leave an empty space on the top to make the control look similar to UIActionSheet
-                topInset = (CGFloat)round(CGRectGetHeight(self.tableView.frame) * kTopSpaceMarginFraction);
-            }
-            self.tableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0);
+    
+    if([self isios6]){
+        [UIView animateWithDuration:self.animationDuration animations:^{
+            self.blurredBackgroundView.alpha = 1.0f;
+            
+            [UIView animateWithDuration:0.3 animations:^{
+                self.cancelButton.frame = CGRectMake(0,
+                                                     CGRectGetMaxY(self.bounds) - self.cancelButtonHeight,
+                                                     CGRectGetWidth(self.bounds),
+                                                     self.cancelButtonHeight);
+                
+                // manual calculation of table's contentSize.height
+                CGFloat tableContentHeight = [self.items count] * self.buttonHeight + CGRectGetHeight(self.tableView.tableHeaderView.frame);
+                
+                CGFloat topInset;
+                BOOL buttonsFitInWithoutScrolling = tableContentHeight < CGRectGetHeight(self.tableView.frame) * (1.0 - kTopSpaceMarginFraction);
+                if (buttonsFitInWithoutScrolling) {
+                    // show all buttons if there isn't many
+                    topInset = CGRectGetHeight(self.tableView.frame) - tableContentHeight;
+                } else {
+                    // leave an empty space on the top to make the control look similar to UIActionSheet
+                    topInset = (CGFloat)round(CGRectGetHeight(self.tableView.frame) * kTopSpaceMarginFraction);
+                }
+                self.tableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0);
+                
+            }];
         }];
-    } completion:nil];
+    }else{
+        
+        [UIView animateKeyframesWithDuration:self.animationDuration delay:0 options:0 animations:^{
+            self.blurredBackgroundView.alpha = 1.0f;
+            
+            [UIView addKeyframeWithRelativeStartTime:0.3f relativeDuration:0.7f animations:^{
+                self.cancelButton.frame = CGRectMake(0,
+                                                     CGRectGetMaxY(self.bounds) - self.cancelButtonHeight,
+                                                     CGRectGetWidth(self.bounds),
+                                                     self.cancelButtonHeight);
+                
+                // manual calculation of table's contentSize.height
+                CGFloat tableContentHeight = [self.items count] * self.buttonHeight + CGRectGetHeight(self.tableView.tableHeaderView.frame);
+                
+                CGFloat topInset;
+                BOOL buttonsFitInWithoutScrolling = tableContentHeight < CGRectGetHeight(self.tableView.frame) * (1.0 - kTopSpaceMarginFraction);
+                if (buttonsFitInWithoutScrolling) {
+                    // show all buttons if there isn't many
+                    topInset = CGRectGetHeight(self.tableView.frame) - tableContentHeight;
+                } else {
+                    // leave an empty space on the top to make the control look similar to UIActionSheet
+                    topInset = (CGFloat)round(CGRectGetHeight(self.tableView.frame) * kTopSpaceMarginFraction);
+                }
+                self.tableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0);
+            }];
+        } completion:nil];
+    }
 }
 
 - (void)dismissAnimated:(BOOL)animated
@@ -328,7 +384,12 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
 - (void)setUpCancelButton
 {
-    UIButton *cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    UIButton *cancelButton;
+    if(![self isios6])
+        cancelButton= [UIButton buttonWithType:UIButtonTypeSystem];
+    else
+       cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    
     NSAttributedString *attrTitle = [[NSAttributedString alloc] initWithString:self.cancelButtonTitle
                                                                     attributes:self.cancelButtonTextAttributes];
     [cancelButton setAttributedTitle:attrTitle forState:UIControlStateNormal];
@@ -369,7 +430,9 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     UITableView *tableView = [[UITableView alloc] initWithFrame:frame];
     tableView.backgroundColor = [UIColor clearColor];
     tableView.showsVerticalScrollIndicator = NO;
-    tableView.separatorInset = UIEdgeInsetsZero;
+    if(![self isios6])
+        tableView.separatorInset = UIEdgeInsetsZero;
+    
     if (self.separatorColor) {
         tableView.separatorColor = self.separatorColor;
     }
