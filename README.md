@@ -1,5 +1,4 @@
 # AHKActionSheet
-[![Twitter: @arekholko](https://img.shields.io/badge/contact-@arekholko-red.svg?style=flat)](https://twitter.com/arekholko)
 [![License: MIT](https://img.shields.io/badge/license-MIT-red.svg?style=flat)](https://github.com/fastred/AHKActionSheet/blob/master/LICENSE)
 [![CocoaPods](https://img.shields.io/cocoapods/v/AHKActionSheet.svg?style=flat)](https://github.com/fastred/AHKActionSheet)
 
@@ -80,3 +79,10 @@ The view is customizable either directly or through a UIAppearance API. See the 
 0.1.0
 
 * Initial release
+
+## Author
+
+Arkadiusz Holko:
+
+* [Blog](http://holko.pl/)
+* [@arekholko on Twitter](https://twitter.com/arekholko)
