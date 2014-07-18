@@ -72,10 +72,12 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     [appearance setCancelButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f],
                                                  NSForegroundColorAttributeName : [UIColor darkGrayColor] }];
     [appearance setButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f]}];
+    [appearance setDisabledButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:14.0f],
+                                                   NSForegroundColorAttributeName : [UIColor colorWithWhite:0.6f alpha:1.0] }];
     [appearance setDestructiveButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f],
                                                       NSForegroundColorAttributeName : [UIColor redColor] }];
     [appearance setTitleTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:14.0f],
-                                                      NSForegroundColorAttributeName : [UIColor grayColor] }];
+                                          NSForegroundColorAttributeName : [UIColor grayColor] }];
     [appearance setAnimationDuration:kDefaultAnimationDuration];
 }
 
@@ -119,7 +121,24 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
     AHKActionSheetItem *item = self.items[(NSUInteger)indexPath.row];
 
-    NSDictionary *attributes = item.type == AHKActionSheetButtonTypeDefault ? self.buttonTextAttributes : self.destructiveButtonTextAttributes;
+	NSDictionary *attributes = nil;
+	switch (item.type)
+	{
+		case AHKActionSheetButtonTypeDefault:
+			attributes = self.buttonTextAttributes;
+			break;
+		case AHKActionSheetButtonTypeDisabled:
+			attributes = self.disabledButtonTextAttributes;
+			cell.selectionStyle = UITableViewCellSelectionStyleNone;
+			break;
+		case AHKActionSheetButtonTypeDestructive:
+			attributes = self.destructiveButtonTextAttributes;
+			break;
+		default:
+            NSCAssert(NO, @"Shouldn't be reached");
+            break;
+	}
+
     NSAttributedString *attrTitle = [[NSAttributedString alloc] initWithString:item.title attributes:attributes];
     cell.textLabel.attributedText = attrTitle;
     cell.textLabel.textAlignment = [self.buttonTextCenteringEnabled boolValue] ? NSTextAlignmentCenter : NSTextAlignmentLeft;
@@ -146,8 +165,11 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    AHKActionSheetItem *item = self.items[(NSUInteger)indexPath.row];
-    [self dismissAnimated:YES duration:self.animationDuration completion:item.handler];
+	AHKActionSheetItem *item = self.items[(NSUInteger)indexPath.row];
+	
+	if (item.type != AHKActionSheetButtonTypeDisabled) {
+		[self dismissAnimated:YES duration:self.animationDuration completion:item.handler];
+	}
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
