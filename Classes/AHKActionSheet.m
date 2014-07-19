@@ -78,6 +78,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
                                                       NSForegroundColorAttributeName : [UIColor redColor] }];
     [appearance setTitleTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:14.0f],
                                           NSForegroundColorAttributeName : [UIColor grayColor] }];
+    [appearance setCancelOnPanGestureEnabled:@(YES)];
     [appearance setAnimationDuration:kDefaultAnimationDuration];
 }
 
@@ -181,11 +182,19 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    if (![self.cancelOnPanGestureEnabled boolValue]) {
+        return;
+    }
+
     [self fadeBlursOnScrollToTop];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
+    if (![self.cancelOnPanGestureEnabled boolValue]) {
+        return;
+    }
+
     CGPoint scrollVelocity = [scrollView.panGestureRecognizer velocityInView:self];
 
     BOOL viewWasFlickedDown = scrollVelocity.y > kFlickDownMinVelocity && scrollView.contentOffset.y < -self.tableView.contentInset.top - kFlickDownHandlingOffset;
@@ -274,6 +283,8 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
             topInset = (CGFloat)round(CGRectGetHeight(self.tableView.frame) * kTopSpaceMarginFraction);
         }
         self.tableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0);
+
+        self.tableView.bounces = [self.cancelOnPanGestureEnabled boolValue] || !buttonsFitInWithoutScrolling;
     };
 
     if ([UIView respondsToSelector:@selector(animateKeyframesWithDuration:delay:options:animations:completion:)]){
