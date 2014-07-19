@@ -38,9 +38,9 @@
                                 NSLog(@"Info tapped");
                             }];
 
-    [actionSheet addButtonWithTitle:NSLocalizedString(@"Add to Favorites", nil)
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"Add to Favorites (disabled)", nil)
                               image:[UIImage imageNamed:@"Icon2"]
-                               type:AHKActionSheetButtonTypeDefault
+                               type:AHKActionSheetButtonTypeDisabled
                             handler:^(AHKActionSheet *as) {
                                 NSLog(@"Favorite tapped");
                             }];
@@ -77,6 +77,8 @@
     UIFont *defaultFont = [UIFont fontWithName:@"Avenir" size:17.0f];
     actionSheet.buttonTextAttributes = @{ NSFontAttributeName : defaultFont,
                                           NSForegroundColorAttributeName : [UIColor whiteColor] };
+    actionSheet.disabledButtonTextAttributes = @{ NSFontAttributeName : defaultFont,
+                                                  NSForegroundColorAttributeName : [UIColor grayColor] };
     actionSheet.destructiveButtonTextAttributes = @{ NSFontAttributeName : defaultFont,
                                           NSForegroundColorAttributeName : [UIColor redColor] };
     actionSheet.cancelButtonTextAttributes = @{ NSFontAttributeName : defaultFont,
@@ -90,9 +92,9 @@
                                type:AHKActionSheetButtonTypeDefault
                             handler:nil];
 
-    [actionSheet addButtonWithTitle:NSLocalizedString(@"Add to Favorites", nil)
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"Add to Favorites (disabled)", nil)
                               image:[UIImage imageNamed:@"Icon2"]
-                               type:AHKActionSheetButtonTypeDefault
+                               type:AHKActionSheetButtonTypeDisabled
                             handler:nil];
 
     for (int i = 0; i < 5; i++) {

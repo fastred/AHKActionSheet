@@ -10,6 +10,7 @@
 
 typedef NS_ENUM(NSInteger, AHKActionSheetButtonType) {
     AHKActionSheetButtonTypeDefault = 0,
+	AHKActionSheetButtonTypeDisabled,
     AHKActionSheetButtonTypeDestructive
 };
 
@@ -50,11 +51,14 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 /// Text attributes of the title (passed in initWithTitle: or set via `title` property)
 @property (copy, nonatomic) NSDictionary *titleTextAttributes UI_APPEARANCE_SELECTOR;
 @property (copy, nonatomic) NSDictionary *buttonTextAttributes UI_APPEARANCE_SELECTOR;
+@property (copy, nonatomic) NSDictionary *disabledButtonTextAttributes UI_APPEARANCE_SELECTOR;
 @property (copy, nonatomic) NSDictionary *destructiveButtonTextAttributes UI_APPEARANCE_SELECTOR;
 @property (copy, nonatomic) NSDictionary *cancelButtonTextAttributes UI_APPEARANCE_SELECTOR;
 /// Duration of the show/dismiss animations. Defaults to 0.5.
 @property (nonatomic) NSTimeInterval animationDuration UI_APPEARANCE_SELECTOR;
 
+// Boxed boolean value. Enables/disables control hiding with pan gesture. Enabled by default
+@property (strong, nonatomic) NSNumber *cancelOnPanGestureEnabled UI_APPEARANCE_SELECTOR;
 
 /// A handler called on every type of dismissal (tapping on "Cancel" or swipe down or flick down).
 @property (strong, nonatomic) AHKActionSheetHandler cancelHandler;
