@@ -78,6 +78,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
                                                       NSForegroundColorAttributeName : [UIColor redColor] }];
     [appearance setTitleTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:14.0f],
                                           NSForegroundColorAttributeName : [UIColor grayColor] }];
+    [appearance setCancelOnPanGestureEnabled:@(YES)];
     [appearance setAnimationDuration:kDefaultAnimationDuration];
 }
 
@@ -189,22 +190,28 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self fadeBlursOnScrollToTop];
+    if ([self.cancelOnPanGestureEnabled boolValue]) {
+        [self fadeBlursOnScrollToTop];
+    }
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    CGPoint scrollVelocity = [scrollView.panGestureRecognizer velocityInView:self];
-    
-    BOOL viewWasFlickedDown = scrollVelocity.y > kFlickDownMinVelocity && scrollView.contentOffset.y < -self.tableView.contentInset.top - kFlickDownHandlingOffset;
-    BOOL shouldSlideDown = scrollView.contentOffset.y < -self.tableView.contentInset.top - kAutoDismissOffset;
-    if (viewWasFlickedDown) {
-        // use a shorter duration for a flick down animation
-        static const NSTimeInterval duration = 0.2f;
-        [self dismissAnimated:YES duration:duration completion:self.cancelHandler];
-    } else if (shouldSlideDown) {
-        [self dismissAnimated:YES duration:self.animationDuration completion:self.cancelHandler];
+    if ([self.cancelOnPanGestureEnabled boolValue]) {
+        CGPoint scrollVelocity = [scrollView.panGestureRecognizer velocityInView:self];
+        
+        BOOL viewWasFlickedDown = scrollVelocity.y > kFlickDownMinVelocity && scrollView.contentOffset.y < -self.tableView.contentInset.top - kFlickDownHandlingOffset;
+        BOOL shouldSlideDown = scrollView.contentOffset.y < -self.tableView.contentInset.top - kAutoDismissOffset;
+        if (viewWasFlickedDown) {
+            // use a shorter duration for a flick down animation
+            static const NSTimeInterval duration = 0.2f;
+            [self dismissAnimated:YES duration:duration completion:self.cancelHandler];
+        } else if (shouldSlideDown) {
+            [self dismissAnimated:YES duration:self.animationDuration completion:self.cancelHandler];
+        }
     }
+    
+    
 }
 
 #pragma mark - Properties
@@ -259,6 +266,21 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     [self setUpCancelButton];
     [self setUpTableView];
     
+    // manual calculation of table's contentSize.height
+    CGFloat tableContentHeight = [self.items count] * self.buttonHeight + CGRectGetHeight(self.tableView.tableHeaderView.frame);
+    BOOL buttonsFitInWithoutScrolling = tableContentHeight < CGRectGetHeight(self.tableView.frame) * (1.0 - kTopSpaceMarginFraction);
+    
+    CGFloat tableContentTopInset;
+    if (buttonsFitInWithoutScrolling) {
+        // show all buttons if there isn't many
+        tableContentTopInset = CGRectGetHeight(self.tableView.frame) - tableContentHeight;
+    } else {
+        // leave an empty space on the top to make the control look similar to UIActionSheet
+        tableContentTopInset = (CGFloat)round(CGRectGetHeight(self.tableView.frame) * kTopSpaceMarginFraction);
+    }
+    self.tableView.bounces = [self.cancelOnPanGestureEnabled boolValue] || !buttonsFitInWithoutScrolling;
+    
+    // animations
     void(^immediateAnimations)(void) = ^(void) {
         self.blurredBackgroundView.alpha = 1.0f;
     };
@@ -269,19 +291,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
                                              CGRectGetWidth(self.bounds),
                                              self.cancelButtonHeight);
         
-        // manual calculation of table's contentSize.height
-        CGFloat tableContentHeight = [self.items count] * self.buttonHeight + CGRectGetHeight(self.tableView.tableHeaderView.frame);
-        
-        CGFloat topInset;
-        BOOL buttonsFitInWithoutScrolling = tableContentHeight < CGRectGetHeight(self.tableView.frame) * (1.0 - kTopSpaceMarginFraction);
-        if (buttonsFitInWithoutScrolling) {
-            // show all buttons if there isn't many
-            topInset = CGRectGetHeight(self.tableView.frame) - tableContentHeight;
-        } else {
-            // leave an empty space on the top to make the control look similar to UIActionSheet
-            topInset = (CGFloat)round(CGRectGetHeight(self.tableView.frame) * kTopSpaceMarginFraction);
-        }
-        self.tableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0);
+        self.tableView.contentInset = UIEdgeInsetsMake(tableContentTopInset, 0, 0, 0);
     };
     
     if ([UIView respondsToSelector:@selector(animateKeyframesWithDuration:delay:options:animations:completion:)]){

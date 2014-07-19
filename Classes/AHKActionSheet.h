@@ -57,6 +57,8 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 /// Duration of the show/dismiss animations. Defaults to 0.5.
 @property (nonatomic) NSTimeInterval animationDuration UI_APPEARANCE_SELECTOR;
 
+// Boxed boolean value. Enables/disables control hiding with pan gesture. Enabled by default
+@property (strong, nonatomic) NSNumber *cancelOnPanGestureEnabled UI_APPEARANCE_SELECTOR;
 
 /// A handler called on every type of dismissal (tapping on "Cancel" or swipe down or flick down).
 @property (strong, nonatomic) AHKActionSheetHandler cancelHandler;
