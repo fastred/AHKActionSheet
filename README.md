@@ -53,6 +53,13 @@ The view is customizable either directly or through a UIAppearance API. See the 
 
 ## Changelog
 
+0.4.0
+
+* Added a new button type: `AHKActionSheetButtonTypeDisabled`
+* Added `cancelOnPanGestureEnabled` property, which allows you to disable:
+  > Gesture-driven navigation with two ways to hide the control: either quick flick down or swipe and release (at the position when the blur is starting to fade)
+* Internal scroll view's `bounces` is now disabled when `cancelOnPanGestureEnabled` is turned off and when the scroll view's `contentSize`'s height is smaller than the screen's height.
+
 0.3.0
 
 * Added iOS 6 support
