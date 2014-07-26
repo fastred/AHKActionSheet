@@ -122,23 +122,23 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
     AHKActionSheetItem *item = self.items[(NSUInteger)indexPath.row];
 
-	NSDictionary *attributes = nil;
-	switch (item.type)
-	{
-		case AHKActionSheetButtonTypeDefault:
-			attributes = self.buttonTextAttributes;
-			break;
-		case AHKActionSheetButtonTypeDisabled:
-			attributes = self.disabledButtonTextAttributes;
-			cell.selectionStyle = UITableViewCellSelectionStyleNone;
-			break;
-		case AHKActionSheetButtonTypeDestructive:
-			attributes = self.destructiveButtonTextAttributes;
-			break;
-		default:
+    NSDictionary *attributes = nil;
+    switch (item.type)
+    {
+        case AHKActionSheetButtonTypeDefault:
+            attributes = self.buttonTextAttributes;
+            break;
+        case AHKActionSheetButtonTypeDisabled:
+            attributes = self.disabledButtonTextAttributes;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            break;
+        case AHKActionSheetButtonTypeDestructive:
+            attributes = self.destructiveButtonTextAttributes;
+            break;
+        default:
             NSCAssert(NO, @"Shouldn't be reached");
             break;
-	}
+    }
 
     NSAttributedString *attrTitle = [[NSAttributedString alloc] initWithString:item.title attributes:attributes];
     cell.textLabel.attributedText = attrTitle;
@@ -166,11 +166,11 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	AHKActionSheetItem *item = self.items[(NSUInteger)indexPath.row];
-	
-	if (item.type != AHKActionSheetButtonTypeDisabled) {
-		[self dismissAnimated:YES duration:self.animationDuration completion:item.handler];
-	}
+    AHKActionSheetItem *item = self.items[(NSUInteger)indexPath.row];
+    
+    if (item.type != AHKActionSheetButtonTypeDisabled) {
+        [self dismissAnimated:YES duration:self.animationDuration completion:item.handler];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
