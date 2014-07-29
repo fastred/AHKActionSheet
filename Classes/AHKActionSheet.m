@@ -315,6 +315,11 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
 - (void)dismissAnimated:(BOOL)animated duration:(NSTimeInterval)duration completion:(AHKActionSheetHandler)completionHandler
 {
+    if (!self.window) {
+        // Action sheet is already dismissed.
+        return;
+    }
+
     // delegate isn't needed anymore because tableView will be hidden (and we don't want delegate methods to be called now)
     self.tableView.delegate = nil;
     self.tableView.userInteractionEnabled = NO;
