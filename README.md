@@ -53,6 +53,10 @@ The view is customizable either directly or through a UIAppearance API. See the 
 
 ## Changelog
 
+0.4.1
+
+* Improved dismissal error handling
+
 0.4.0
 
 * Added a new button type: `AHKActionSheetButtonTypeDisabled`
