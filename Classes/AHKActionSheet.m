@@ -247,8 +247,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 {
     NSAssert([self.items count] > 0, @"Please add some buttons before calling -show.");
 
-    BOOL actionSheetIsVisible = !!self.window; // action sheet is visible iff it's associated with a window
-    if (actionSheetIsVisible) {
+    if ([self isVisible]) {
         return;
     }
 
@@ -313,10 +312,15 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
 #pragma mark - Private
 
+- (BOOL)isVisible
+{
+    // action sheet is visible iff it's associated with a window
+    return !!self.window;
+}
+
 - (void)dismissAnimated:(BOOL)animated duration:(NSTimeInterval)duration completion:(AHKActionSheetHandler)completionHandler
 {
-    if (!self.window) {
-        // Action sheet is already dismissed.
+    if (![self isVisible]) {
         return;
     }
 
