@@ -53,6 +53,10 @@ The view is customizable either directly or through a UIAppearance API. See the 
 
 ## Changelog
 
+0.4.2
+
+* Fixed incorrect orientiation of the blurred snapshot on iOS 8
+
 0.4.1
 
 * Improved dismissal error handling
