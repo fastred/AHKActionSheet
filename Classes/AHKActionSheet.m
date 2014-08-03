@@ -31,12 +31,48 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 /// Used for storing button configuration.
 @interface AHKActionSheetItem : NSObject
 @property (copy, nonatomic) NSString *title;
+@property (copy, nonatomic) NSString *subtitle;
 @property (strong, nonatomic) UIImage *image;
 @property (nonatomic) AHKActionSheetButtonType type;
 @property (strong, nonatomic) AHKActionSheetHandler handler;
 @end
 
 @implementation AHKActionSheetItem
+@end
+
+
+
+static NSString* const kAHKActionSheetCellWithSubtitleReuseId = @"AHKActionSheetCellWithSubtitle";
+
+@interface AHKActionSheetCellWithSubtitle : UITableViewCell
+
+@end
+
+@implementation AHKActionSheetCellWithSubtitle
+
+-(instancetype) initWithStyle:(UITableViewCellStyle) style
+			  reuseIdentifier:(NSString *) reuseIdentifier
+{
+	if (self = [super initWithStyle:UITableViewCellStyleSubtitle
+					reuseIdentifier:reuseIdentifier])
+	{
+	}
+	return self;
+}
+
+-(void) layoutSubviews
+{
+	[super layoutSubviews];
+	
+	CGRect cvb = self.contentView.bounds;
+	CGRect tlf = self.textLabel.frame;
+	tlf.size.width = cvb.size.width-tlf.origin.x-15;
+	self.textLabel.frame = tlf;
+	CGRect dtlf = self.detailTextLabel.frame;
+	dtlf.size.width = cvb.size.width-dtlf.origin.x-15;
+	self.detailTextLabel.frame = dtlf;
+}
+
 @end
 
 
@@ -76,6 +112,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
                                                    NSForegroundColorAttributeName : [UIColor colorWithWhite:0.6f alpha:1.0] }];
     [appearance setDestructiveButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f],
                                                       NSForegroundColorAttributeName : [UIColor redColor] }];
+	[appearance setButtonSubtitleTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:12]}];
     [appearance setTitleTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:14.0f],
                                           NSForegroundColorAttributeName : [UIColor grayColor] }];
     [appearance setCancelOnPanGestureEnabled:@(YES)];
@@ -119,8 +156,11 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
-    AHKActionSheetItem *item = self.items[(NSUInteger)indexPath.row];
+	AHKActionSheetItem *item = self.items[(NSUInteger)indexPath.row];
+	
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:
+							 item.subtitle ? kAHKActionSheetCellWithSubtitleReuseId : kCellIdentifier
+															forIndexPath:indexPath];
 
     NSDictionary *attributes = nil;
     switch (item.type)
@@ -143,6 +183,12 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     NSAttributedString *attrTitle = [[NSAttributedString alloc] initWithString:item.title attributes:attributes];
     cell.textLabel.attributedText = attrTitle;
     cell.textLabel.textAlignment = [self.buttonTextCenteringEnabled boolValue] ? NSTextAlignmentCenter : NSTextAlignmentLeft;
+	
+	if (item.subtitle)
+	{
+		cell.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithString:item.subtitle attributes:self.buttonSubtitleTextAttributes];
+		cell.detailTextLabel.textAlignment = [self.buttonTextCenteringEnabled boolValue] ? NSTextAlignmentCenter : NSTextAlignmentLeft;
+	}
 
     // Use image with template mode with color the same as the text (when enabled).
     BOOL useTemplateMode = [UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)] && [self.automaticallyTintButtonImages boolValue];
@@ -230,17 +276,27 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
 - (void)addButtonWithTitle:(NSString *)title type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler
 {
-    [self addButtonWithTitle:title image:nil type:type handler:handler];
+	[self addButtonWithTitle:title subtitle:nil image:nil type:type handler:handler];
 }
 
 - (void)addButtonWithTitle:(NSString *)title image:(UIImage *)image type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler
 {
-    AHKActionSheetItem *item = [[AHKActionSheetItem alloc] init];
-    item.title = title;
-    item.image = image;
-    item.type = type;
-    item.handler = handler;
-    [self.items addObject:item];
+	[self addButtonWithTitle:title subtitle:nil image:image type:type handler:handler];
+}
+
+-(void) addButtonWithTitle:(NSString *) title
+				  subtitle:(NSString *) subtitle
+					 image:(UIImage *) image
+					  type:(AHKActionSheetButtonType) type
+				   handler:(AHKActionSheetHandler) handler
+{
+	AHKActionSheetItem *item = [[AHKActionSheetItem alloc] init];
+	item.title = title;
+	item.subtitle = subtitle;
+	item.image = image;
+	item.type = type;
+	item.handler = handler;
+	[self.items addObject:item];
 }
 
 - (void)show
@@ -451,6 +507,8 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     tableView.delegate = self;
     tableView.dataSource = self;
     [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
+	[tableView registerClass:[AHKActionSheetCellWithSubtitle class]
+	  forCellReuseIdentifier:kAHKActionSheetCellWithSubtitleReuseId];
     [self insertSubview:tableView aboveSubview:self.blurredBackgroundView];
     // move the content below the screen, ready to be animated in -show
     tableView.contentInset = UIEdgeInsetsMake(CGRectGetHeight(self.bounds), 0, 0, 0);
@@ -472,6 +530,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
         // create a label and calculate its size
         UILabel *label = [[UILabel alloc] init];
+		label.textAlignment = [self.buttonTextCenteringEnabled boolValue] ? NSTextAlignmentCenter : NSTextAlignmentLeft;
         label.numberOfLines = 0;
         [label setAttributedText:attrText];
         CGSize labelSize = [label sizeThatFits:CGSizeMake(labelWidth, MAXFLOAT)];
