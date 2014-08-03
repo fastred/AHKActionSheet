@@ -53,6 +53,7 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 @property (copy, nonatomic) NSDictionary *buttonTextAttributes UI_APPEARANCE_SELECTOR;
 @property (copy, nonatomic) NSDictionary *disabledButtonTextAttributes UI_APPEARANCE_SELECTOR;
 @property (copy, nonatomic) NSDictionary *destructiveButtonTextAttributes UI_APPEARANCE_SELECTOR;
+@property (copy, nonatomic) NSDictionary *buttonSubtitleTextAttributes UI_APPEARANCE_SELECTOR;
 @property (copy, nonatomic) NSDictionary *cancelButtonTextAttributes UI_APPEARANCE_SELECTOR;
 /// Duration of the show/dismiss animations. Defaults to 0.5.
 @property (nonatomic) NSTimeInterval animationDuration UI_APPEARANCE_SELECTOR;
@@ -96,6 +97,18 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
  *  @param handler A completion handler block to execute when a dismissal animation (after the user tapped on the button) has finished.
  */
 - (void)addButtonWithTitle:(NSString *)title image:(UIImage *)image type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler;
+
+/**
+ *  Adds a button with an image and subtitle. Has to be called before showing the action sheet.
+ *
+ *  @param image   The image to display on the left of the title.
+ *  @param handler A completion handler block to execute when a dismissal animation (after the user tapped on the button) has finished.
+ */
+- (void)addButtonWithTitle:(NSString *) title
+				  subtitle:(NSString *) subtitle
+					 image:(UIImage *) image
+					  type:(AHKActionSheetButtonType) type
+				   handler:(AHKActionSheetHandler) handler;
 
 /// Displays the action sheet.
 - (void)show;
