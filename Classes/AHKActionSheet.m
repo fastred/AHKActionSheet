@@ -240,6 +240,17 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     }
 }
 
+- (void)addButtonWithTitles:(NSArray *)titles images:(NSArray *)images type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler
+{
+    NSUInteger i=0;
+    for (NSString * title in titles) {
+        UIImage * image = [images objectAtIndex:i];
+        [self addButtonWithTitle:title image:image type:type handler:handler];
+        i++;
+    }
+}
+
+
 - (void)addButtonWithTitle:(NSString *)title image:(UIImage *)image type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler
 {
     AHKActionSheetItem *item = [[AHKActionSheetItem alloc] init];
