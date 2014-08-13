@@ -167,8 +167,8 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     AHKActionSheetItem *item = self.items[(NSUInteger)indexPath.row];
-    
     if (item.type != AHKActionSheetButtonTypeDisabled) {
+        self.buttonIndex = indexPath.row;
         [self dismissAnimated:YES duration:self.animationDuration completion:item.handler];
     }
 }
@@ -231,6 +231,13 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 - (void)addButtonWithTitle:(NSString *)title type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler
 {
     [self addButtonWithTitle:title image:nil type:type handler:handler];
+}
+
+- (void)addButtonWithTitles:(NSArray *)titles type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler
+{
+    for (NSString * title in titles) {
+        [self addButtonWithTitle:title image:nil type:type handler:handler];
+    }
 }
 
 - (void)addButtonWithTitle:(NSString *)title image:(UIImage *)image type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler

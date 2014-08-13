@@ -112,6 +112,15 @@
     [actionSheet show];
 }
 
+- (IBAction)onArraryExample:(UIButton *)sender {
+    NSArray * arrBtns = @[@"Title 0",@"Title 1",@"Title 2"];
+    AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:NSLocalizedString(@"Lorem ipsum dolor sit amet, consectetur adipiscing elit?", nil)];
+    [actionSheet addButtonWithTitles:arrBtns type:AHKActionSheetButtonTypeDefault handler:^(AHKActionSheet *as) {
+        NSLog(@"Title %ld",(long)as.buttonIndex);
+    }];
+    [actionSheet show];
+}
+
 #pragma mark - Private
 
 + (UIView *)fancyHeaderView
