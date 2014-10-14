@@ -72,7 +72,7 @@
     }
 
     if([self respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)]) {
-        [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:YES];
+        [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:NO];
     } else {
         [self.layer renderInContext:UIGraphicsGetCurrentContext()];
     }
