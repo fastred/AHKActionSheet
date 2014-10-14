@@ -258,6 +258,9 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     [self setUpBlurredBackgroundWithSnapshot:previousKeyWindowSnapshot];
     [self setUpCancelButton];
     [self setUpTableView];
+    
+    CGFloat slideDownMinOffset = (CGFloat)fmin(CGRectGetHeight(self.frame) + self.tableView.contentOffset.y, CGRectGetHeight(self.frame));
+    self.tableView.transform = CGAffineTransformMakeTranslation(0, slideDownMinOffset);
 
     void(^immediateAnimations)(void) = ^(void) {
         self.blurredBackgroundView.alpha = 1.0f;
@@ -268,6 +271,9 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
                                              CGRectGetMaxY(self.bounds) - self.cancelButtonHeight,
                                              CGRectGetWidth(self.bounds),
                                              self.cancelButtonHeight);
+            
+        self.tableView.transform = CGAffineTransformMakeTranslation(0, 0);
+
 
         // manual calculation of table's contentSize.height
         CGFloat tableContentHeight = [self.items count] * self.buttonHeight + CGRectGetHeight(self.tableView.tableHeaderView.frame);
