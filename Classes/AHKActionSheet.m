@@ -178,6 +178,10 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     return self.buttonHeight;
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    return [UIView new];
+}
+
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
