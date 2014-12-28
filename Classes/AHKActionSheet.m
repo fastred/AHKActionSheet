@@ -178,6 +178,24 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     return self.buttonHeight;
 }
 
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Remove separator inset as described here: http://stackoverflow.com/a/25877725/783960
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    // Prevent the cell from inheriting the Table View's margin settings
+    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
+        [cell setPreservesSuperviewLayoutMargins:NO];
+    }
+    
+    // Explictly set your cell's layout margins
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -446,10 +464,6 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     tableView.backgroundColor = [UIColor clearColor];
     tableView.showsVerticalScrollIndicator = NO;
 
-    if ([UITableView instancesRespondToSelector:@selector(setSeparatorInset:)]) {
-        tableView.separatorInset = UIEdgeInsetsZero;
-    }
-
     if (self.separatorColor) {
         tableView.separatorColor = self.separatorColor;
     }
@@ -460,6 +474,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     [self insertSubview:tableView aboveSubview:self.blurredBackgroundView];
     // move the content below the screen, ready to be animated in -show
     tableView.contentInset = UIEdgeInsetsMake(CGRectGetHeight(self.bounds), 0, 0, 0);
+    tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 
     self.tableView = tableView;
 
@@ -483,6 +498,11 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
         CGSize labelSize = [label sizeThatFits:CGSizeMake(labelWidth, MAXFLOAT)];
         label.frame = CGRectMake(leftRightPadding, topBottomPadding, labelWidth, labelSize.height);
         label.backgroundColor = [UIColor clearColor];
+        
+        if (self.titleTextCenteringEnabled && [self.titleTextCenteringEnabled boolValue])
+        {
+            label.textAlignment = NSTextAlignmentCenter;
+        }
 
         // create and add a header consisting of the label
         UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), labelSize.height + 2*topBottomPadding)];
