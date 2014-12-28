@@ -483,6 +483,11 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
         CGSize labelSize = [label sizeThatFits:CGSizeMake(labelWidth, MAXFLOAT)];
         label.frame = CGRectMake(leftRightPadding, topBottomPadding, labelWidth, labelSize.height);
         label.backgroundColor = [UIColor clearColor];
+        
+        if (self.titleTextCenteringEnabled && [self.titleTextCenteringEnabled boolValue])
+        {
+            label.textAlignment = NSTextAlignmentCenter;
+        }
 
         // create and add a header consisting of the label
         UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), labelSize.height + 2*topBottomPadding)];
