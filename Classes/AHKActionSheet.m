@@ -178,6 +178,24 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     return self.buttonHeight;
 }
 
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Remove separator inset as described here: http://stackoverflow.com/a/25877725/783960
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    // Prevent the cell from inheriting the Table View's margin settings
+    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
+        [cell setPreservesSuperviewLayoutMargins:NO];
+    }
+    
+    // Explictly set your cell's layout margins
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -445,10 +463,6 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     UITableView *tableView = [[UITableView alloc] initWithFrame:frame];
     tableView.backgroundColor = [UIColor clearColor];
     tableView.showsVerticalScrollIndicator = NO;
-
-    if ([UITableView instancesRespondToSelector:@selector(setSeparatorInset:)]) {
-        tableView.separatorInset = UIEdgeInsetsZero;
-    }
 
     if (self.separatorColor) {
         tableView.separatorColor = self.separatorColor;
