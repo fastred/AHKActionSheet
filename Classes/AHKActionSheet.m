@@ -474,6 +474,8 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     [self insertSubview:tableView aboveSubview:self.blurredBackgroundView];
     // move the content below the screen, ready to be animated in -show
     tableView.contentInset = UIEdgeInsetsMake(CGRectGetHeight(self.bounds), 0, 0, 0);
+    // removes separators below the footer (between empty cells)
+    tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 
     self.tableView = tableView;
 
