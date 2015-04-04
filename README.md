@@ -53,6 +53,10 @@ The view is customizable either directly or through a UIAppearance API. See the 
 
 ## Changelog
 
+0.5.1
+
+* Fixed issues with separators on iOS 8
+
 0.5
 
 * Fixed bugs on iOS 8
