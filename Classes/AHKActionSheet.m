@@ -135,9 +135,6 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
         case AHKActionSheetButtonTypeDestructive:
             attributes = self.destructiveButtonTextAttributes;
             break;
-        default:
-            NSCAssert(NO, @"Shouldn't be reached");
-            break;
     }
 
     NSAttributedString *attrTitle = [[NSAttributedString alloc] initWithString:item.title attributes:attributes];
