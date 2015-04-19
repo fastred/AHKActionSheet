@@ -430,6 +430,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
                                     self.cancelButtonHeight);
     // move the button below the screen (ready to be animated -show)
     cancelButton.transform = CGAffineTransformMakeTranslation(0, self.cancelButtonHeight);
+    cancelButton.clipsToBounds = YES;
     [self addSubview:cancelButton];
 
     self.cancelButton = cancelButton;
