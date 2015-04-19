@@ -53,6 +53,10 @@ The view is customizable either directly or through a UIAppearance API. See the 
 
 ## Changelog
 
+0.5.2
+
+* Fixed visible cancel button even though its height was set to 0.
+
 0.5.1
 
 * Fixed issues with separators on iOS 8
