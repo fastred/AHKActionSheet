@@ -59,6 +59,10 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 
 /// Boxed boolean value. Enables/disables control hiding with pan gesture. Enabled by default.
 @property (strong, nonatomic) NSNumber *cancelOnPanGestureEnabled UI_APPEARANCE_SELECTOR;
+
+/// Boxed boolean value. Enables/disables control hiding when tapped on empty area. Disabled by default.
+@property (strong, nonatomic) NSNumber *cancelOnTapEmptyAreaEnabled UI_APPEARANCE_SELECTOR;
+
 /// A handler called on every type of dismissal (tapping on "Cancel" or swipe down or flick down).
 @property (strong, nonatomic) AHKActionSheetHandler cancelHandler;
 @property (copy, nonatomic) NSString *cancelButtonTitle;

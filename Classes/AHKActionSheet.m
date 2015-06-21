@@ -41,7 +41,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
 
 
-@interface AHKActionSheet() <UITableViewDataSource, UITableViewDelegate>
+@interface AHKActionSheet() <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 @property (strong, nonatomic) NSMutableArray *items;
 @property (weak, nonatomic, readwrite) UIWindow *previousKeyWindow;
 @property (strong, nonatomic) UIWindow *window;
@@ -79,6 +79,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     [appearance setTitleTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:14.0f],
                                           NSForegroundColorAttributeName : [UIColor grayColor] }];
     [appearance setCancelOnPanGestureEnabled:@(YES)];
+    [appearance setCancelOnTapEmptyAreaEnabled:@(NO)];
     [appearance setAnimationDuration:kDefaultAnimationDuration];
 }
 
@@ -274,6 +275,10 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     [self setUpCancelButton];
     [self setUpTableView];
     
+    if (self.cancelOnPanGestureEnabled.boolValue) {
+        [self setUpCancelTapGestureForView:self.tableView];
+    }
+    
     CGFloat slideDownMinOffset = (CGFloat)fmin(CGRectGetHeight(self.frame) + self.tableView.contentOffset.y, CGRectGetHeight(self.frame));
     self.tableView.transform = CGAffineTransformMakeTranslation(0, slideDownMinOffset);
 
@@ -410,6 +415,12 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     self.blurredBackgroundView = backgroundView;
 }
 
+- (void)setUpCancelTapGestureForView:(UIView*)view {
+    UITapGestureRecognizer *cancelTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelButtonTapped:)];
+    cancelTap.delegate = self;
+    [view addGestureRecognizer:cancelTap];
+}
+
 - (void)setUpCancelButton
 {
     UIButton *cancelButton;
@@ -529,6 +540,16 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
         self.blurredBackgroundView.alpha = alpha;
         self.cancelButtonShadowView.alpha = alpha;
     }
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    // If the view that is touched is not the view associated with this view's table view, but
+    // is one of the sub-views, we should not recognize the touch.
+    // Original source: http://stackoverflow.com/questions/10755566/how-to-know-uitableview-is-pressed-when-empty
+    if (touch.view != self.tableView && [touch.view isDescendantOfView:self.tableView]) {
+        return NO;
+    }
+    return YES;
 }
 
 @end
