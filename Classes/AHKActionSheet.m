@@ -306,6 +306,12 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
         self.tableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0);
 
         self.tableView.bounces = [self.cancelOnPanGestureEnabled boolValue] || !buttonsFitInWithoutScrolling;
+		
+		if (self.shouldScrollToBottom) {
+			NSInteger row = (NSInteger) self.items.count - 1;
+			[self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]
+								  atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+		}
     };
 
     if ([UIView respondsToSelector:@selector(animateKeyframesWithDuration:delay:options:animations:completion:)]){

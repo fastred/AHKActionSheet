@@ -67,6 +67,7 @@
     AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:nil];
 
     actionSheet.blurTintColor = [UIColor colorWithWhite:0.0f alpha:0.75f];
+	actionSheet.shouldScrollToBottom = YES;
     actionSheet.blurRadius = 8.0f;
 	actionSheet.separatorInset = 16;
     actionSheet.buttonHeight = 50.0f;
