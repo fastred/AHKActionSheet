@@ -244,6 +244,11 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
 #pragma mark - Public
 
+- (void)setWindowOfAppExtensions:(UIWindow *)window
+{
+    self.previousKeyWindow = window;
+}
+
 - (void)addButtonWithTitle:(NSString *)title type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler
 {
     [self addButtonWithTitle:title image:nil type:type handler:handler];
@@ -267,7 +272,10 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
         return;
     }
 
+#if !defined(AHK_APP_EXTENSIONS)
     self.previousKeyWindow = [UIApplication sharedApplication].keyWindow;
+#endif
+  
     UIImage *previousKeyWindowSnapshot = [self.previousKeyWindow ahk_snapshot];
 
     [self setUpNewWindow];
@@ -462,8 +470,13 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
 - (void)setUpTableView
 {
-    CGRect statusBarViewRect = [self convertRect:[UIApplication sharedApplication].statusBarFrame fromView:nil];
-    CGFloat statusBarHeight = CGRectGetHeight(statusBarViewRect);
+  CGFloat statusBarHeight = 0;
+#if defined(AHK_APP_EXTENSIONS)
+  statusBarHeight = 0;
+#else
+  CGRect statusBarViewRect = [self convertRect:[UIApplication sharedApplication].statusBarFrame fromView:nil];
+  statusBarHeight = CGRectGetHeight(statusBarViewRect);
+#endif
     CGRect frame = CGRectMake(0,
                               statusBarHeight,
                               CGRectGetWidth(self.bounds),

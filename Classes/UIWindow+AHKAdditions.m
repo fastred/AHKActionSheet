@@ -41,7 +41,7 @@
     // UIWindow doesn't have to be rotated on iOS 8+.
     BOOL ignoreOrientation = SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0");
 
-    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    UIInterfaceOrientation orientation = [self currentOrientation];
 
     CGSize imageSize = CGSizeZero;
     if (UIInterfaceOrientationIsPortrait(orientation) || ignoreOrientation) {
@@ -93,6 +93,24 @@
         viewController = viewController.presentedViewController;
     }
     return viewController;
+}
+
+- (UIInterfaceOrientation)currentOrientation
+{
+    UIInterfaceOrientation orientation;
+  
+#if defined(AHK_APP_EXTENSIONS)
+    if ([UIScreen mainScreen].bounds.size.width < [UIScreen mainScreen].bounds.size.height) {
+      orientation = UIInterfaceOrientationPortrait;
+    }
+    else {
+      orientation = UIInterfaceOrientationLandscapeLeft;
+    }
+#else
+    orientation = [UIApplication sharedApplication].statusBarOrientation;
+#endif
+  
+    return orientation;
 }
 
 @end

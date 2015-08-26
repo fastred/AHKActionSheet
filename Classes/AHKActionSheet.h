@@ -107,4 +107,6 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 /// Dismisses the action sheet with an optional animation.
 - (void)dismissAnimated:(BOOL)animated;
 
+- (void)setWindowOfAppExtensions:(UIWindow *)window;
+
 @end

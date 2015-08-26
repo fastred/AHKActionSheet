@@ -54,18 +54,22 @@
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
     UIWindow *window = self.actionSheet.previousKeyWindow;
+#if !defined(AHK_APP_EXTENSIONS)
     if (!window) {
-        window = [[UIApplication sharedApplication].windows firstObject];
+      window = [[UIApplication sharedApplication].windows firstObject];
     }
+#endif
     return [[window ahk_viewControllerForStatusBarStyle] preferredStatusBarStyle];
 }
 
 - (BOOL)prefersStatusBarHidden
 {
     UIWindow *window = self.actionSheet.previousKeyWindow;
+#if !defined(AHK_APP_EXTENSIONS)
     if (!window) {
-        window = [[UIApplication sharedApplication].windows firstObject];
+      window = [[UIApplication sharedApplication].windows firstObject];
     }
+#endif
     return [[window ahk_viewControllerForStatusBarHidden] prefersStatusBarHidden];
 }
 
