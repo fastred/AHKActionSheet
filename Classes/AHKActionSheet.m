@@ -44,6 +44,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 @interface AHKActionSheet() <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 @property (strong, nonatomic) NSMutableArray *items;
 @property (weak, nonatomic, readwrite) UIWindow *previousKeyWindow;
+@property (weak, nonatomic, readwrite) UIViewController *viewController;
 @property (strong, nonatomic) UIWindow *window;
 @property (weak, nonatomic) UIImageView *blurredBackgroundView;
 @property (weak, nonatomic) UITableView *tableView;
@@ -61,7 +62,11 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
         return;
     }
 
-    AHKActionSheet *appearance = [self appearance];
+    [AHKActionSheet setAppearance:[self appearance]];
+}
+
++ (void)setAppearance:(AHKActionSheet *)appearance
+{
     [appearance setBlurRadius:16.0f];
     [appearance setBlurTintColor:[UIColor colorWithWhite:1.0f alpha:0.5f]];
     [appearance setBlurSaturationDeltaFactor:1.8f];
@@ -90,6 +95,9 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     if (self) {
         _title = [title copy];
         _cancelButtonTitle = @"Cancel";
+#if defined(AHK_APP_EXTENSIONS)
+        [AHKActionSheet setAppearance:self];
+#endif
     }
 
     return self;
@@ -173,7 +181,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return self.buttonHeight;
+  return self.buttonHeight;
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -244,11 +252,6 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
 #pragma mark - Public
 
-- (void)setWindowOfAppExtensions:(UIWindow *)window
-{
-    self.previousKeyWindow = window;
-}
-
 - (void)addButtonWithTitle:(NSString *)title type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler
 {
     [self addButtonWithTitle:title image:nil type:type handler:handler];
@@ -262,6 +265,15 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     item.type = type;
     item.handler = handler;
     [self.items addObject:item];
+}
+
+- (void)showInViewController:(UIViewController *)viewController
+{
+    NSAssert(viewController, @"viewController can't be nil -showInViewController:.");
+  
+    self.viewController = viewController;
+    self.previousKeyWindow = viewController.view.window;
+    [self show];
 }
 
 - (void)show
@@ -348,8 +360,12 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
 - (BOOL)isVisible
 {
-    // action sheet is visible iff it's associated with a window
-    return !!self.window;
+#if defined(AHK_APP_EXTENSIONS)
+    return [[self.viewController.view subviews] containsObject:self];
+#else
+    // action sheet is visible if it's associated with a window
+    return self.window;
+#endif
 }
 
 - (void)dismissAnimated:(BOOL)animated duration:(NSTimeInterval)duration completion:(AHKActionSheetHandler)completionHandler
@@ -366,13 +382,27 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
     void(^tearDownView)(void) = ^(void) {
         // remove the views because it's easiest to just recreate them if the action sheet is shown again
-        for (UIView *view in @[self.tableView, self.cancelButton, self.blurredBackgroundView, self.window]) {
+        NSMutableArray *viewArray = [@[self.tableView, self.cancelButton, self.blurredBackgroundView] mutableCopy];
+        if (self.window) {
+            [viewArray addObject:self.window];
+        }
+        else {
+            [viewArray addObject:self];
+        }
+        for (UIView *view in viewArray) {
             [view removeFromSuperview];
         }
 
+#if defined(AHK_APP_EXTENSIONS)
+        [self.viewController.view.subviews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            UIView *subView = (UIView *)obj;
+            [subView setUserInteractionEnabled:YES];
+        }];
+#else
         self.window = nil;
         [self.previousKeyWindow makeKeyAndVisible];
-
+#endif
+      
         if (completionHandler) {
             completionHandler(self);
         }
@@ -401,12 +431,20 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 {
     AHKActionSheetViewController *actionSheetVC = [[AHKActionSheetViewController alloc] initWithNibName:nil bundle:nil];
     actionSheetVC.actionSheet = self;
-
+#if defined(AHK_APP_EXTENSIONS)
+    [self.viewController.view.subviews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        UIView *subView = (UIView *)obj;
+        [subView setUserInteractionEnabled:NO];
+    }];
+    self.frame = CGRectMake(0.0f, 0.0f, self.viewController.view.frame.size.width, self.viewController.view.frame.size.height) ;
+    [self.viewController.view addSubview:self];
+#else
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.window.opaque = NO;
     self.window.rootViewController = actionSheetVC;
     [self.window makeKeyAndVisible];
+#endif
 }
 
 - (void)setUpBlurredBackgroundWithSnapshot:(UIImage *)previousKeyWindowSnapshot
@@ -470,12 +508,12 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
 - (void)setUpTableView
 {
-  CGFloat statusBarHeight = 0;
+    CGFloat statusBarHeight = 0;
 #if defined(AHK_APP_EXTENSIONS)
-  statusBarHeight = 0;
+    statusBarHeight = 0;
 #else
-  CGRect statusBarViewRect = [self convertRect:[UIApplication sharedApplication].statusBarFrame fromView:nil];
-  statusBarHeight = CGRectGetHeight(statusBarViewRect);
+    CGRect statusBarViewRect = [self convertRect:[UIApplication sharedApplication].statusBarFrame fromView:nil];
+    statusBarHeight = CGRectGetHeight(statusBarViewRect);
 #endif
     CGRect frame = CGRectMake(0,
                               statusBarHeight,

@@ -73,7 +73,7 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 @property (strong, nonatomic) UIView *headerView;
 /// Window visible before the actionSheet was presented.
 @property (weak, nonatomic, readonly) UIWindow *previousKeyWindow;
-
+@property (weak, nonatomic, readonly) UIViewController *viewController;
 
 /**
  *  Initializes the action sheet with a specified title. `headerView` can be used if a string is insufficient for the title; set `title` as `nil` in this case.
@@ -101,12 +101,13 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
  */
 - (void)addButtonWithTitle:(NSString *)title image:(UIImage *)image type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler;
 
+/// Displays the action sheet. Has to be used in app extensions.
+- (void)showInViewController:(UIViewController *)viewController;
+
 /// Displays the action sheet.
 - (void)show;
 
 /// Dismisses the action sheet with an optional animation.
 - (void)dismissAnimated:(BOOL)animated;
-
-- (void)setWindowOfAppExtensions:(UIWindow *)window;
 
 @end
