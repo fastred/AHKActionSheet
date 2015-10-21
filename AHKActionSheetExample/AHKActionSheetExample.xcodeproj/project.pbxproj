@@ -226,7 +226,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = AHK;
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Arkadiusz Holko";
 				TargetAttributes = {
 					A6BA55D018F3F7840009AC11 = {
@@ -353,6 +353,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -432,6 +433,7 @@
 					"-Wno-unused-parameter",
 					"-Wunreachable-code",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "pl.holko.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -464,6 +466,7 @@
 					"-Wno-unused-parameter",
 					"-Wunreachable-code",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "pl.holko.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -485,6 +488,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "AHKActionSheetExampleTests/AHKActionSheetExampleTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "pl.holko.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -503,6 +507,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AHKActionSheetExample/AHKActionSheetExample-Prefix.pch";
 				INFOPLIST_FILE = "AHKActionSheetExampleTests/AHKActionSheetExampleTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "pl.holko.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
