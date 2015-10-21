@@ -81,6 +81,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     [appearance setCancelOnPanGestureEnabled:@(YES)];
     [appearance setCancelOnTapEmptyAreaEnabled:@(NO)];
     [appearance setAnimationDuration:kDefaultAnimationDuration];
+	[appearance setSeparatorInset:0];
 }
 
 - (instancetype)initWithTitle:(NSString *)title
@@ -165,7 +166,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     AHKActionSheetItem *item = self.items[(NSUInteger)indexPath.row];
-    
+
     if (item.type != AHKActionSheetButtonTypeDisabled) {
         [self dismissAnimated:YES duration:self.animationDuration completion:item.handler];
     }
@@ -180,7 +181,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 {
     // Remove separator inset as described here: http://stackoverflow.com/a/25877725/783960
     if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
-        [cell setSeparatorInset:UIEdgeInsetsZero];
+		[cell setSeparatorInset:UIEdgeInsetsMake(0, self.separatorInset, 0, self.separatorInset)];
     }
     
     // Prevent the cell from inheriting the Table View's margin settings
@@ -310,6 +311,12 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
         self.tableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0);
 
         self.tableView.bounces = [self.cancelOnPanGestureEnabled boolValue] || !buttonsFitInWithoutScrolling;
+		
+		if (self.shouldScrollToBottom) {
+			NSInteger row = (NSInteger) self.items.count - 1;
+			[self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]
+								  atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+		}
     };
 
     if ([UIView respondsToSelector:@selector(animateKeyframesWithDuration:delay:options:animations:completion:)]){
@@ -481,6 +488,9 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     tableView.dataSource = self;
     [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
     [self insertSubview:tableView aboveSubview:self.blurredBackgroundView];
+
+	self.tableView.separatorInset = UIEdgeInsetsMake(0,self.separatorInset, 0, self.separatorInset);
+
     // move the content below the screen, ready to be animated in -show
     tableView.contentInset = UIEdgeInsetsMake(CGRectGetHeight(self.bounds), 0, 0, 0);
     // removes separators below the footer (between empty cells)
@@ -521,9 +531,9 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     // add a separator between the tableHeaderView and a first row (technically at the bottom of the tableHeaderView)
     if (self.tableView.tableHeaderView && self.tableView.separatorStyle != UITableViewCellSeparatorStyleNone) {
         CGFloat separatorHeight = 1.0f / [UIScreen mainScreen].scale;
-        CGRect separatorFrame = CGRectMake(0,
+		CGRect separatorFrame = CGRectMake(self.separatorInset,
                                            CGRectGetHeight(self.tableView.tableHeaderView.frame) - separatorHeight,
-                                           CGRectGetWidth(self.tableView.tableHeaderView.frame),
+                                           CGRectGetWidth(self.tableView.tableHeaderView.frame) - self.separatorInset *2,
                                            separatorHeight);
         UIView *separator = [[UIView alloc] initWithFrame:separatorFrame];
         separator.backgroundColor = self.tableView.separatorColor;

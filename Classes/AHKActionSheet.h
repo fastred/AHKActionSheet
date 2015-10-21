@@ -34,6 +34,8 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 @property (nonatomic) CGFloat buttonHeight UI_APPEARANCE_SELECTOR;
 /// Height of the cancel button.
 @property (nonatomic) CGFloat cancelButtonHeight UI_APPEARANCE_SELECTOR;
+// distance between the edge of the table view and the separator start/end
+@property(nonatomic) NSUInteger separatorInset UI_APPEARANCE_SELECTOR;
 /**
  *  If set, a small shadow (a gradient layer) will be drawn above the cancel button to separate it visually from the other buttons.
  *  It's best to use a color similar (but maybe with a lower alpha value) to blurTintColor.
@@ -74,6 +76,8 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 /// Window visible before the actionSheet was presented.
 @property (weak, nonatomic, readonly) UIWindow *previousKeyWindow;
 
+//Makes the table view scrolls to the end, showing the last item
+@property(nonatomic) BOOL shouldScrollToBottom;
 
 /**
  *  Initializes the action sheet with a specified title. `headerView` can be used if a string is insufficient for the title; set `title` as `nil` in this case.
