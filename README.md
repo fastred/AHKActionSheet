@@ -53,6 +53,11 @@ The view is customizable either directly or through a UIAppearance API. See the 
 
 ## Changelog
 
+0.5.3
+
+* Added `cancelOnTapEmptyAreaEnabled` property
+* Updated the project to compile cleanly on Xcode 7
+
 0.5.2
 
 * Fixed visible cancel button even though its height was set to 0.
