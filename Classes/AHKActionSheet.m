@@ -129,13 +129,12 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     cell.textLabel.textAlignment = [self.buttonTextCenteringEnabled boolValue] ? NSTextAlignmentCenter : NSTextAlignmentLeft;
 
     // Use image with template mode with color the same as the text (when enabled).
-    BOOL useTemplateMode = [UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)] && [self.automaticallyTintButtonImages boolValue];
-    cell.imageView.image = useTemplateMode ? [item.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] : item.image;
-
-    if ([UIImageView instancesRespondToSelector:@selector(tintColor)]){
-        cell.imageView.tintColor = attributes[NSForegroundColorAttributeName] ? attributes[NSForegroundColorAttributeName] : [UIColor blackColor];
-    }
-
+//    BOOL useTemplateMode = [UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)] && [self.automaticallyTintButtonImages boolValue];
+//    cell.imageView.image = useTemplateMode ? [item.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] : item.image;
+//    if ([UIImageView instancesRespondToSelector:@selector(tintColor)]){
+//        cell.imageView.tintColor = attributes[NSForegroundColorAttributeName] ? attributes[NSForegroundColorAttributeName] : [UIColor blackColor];
+//    }
+    cell.imageView.image = item.image;
     cell.backgroundColor = [UIColor clearColor];
 
     if (self.selectedBackgroundColor && ![cell.selectedBackgroundView.backgroundColor isEqual:self.selectedBackgroundColor]) {
@@ -143,6 +142,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
         cell.selectedBackgroundView.backgroundColor = self.selectedBackgroundColor;
     }
 
+    cell.textLabel.textColor = [UIColor blackColor];
     return cell;
 }
 
@@ -450,14 +450,19 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 {
     CGRect statusBarViewRect = [self convertRect:[UIApplication sharedApplication].statusBarFrame fromView:nil];
     CGFloat statusBarHeight = CGRectGetHeight(statusBarViewRect);
-    CGRect frame = CGRectMake(0,
-                              statusBarHeight,
-                              CGRectGetWidth(self.bounds),
-                              CGRectGetHeight(self.bounds) - statusBarHeight - self.cancelButtonHeight);
+    CGFloat padding = 20;
+    
+    CGRect frame = CGRectMake(padding,
+                              statusBarHeight + padding,
+                              CGRectGetWidth(self.bounds) - 2*padding,
+                              CGRectGetHeight(self.bounds) - statusBarHeight - self.cancelButtonHeight - padding*2);
 
     UITableView *tableView = [[UITableView alloc] initWithFrame:frame];
-    tableView.backgroundColor = [UIColor clearColor];
+    tableView.backgroundColor = [UIColor colorWithRed:0.9059f green:0.9137f blue:0.9059f alpha:1.0];
     tableView.showsVerticalScrollIndicator = NO;
+    
+    //rounded corners
+    tableView.layer.cornerRadius = 10.0;
 
     if (self.separatorColor) {
         tableView.separatorColor = self.separatorColor;
