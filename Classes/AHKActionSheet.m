@@ -27,20 +27,6 @@ static const CGFloat kTopSpaceMarginFraction = 0.333f;
 // cancelButton's shadow height as the ratio to the cancelButton's height
 static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
-
-/// Used for storing button configuration.
-@interface AHKActionSheetItem : NSObject
-@property (copy, nonatomic) NSString *title;
-@property (strong, nonatomic) UIImage *image;
-@property (nonatomic) AHKActionSheetButtonType type;
-@property (strong, nonatomic) AHKActionSheetHandler handler;
-@end
-
-@implementation AHKActionSheetItem
-@end
-
-
-
 @interface AHKActionSheet() <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 @property (strong, nonatomic) NSMutableArray *items;
 @property (weak, nonatomic, readwrite) UIWindow *previousKeyWindow;
@@ -165,7 +151,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     AHKActionSheetItem *item = self.items[(NSUInteger)indexPath.row];
-    
+    self.seletecItem = item;
     if (item.type != AHKActionSheetButtonTypeDisabled) {
         [self dismissAnimated:YES duration:self.animationDuration completion:item.handler];
     }
@@ -366,7 +352,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
         [self.previousKeyWindow makeKeyAndVisible];
 
         if (completionHandler) {
-            completionHandler(self);
+            completionHandler(self.seletecItem);
         }
     };
 

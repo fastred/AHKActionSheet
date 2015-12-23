@@ -7,15 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-typedef NS_ENUM(NSInteger, AHKActionSheetButtonType) {
-    AHKActionSheetButtonTypeDefault = 0,
-	AHKActionSheetButtonTypeDisabled,
-    AHKActionSheetButtonTypeDestructive
-};
-
-@class AHKActionSheet;
-typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
+#import "AHKActionSheetItem.h"
 
 
 /// A block-based alternative to the `UIAlertView`.
@@ -73,7 +65,8 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 @property (strong, nonatomic) UIView *headerView;
 /// Window visible before the actionSheet was presented.
 @property (weak, nonatomic, readonly) UIWindow *previousKeyWindow;
-
+/// Index of the selected item on actionsheet
+@property (nonatomic) AHKActionSheetItem *seletecItem;
 
 /**
  *  Initializes the action sheet with a specified title. `headerView` can be used if a string is insufficient for the title; set `title` as `nil` in this case.
