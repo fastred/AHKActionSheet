@@ -127,13 +127,6 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     NSAttributedString *attrTitle = [[NSAttributedString alloc] initWithString:item.title attributes:attributes];
     cell.textLabel.attributedText = attrTitle;
     cell.textLabel.textAlignment = [self.buttonTextCenteringEnabled boolValue] ? NSTextAlignmentCenter : NSTextAlignmentLeft;
-
-    // Use image with template mode with color the same as the text (when enabled).
-//    BOOL useTemplateMode = [UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)] && [self.automaticallyTintButtonImages boolValue];
-//    cell.imageView.image = useTemplateMode ? [item.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] : item.image;
-//    if ([UIImageView instancesRespondToSelector:@selector(tintColor)]){
-//        cell.imageView.tintColor = attributes[NSForegroundColorAttributeName] ? attributes[NSForegroundColorAttributeName] : [UIColor blackColor];
-//    }
     cell.imageView.image = item.image;
     cell.backgroundColor = [UIColor clearColor];
 
@@ -141,6 +134,16 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
         cell.selectedBackgroundView = [[UIView alloc] init];
         cell.selectedBackgroundView.backgroundColor = self.selectedBackgroundColor;
     }
+    
+    // We have to use the borderColor/Width as opposed to just setting the
+    // backgroundColor else the view becomes transparent and disappears during
+    // the cell's selected/highlighted animation
+    CGFloat padding = 15;
+    UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(padding, cell.frame.size.height, cell.frame.size.width - padding *2, 1)];
+    separatorView.layer.borderColor = [UIColor colorWithRed:0.9697 green:1.0 blue:0.8978 alpha:0.35].CGColor;
+    separatorView.layer.borderWidth = 1.0;
+    [cell.contentView addSubview:separatorView];
+    
 
     cell.textLabel.textColor = [UIColor blackColor];
     return cell;
@@ -162,23 +165,23 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     return self.buttonHeight;
 }
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Remove separator inset as described here: http://stackoverflow.com/a/25877725/783960
-    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
-        [cell setSeparatorInset:UIEdgeInsetsZero];
-    }
-    
-    // Prevent the cell from inheriting the Table View's margin settings
-    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
-        [cell setPreservesSuperviewLayoutMargins:NO];
-    }
-    
-    // Explictly set your cell's layout margins
-    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
-        [cell setLayoutMargins:UIEdgeInsetsZero];
-    }
-}
+//-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    // Remove separator inset as described here: http://stackoverflow.com/a/25877725/783960
+//    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+//        [cell setSeparatorInset:UIEdgeInsetsZero];
+//    }
+//    
+//    // Prevent the cell from inheriting the Table View's margin settings
+//    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
+//        [cell setPreservesSuperviewLayoutMargins:NO];
+//    }
+//    
+//    // Explictly set your cell's layout margins
+//    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+//        [cell setLayoutMargins:UIEdgeInsetsMake(0, 20, 0, -20)];
+//    }
+//}
 
 #pragma mark - UIScrollViewDelegate
 
@@ -463,8 +466,10 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     
     //rounded corners
     tableView.layer.cornerRadius = 10.0;
-
+    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    //custom seperator
     if (self.separatorColor) {
+        
         tableView.separatorColor = self.separatorColor;
     }
 
