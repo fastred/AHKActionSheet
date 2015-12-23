@@ -12,6 +12,7 @@
 
 typedef NS_ENUM(NSInteger, AHKActionSheetButtonType) {
     AHKActionSheetButtonTypeDefault = 0,
+    AHKActionSheetButtonTypeSelected,
     AHKActionSheetButtonTypeDisabled,
     AHKActionSheetButtonTypeDestructive
 };

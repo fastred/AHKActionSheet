@@ -115,6 +115,9 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
         case AHKActionSheetButtonTypeDefault:
             attributes = self.buttonTextAttributes;
             break;
+        case AHKActionSheetButtonTypeSelected:
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            break;
         case AHKActionSheetButtonTypeDisabled:
             attributes = self.disabledButtonTextAttributes;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
