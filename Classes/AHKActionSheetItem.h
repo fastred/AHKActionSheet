@@ -24,6 +24,7 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheetItem *actionSheetItem);
 
 @property (copy, nonatomic) NSString *title;
 @property (strong, nonatomic) UIImage *image;
+@property (strong, nonatomic) id identifier;
 @property (nonatomic) AHKActionSheetButtonType type;
 @property (strong, nonatomic) AHKActionSheetHandler handler;
 
