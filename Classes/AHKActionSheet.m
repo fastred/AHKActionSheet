@@ -459,12 +459,15 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     CGFloat statusBarHeight = CGRectGetHeight(statusBarViewRect);
     CGFloat padding = 20;
     
-    CGRect frame = CGRectMake(padding,
-                              statusBarHeight + padding,
-                              CGRectGetWidth(self.bounds) - 2*padding,
-                              CGRectGetHeight(self.bounds) - statusBarHeight - self.cancelButtonHeight - padding*2);
+//    CGRect frame = CGRectMake(padding,
+//                              statusBarHeight + padding,
+//                              CGRectGetWidth(self.bounds) - 2*padding,
+//                              CGRectGetHeight(self.bounds) - statusBarHeight - self.cancelButtonHeight - padding*2);
 
-    UITableView *tableView = [[UITableView alloc] initWithFrame:frame];
+//    UITableView *tableView = [[UITableView alloc] initWithFrame:frame];
+    
+    UITableView *tableView = [[UITableView alloc] init];
+    tableView.translatesAutoresizingMaskIntoConstraints = NO;
     tableView.backgroundColor = [UIColor colorWithRed:0.9059f green:0.9137f blue:0.9059f alpha:1.0];
     tableView.showsVerticalScrollIndicator = NO;
     
@@ -487,9 +490,32 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 
     self.tableView = tableView;
+    
+    //setup Autolayout constrains for tableview height
+    NSDictionary *views = @{@"tableView": self.tableView};
+    NSDictionary *metrics = @{@"padding": @20 ,
+                              @"statusBarHeight": [NSNumber numberWithDouble:statusBarHeight],
+                              @"cancelButtonHeight":[NSNumber numberWithDouble:self.cancelButtonHeight]};
+    
+    CGFloat verticalPaddings = statusBarHeight + self.cancelButtonHeight + padding*2;
+    CGFloat maxHeight = CGRectGetHeight(self.bounds) - verticalPaddings;
+    NSUInteger itemsCount = [self.items count];
+    CGFloat suggestHeight = itemsCount *self.buttonHeight + verticalPaddings;
+    CGFloat moduloHeight =(suggestHeight < maxHeight)?suggestHeight:maxHeight;
 
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(>=padding)-[tableView]-(cancelButtonHeight)-|" options:0 metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(padding)-[tableView]-(padding)-|" options:0 metrics:metrics views:views]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView
+                                                     attribute:NSLayoutAttributeHeight
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:nil
+                                                     attribute:NSLayoutAttributeNotAnAttribute
+                                                    multiplier:1.0
+                                                      constant:moduloHeight]];
+    
     [self setUpTableViewHeader];
 }
+
 
 - (void)setUpTableViewHeader
 {

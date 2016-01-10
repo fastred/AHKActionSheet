@@ -11,7 +11,8 @@
 #import "AHKViewController.h"
 #import "AHKActionSheet.h"
 
-@interface AHKViewController ()
+@interface AHKViewController (){}
+@property (strong, nonatomic) AHKActionSheet *actionSheet;
 
 @end
 
@@ -29,37 +30,41 @@
 
 - (IBAction)basicExampleTapped:(id)sender
 {
-    AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:NSLocalizedString(@"Lorem ipsum dolor sit amet, consectetur adipiscing elit?", nil)];
+    _actionSheet = [[AHKActionSheet alloc] initWithTitle:NSLocalizedString(@"Lorem ipsum dolor sit amet, consectetur adipiscing elit?", nil)];
 
-    [actionSheet addButtonWithTitle:NSLocalizedString(@"Info", nil)
+    [_actionSheet addButtonWithTitle:NSLocalizedString(@"Info", nil)
+                        identifier:@1
                               image:[UIImage imageNamed:@"Icon1"]
                                type:AHKActionSheetButtonTypeDefault
                             handler:^(AHKActionSheetItem *as) {
                                 NSLog(@"selected index %@", as.title);
                             }];
 
-    [actionSheet addButtonWithTitle:NSLocalizedString(@"Add to Favorites", nil)
+    [_actionSheet addButtonWithTitle:NSLocalizedString(@"Add to Favorites", nil)
+                        identifier:@2
                               image:[UIImage imageNamed:@"Icon2"]
                                type:AHKActionSheetButtonTypeDefault
                             handler:^(AHKActionSheetItem *as) {
                                 NSLog(@"selected index %@", as.title);
                             }];
 
-    [actionSheet addButtonWithTitle:NSLocalizedString(@"Share", nil)
-                              image:[UIImage imageNamed:@"Icon3"]
-                               type:AHKActionSheetButtonTypeDefault
-                            handler:^(AHKActionSheetItem *as) {
-                                NSLog(@"selected index %@", as.title);
-                            }];
+//    [actionSheet addButtonWithTitle:NSLocalizedString(@"Share", nil)
+//                        identifier:@3
+//                              image:[UIImage imageNamed:@"Icon3"]
+//                               type:AHKActionSheetButtonTypeDefault
+//                            handler:^(AHKActionSheetItem *as) {
+//                                NSLog(@"selected index %@", as.title);
+//                            }];
+//
+//    [actionSheet addButtonWithTitle:NSLocalizedString(@"Delete", nil)
+//                         identifier:@4
+//                              image:[UIImage imageNamed:@"Icon4"]
+//                               type:AHKActionSheetButtonTypeDestructive
+//                            handler:^(AHKActionSheetItem *as) {
+//                                NSLog(@"selected index %@", as.title);
+//                            }];
 
-    [actionSheet addButtonWithTitle:NSLocalizedString(@"Delete", nil)
-                              image:[UIImage imageNamed:@"Icon4"]
-                               type:AHKActionSheetButtonTypeDestructive
-                            handler:^(AHKActionSheetItem *as) {
-                                NSLog(@"selected index %@", as.title);
-                            }];
-
-    [actionSheet show];
+    [_actionSheet show];
 }
 
 - (IBAction)advancedExampleTapped:(id)sender
@@ -88,6 +93,7 @@
     actionSheet.headerView = headerView;
 
     [actionSheet addButtonWithTitle:NSLocalizedString(@"Info", nil)
+                         identifier:@1
                               image:[UIImage imageNamed:@"Icon1"]
                                type:AHKActionSheetButtonTypeDefault
                             handler:^(AHKActionSheetItem *as) {
@@ -95,6 +101,7 @@
                             }];
 
     [actionSheet addButtonWithTitle:NSLocalizedString(@"Add to Favorites (disabled)", nil)
+                            identifier:@2
                               image:[UIImage imageNamed:@"Icon2"]
                                type:AHKActionSheetButtonTypeDisabled
                             handler:^(AHKActionSheetItem *as) {
@@ -103,6 +110,7 @@
 
     for (int i = 0; i < 5; i++) {
         [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"Share %d", i]
+                             identifier:[NSNumber numberWithInt:i]
                                   image:[UIImage imageNamed:@"Icon3"]
                                    type:AHKActionSheetButtonTypeDefault
                                 handler:^(AHKActionSheetItem *as) {
@@ -111,6 +119,7 @@
     }
 
     [actionSheet addButtonWithTitle:NSLocalizedString(@"Delete", nil)
+                         identifier:@1
                               image:[UIImage imageNamed:@"Icon4"]
                                type:AHKActionSheetButtonTypeDestructive
                             handler:^(AHKActionSheetItem *as) {
