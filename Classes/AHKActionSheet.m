@@ -129,7 +129,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
     NSAttributedString *attrTitle = [[NSAttributedString alloc] initWithString:item.title attributes:attributes];
     cell.textLabel.attributedText = attrTitle;
-    cell.textLabel.textAlignment = [self.buttonTextCenteringEnabled boolValue] ? NSTextAlignmentCenter : NSTextAlignmentLeft;
+    cell.textLabel.textAlignment = NSTextAlignmentNatural;
     cell.imageView.image = item.image;
     cell.backgroundColor = [UIColor clearColor];
 
