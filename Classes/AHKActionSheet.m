@@ -275,7 +275,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     [self setUpCancelButton];
     [self setUpTableView];
     
-    if (self.cancelOnPanGestureEnabled.boolValue) {
+    if (self.cancelOnTapEmptyAreaEnabled.boolValue) {
         [self setUpCancelTapGestureForView:self.tableView];
     }
     
