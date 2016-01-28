@@ -53,6 +53,10 @@ The view is customizable either directly or through a UIAppearance API. See the 
 
 ## Changelog
 
+0.5.4
+
+* Fix `cancelOnTapEmptyAreaEnabled` behavior
+
 0.5.3
 
 * Added `cancelOnTapEmptyAreaEnabled` property
