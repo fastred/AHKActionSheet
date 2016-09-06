@@ -476,6 +476,13 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     if (self.separatorColor) {
         tableView.separatorColor = self.separatorColor;
     }
+    
+    // Fix indentation on iPad
+    // http://stackoverflow.com/questions/25770119/ios-8-uitableview-separator-inset-0-not-working/25877725#25877725
+    if([tableView respondsToSelector:@selector(setCellLayoutMarginsFollowReadableWidth:)])
+    {
+        tableView.cellLayoutMarginsFollowReadableWidth = NO;
+    }
 
     tableView.delegate = self;
     tableView.dataSource = self;
