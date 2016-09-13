@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -132,7 +132,7 @@
 				};
 			};
 			buildConfigurationList = 6EDF8BF01D24673A00D8DD27 /* Build configuration list for PBXProject "AHKActionSheet" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -276,6 +276,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.colemancda.AHKActionSheet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -292,6 +293,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.colemancda.AHKActionSheet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
@@ -314,6 +316,7 @@
 				6EDF8C001D24673A00D8DD27 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
