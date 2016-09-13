@@ -1,0 +1,324 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6EDF8C0A1D24674400D8DD27 /* AHKActionSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EDF8C021D24674400D8DD27 /* AHKActionSheet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6EDF8C0B1D24674400D8DD27 /* AHKActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EDF8C031D24674400D8DD27 /* AHKActionSheet.m */; };
+		6EDF8C0C1D24674400D8DD27 /* AHKActionSheetViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EDF8C041D24674400D8DD27 /* AHKActionSheetViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6EDF8C0D1D24674400D8DD27 /* AHKActionSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EDF8C051D24674400D8DD27 /* AHKActionSheetViewController.m */; };
+		6EDF8C0E1D24674400D8DD27 /* UIImage+AHKAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EDF8C061D24674400D8DD27 /* UIImage+AHKAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6EDF8C0F1D24674400D8DD27 /* UIImage+AHKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EDF8C071D24674400D8DD27 /* UIImage+AHKAdditions.m */; };
+		6EDF8C101D24674400D8DD27 /* UIWindow+AHKAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EDF8C081D24674400D8DD27 /* UIWindow+AHKAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6EDF8C111D24674400D8DD27 /* UIWindow+AHKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EDF8C091D24674400D8DD27 /* UIWindow+AHKAdditions.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		6EDF8BF61D24673A00D8DD27 /* AHKActionSheet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AHKActionSheet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6EDF8BFB1D24673A00D8DD27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6EDF8C021D24674400D8DD27 /* AHKActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AHKActionSheet.h; sourceTree = "<group>"; };
+		6EDF8C031D24674400D8DD27 /* AHKActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AHKActionSheet.m; sourceTree = "<group>"; };
+		6EDF8C041D24674400D8DD27 /* AHKActionSheetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AHKActionSheetViewController.h; sourceTree = "<group>"; };
+		6EDF8C051D24674400D8DD27 /* AHKActionSheetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AHKActionSheetViewController.m; sourceTree = "<group>"; };
+		6EDF8C061D24674400D8DD27 /* UIImage+AHKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+AHKAdditions.h"; sourceTree = "<group>"; };
+		6EDF8C071D24674400D8DD27 /* UIImage+AHKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+AHKAdditions.m"; sourceTree = "<group>"; };
+		6EDF8C081D24674400D8DD27 /* UIWindow+AHKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+AHKAdditions.h"; sourceTree = "<group>"; };
+		6EDF8C091D24674400D8DD27 /* UIWindow+AHKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+AHKAdditions.m"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6EDF8BF21D24673A00D8DD27 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6EDF8BEC1D24673A00D8DD27 = {
+			isa = PBXGroup;
+			children = (
+				6EDF8BF81D24673A00D8DD27 /* AHKActionSheet */,
+				6EDF8BF71D24673A00D8DD27 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6EDF8BF71D24673A00D8DD27 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6EDF8BF61D24673A00D8DD27 /* AHKActionSheet.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6EDF8BF81D24673A00D8DD27 /* AHKActionSheet */ = {
+			isa = PBXGroup;
+			children = (
+				6EDF8C011D24674400D8DD27 /* Classes */,
+				6EDF8BFB1D24673A00D8DD27 /* Info.plist */,
+			);
+			path = AHKActionSheet;
+			sourceTree = "<group>";
+		};
+		6EDF8C011D24674400D8DD27 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				6EDF8C021D24674400D8DD27 /* AHKActionSheet.h */,
+				6EDF8C031D24674400D8DD27 /* AHKActionSheet.m */,
+				6EDF8C041D24674400D8DD27 /* AHKActionSheetViewController.h */,
+				6EDF8C051D24674400D8DD27 /* AHKActionSheetViewController.m */,
+				6EDF8C061D24674400D8DD27 /* UIImage+AHKAdditions.h */,
+				6EDF8C071D24674400D8DD27 /* UIImage+AHKAdditions.m */,
+				6EDF8C081D24674400D8DD27 /* UIWindow+AHKAdditions.h */,
+				6EDF8C091D24674400D8DD27 /* UIWindow+AHKAdditions.m */,
+			);
+			name = Classes;
+			path = ../../Classes;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		6EDF8BF31D24673A00D8DD27 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6EDF8C0A1D24674400D8DD27 /* AHKActionSheet.h in Headers */,
+				6EDF8C101D24674400D8DD27 /* UIWindow+AHKAdditions.h in Headers */,
+				6EDF8C0C1D24674400D8DD27 /* AHKActionSheetViewController.h in Headers */,
+				6EDF8C0E1D24674400D8DD27 /* UIImage+AHKAdditions.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		6EDF8BF51D24673A00D8DD27 /* AHKActionSheet */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6EDF8BFE1D24673A00D8DD27 /* Build configuration list for PBXNativeTarget "AHKActionSheet" */;
+			buildPhases = (
+				6EDF8BF11D24673A00D8DD27 /* Sources */,
+				6EDF8BF21D24673A00D8DD27 /* Frameworks */,
+				6EDF8BF31D24673A00D8DD27 /* Headers */,
+				6EDF8BF41D24673A00D8DD27 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AHKActionSheet;
+			productName = AHKActionSheet;
+			productReference = 6EDF8BF61D24673A00D8DD27 /* AHKActionSheet.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6EDF8BED1D24673A00D8DD27 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = ColemanCDA;
+				TargetAttributes = {
+					6EDF8BF51D24673A00D8DD27 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+				};
+			};
+			buildConfigurationList = 6EDF8BF01D24673A00D8DD27 /* Build configuration list for PBXProject "AHKActionSheet" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 6EDF8BEC1D24673A00D8DD27;
+			productRefGroup = 6EDF8BF71D24673A00D8DD27 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6EDF8BF51D24673A00D8DD27 /* AHKActionSheet */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6EDF8BF41D24673A00D8DD27 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6EDF8BF11D24673A00D8DD27 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6EDF8C0F1D24674400D8DD27 /* UIImage+AHKAdditions.m in Sources */,
+				6EDF8C0B1D24674400D8DD27 /* AHKActionSheet.m in Sources */,
+				6EDF8C111D24674400D8DD27 /* UIWindow+AHKAdditions.m in Sources */,
+				6EDF8C0D1D24674400D8DD27 /* AHKActionSheetViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		6EDF8BFC1D24673A00D8DD27 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		6EDF8BFD1D24673A00D8DD27 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		6EDF8BFF1D24673A00D8DD27 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = AHKActionSheet/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.colemancda.AHKActionSheet;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
+			};
+			name = Debug;
+		};
+		6EDF8C001D24673A00D8DD27 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = AHKActionSheet/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.colemancda.AHKActionSheet;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6EDF8BF01D24673A00D8DD27 /* Build configuration list for PBXProject "AHKActionSheet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6EDF8BFC1D24673A00D8DD27 /* Debug */,
+				6EDF8BFD1D24673A00D8DD27 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6EDF8BFE1D24673A00D8DD27 /* Build configuration list for PBXNativeTarget "AHKActionSheet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6EDF8BFF1D24673A00D8DD27 /* Debug */,
+				6EDF8C001D24673A00D8DD27 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6EDF8BED1D24673A00D8DD27 /* Project object */;
+}
