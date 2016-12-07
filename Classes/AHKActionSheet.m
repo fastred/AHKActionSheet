@@ -27,20 +27,6 @@ static const CGFloat kTopSpaceMarginFraction = 0.333f;
 // cancelButton's shadow height as the ratio to the cancelButton's height
 static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
-
-/// Used for storing button configuration.
-@interface AHKActionSheetItem : NSObject
-@property (copy, nonatomic) NSString *title;
-@property (strong, nonatomic) UIImage *image;
-@property (nonatomic) AHKActionSheetButtonType type;
-@property (strong, nonatomic) AHKActionSheetHandler handler;
-@end
-
-@implementation AHKActionSheetItem
-@end
-
-
-
 @interface AHKActionSheet() <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 @property (strong, nonatomic) NSMutableArray *items;
 @property (weak, nonatomic, readwrite) UIWindow *previousKeyWindow;
@@ -129,6 +115,9 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
         case AHKActionSheetButtonTypeDefault:
             attributes = self.buttonTextAttributes;
             break;
+        case AHKActionSheetButtonTypeSelected:
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            break;
         case AHKActionSheetButtonTypeDisabled:
             attributes = self.disabledButtonTextAttributes;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -140,23 +129,26 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
     NSAttributedString *attrTitle = [[NSAttributedString alloc] initWithString:item.title attributes:attributes];
     cell.textLabel.attributedText = attrTitle;
-    cell.textLabel.textAlignment = [self.buttonTextCenteringEnabled boolValue] ? NSTextAlignmentCenter : NSTextAlignmentLeft;
-
-    // Use image with template mode with color the same as the text (when enabled).
-    BOOL useTemplateMode = [UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)] && [self.automaticallyTintButtonImages boolValue];
-    cell.imageView.image = useTemplateMode ? [item.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] : item.image;
-
-    if ([UIImageView instancesRespondToSelector:@selector(tintColor)]){
-        cell.imageView.tintColor = attributes[NSForegroundColorAttributeName] ? attributes[NSForegroundColorAttributeName] : [UIColor blackColor];
-    }
-
+    cell.textLabel.textAlignment = NSTextAlignmentNatural;
+    cell.imageView.image = item.image;
     cell.backgroundColor = [UIColor clearColor];
 
     if (self.selectedBackgroundColor && ![cell.selectedBackgroundView.backgroundColor isEqual:self.selectedBackgroundColor]) {
         cell.selectedBackgroundView = [[UIView alloc] init];
         cell.selectedBackgroundView.backgroundColor = self.selectedBackgroundColor;
     }
+    
+    // We have to use the borderColor/Width as opposed to just setting the
+    // backgroundColor else the view becomes transparent and disappears during
+    // the cell's selected/highlighted animation
+    CGFloat padding = 15;
+    UIView *separatorView = [[UIView alloc] initWithFrame:CGRectMake(padding, cell.frame.size.height, cell.frame.size.width - padding *2, 1)];
+    separatorView.layer.borderColor = [UIColor colorWithRed:0.9697 green:1.0 blue:0.8978 alpha:0.35].CGColor;
+    separatorView.layer.borderWidth = 1.0;
+    [cell.contentView addSubview:separatorView];
+    
 
+    cell.textLabel.textColor = [UIColor blackColor];
     return cell;
 }
 
@@ -165,7 +157,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     AHKActionSheetItem *item = self.items[(NSUInteger)indexPath.row];
-    
+    self.seletecItem = item;
     if (item.type != AHKActionSheetButtonTypeDisabled) {
         [self dismissAnimated:YES duration:self.animationDuration completion:item.handler];
     }
@@ -176,23 +168,23 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     return self.buttonHeight;
 }
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Remove separator inset as described here: http://stackoverflow.com/a/25877725/783960
-    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
-        [cell setSeparatorInset:UIEdgeInsetsZero];
-    }
-    
-    // Prevent the cell from inheriting the Table View's margin settings
-    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
-        [cell setPreservesSuperviewLayoutMargins:NO];
-    }
-    
-    // Explictly set your cell's layout margins
-    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
-        [cell setLayoutMargins:UIEdgeInsetsZero];
-    }
-}
+//-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    // Remove separator inset as described here: http://stackoverflow.com/a/25877725/783960
+//    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+//        [cell setSeparatorInset:UIEdgeInsetsZero];
+//    }
+//    
+//    // Prevent the cell from inheriting the Table View's margin settings
+//    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
+//        [cell setPreservesSuperviewLayoutMargins:NO];
+//    }
+//    
+//    // Explictly set your cell's layout margins
+//    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+//        [cell setLayoutMargins:UIEdgeInsetsMake(0, 20, 0, -20)];
+//    }
+//}
 
 #pragma mark - UIScrollViewDelegate
 
@@ -244,15 +236,16 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
 #pragma mark - Public
 
-- (void)addButtonWithTitle:(NSString *)title type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler
+- (void)addButtonWithTitle:(NSString *)title identifier:(id)identifier type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler
 {
-    [self addButtonWithTitle:title image:nil type:type handler:handler];
+    [self addButtonWithTitle:title identifier:identifier image:nil type:type handler:handler];
 }
 
-- (void)addButtonWithTitle:(NSString *)title image:(UIImage *)image type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler
+- (void)addButtonWithTitle:(NSString *)title identifier:(id)identifier image:(UIImage *)image type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler
 {
     AHKActionSheetItem *item = [[AHKActionSheetItem alloc] init];
     item.title = title;
+    item.identifier = identifier;
     item.image = image;
     item.type = type;
     item.handler = handler;
@@ -366,7 +359,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
         [self.previousKeyWindow makeKeyAndVisible];
 
         if (completionHandler) {
-            completionHandler(self);
+            completionHandler(self.seletecItem);
         }
     };
 
@@ -464,16 +457,26 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 {
     CGRect statusBarViewRect = [self convertRect:[UIApplication sharedApplication].statusBarFrame fromView:nil];
     CGFloat statusBarHeight = CGRectGetHeight(statusBarViewRect);
-    CGRect frame = CGRectMake(0,
-                              statusBarHeight,
-                              CGRectGetWidth(self.bounds),
-                              CGRectGetHeight(self.bounds) - statusBarHeight - self.cancelButtonHeight);
+    CGFloat padding = 20;
+    
+//    CGRect frame = CGRectMake(padding,
+//                              statusBarHeight + padding,
+//                              CGRectGetWidth(self.bounds) - 2*padding,
+//                              CGRectGetHeight(self.bounds) - statusBarHeight - self.cancelButtonHeight - padding*2);
 
-    UITableView *tableView = [[UITableView alloc] initWithFrame:frame];
-    tableView.backgroundColor = [UIColor clearColor];
+//    UITableView *tableView = [[UITableView alloc] initWithFrame:frame];
+    
+    UITableView *tableView = [[UITableView alloc] init];
+    tableView.translatesAutoresizingMaskIntoConstraints = NO;
+    tableView.backgroundColor = [UIColor colorWithRed:0.9059f green:0.9137f blue:0.9059f alpha:1.0];
     tableView.showsVerticalScrollIndicator = NO;
-
+    
+    //rounded corners
+    tableView.layer.cornerRadius = 10.0;
+    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    //custom seperator
     if (self.separatorColor) {
+        
         tableView.separatorColor = self.separatorColor;
     }
     
@@ -494,9 +497,32 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 
     self.tableView = tableView;
+    
+    //setup Autolayout constrains for tableview height
+    NSDictionary *views = @{@"tableView": self.tableView};
+    NSDictionary *metrics = @{@"padding": @20 ,
+                              @"statusBarHeight": [NSNumber numberWithDouble:statusBarHeight],
+                              @"cancelButtonHeight":[NSNumber numberWithDouble:self.cancelButtonHeight]};
+    
+    CGFloat verticalPaddings = statusBarHeight + self.cancelButtonHeight + padding*2;
+    CGFloat maxHeight = CGRectGetHeight(self.bounds) - verticalPaddings;
+    NSUInteger itemsCount = [self.items count];
+    CGFloat suggestHeight = itemsCount *self.buttonHeight + verticalPaddings;
+    CGFloat moduloHeight =(suggestHeight < maxHeight)?suggestHeight:maxHeight;
 
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(>=padding)-[tableView]-(cancelButtonHeight)-|" options:0 metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(padding)-[tableView]-(padding)-|" options:0 metrics:metrics views:views]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.tableView
+                                                     attribute:NSLayoutAttributeHeight
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:nil
+                                                     attribute:NSLayoutAttributeNotAnAttribute
+                                                    multiplier:1.0
+                                                      constant:moduloHeight]];
+    
     [self setUpTableViewHeader];
 }
+
 
 - (void)setUpTableViewHeader
 {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B5605BB1C2A8186006B9C4A /* AHKActionSheetItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5605BA1C2A8186006B9C4A /* AHKActionSheetItem.m */; };
 		A618482818FBDC2F005EA537 /* UIWindow+AHKAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A618482718FBDC2F005EA537 /* UIWindow+AHKAdditions.m */; };
 		A67A09F318F5665C0085FA8D /* AHKActionSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A67A09F218F5665B0085FA8D /* AHKActionSheetViewController.m */; };
 		A6BA55B418F3F7840009AC11 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6BA55B318F3F7840009AC11 /* Foundation.framework */; };
@@ -38,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5B5605B91C2A8186006B9C4A /* AHKActionSheetItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AHKActionSheetItem.h; sourceTree = "<group>"; };
+		5B5605BA1C2A8186006B9C4A /* AHKActionSheetItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AHKActionSheetItem.m; sourceTree = "<group>"; };
 		A618482618FBDC2F005EA537 /* UIWindow+AHKAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+AHKAdditions.h"; sourceTree = "<group>"; };
 		A618482718FBDC2F005EA537 /* UIWindow+AHKAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+AHKAdditions.m"; sourceTree = "<group>"; };
 		A67A09F118F5665B0085FA8D /* AHKActionSheetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AHKActionSheetViewController.h; sourceTree = "<group>"; };
@@ -170,6 +173,8 @@
 			children = (
 				A6BA55E918F3FD110009AC11 /* AHKActionSheet.h */,
 				A6BA55EA18F3FD110009AC11 /* AHKActionSheet.m */,
+				5B5605B91C2A8186006B9C4A /* AHKActionSheetItem.h */,
+				5B5605BA1C2A8186006B9C4A /* AHKActionSheetItem.m */,
 				A67A09F118F5665B0085FA8D /* AHKActionSheetViewController.h */,
 				A67A09F218F5665B0085FA8D /* AHKActionSheetViewController.m */,
 				A6BA55EC18F3FD270009AC11 /* UIImage+AHKAdditions.h */,
@@ -280,6 +285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A6BA55C018F3F7840009AC11 /* main.m in Sources */,
+				5B5605BB1C2A8186006B9C4A /* AHKActionSheetItem.m in Sources */,
 				A6BA55EE18F3FD270009AC11 /* UIImage+AHKAdditions.m in Sources */,
 				A67A09F318F5665C0085FA8D /* AHKActionSheetViewController.m in Sources */,
 				A6BA55CA18F3F7840009AC11 /* AHKViewController.m in Sources */,
