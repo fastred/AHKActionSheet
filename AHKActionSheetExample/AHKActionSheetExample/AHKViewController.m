@@ -112,6 +112,18 @@
     [actionSheet show];
 }
 
+- (IBAction)onArraryExample:(UIButton *)sender {
+    
+    NSArray * arrBtns = @[@"Title 0",@"Title 1",@"Title 2"];
+    NSArray * arrImgs = @[[UIImage imageNamed:@"Icon1"],[UIImage imageNamed:@"Icon2"],[UIImage imageNamed:@"Icon3"]];
+    
+    AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:NSLocalizedString(@"Lorem ipsum dolor sit amet, consectetur adipiscing elit?", nil)];
+    [actionSheet addButtonWithTitles:arrBtns images:arrImgs type:AHKActionSheetButtonTypeDefault handler:^(AHKActionSheet *as) {
+        NSLog(@"Title %ld",(long)as.buttonIndex);
+    }];
+    [actionSheet show];
+}
+
 #pragma mark - Private
 
 + (UIView *)fancyHeaderView

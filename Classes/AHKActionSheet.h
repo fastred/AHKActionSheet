@@ -74,6 +74,8 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 /// Window visible before the actionSheet was presented.
 @property (weak, nonatomic, readonly) UIWindow *previousKeyWindow;
 
+/// Integer index to get index back titles
+@property NSInteger buttonIndex;
 
 /**
  *  Initializes the action sheet with a specified title. `headerView` can be used if a string is insufficient for the title; set `title` as `nil` in this case.
@@ -94,12 +96,27 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 - (void)addButtonWithTitle:(NSString *)title type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler;
 
 /**
+ *  Add buttons without an image. Has to be called before showing the action sheet.
+ *
+ *  @param handler A completion handler block to execute when a dismissal animation (after the user tapped on the button) has finished.
+ */
+- (void)addButtonWithTitles:(NSArray *)titles type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler;
+
+/**
  *  Adds a button with an image. Has to be called before showing the action sheet.
  *
  *  @param image   The image to display on the left of the title.
  *  @param handler A completion handler block to execute when a dismissal animation (after the user tapped on the button) has finished.
  */
 - (void)addButtonWithTitle:(NSString *)title image:(UIImage *)image type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler;
+
+/**
+ *  Add buttons with an image. Has to be called before showing the action sheet.
+ *
+ *  @param image   The image to display on the left of the title.
+ *  @param handler A completion handler block to execute when a dismissal animation (after the user tapped on the button) has finished.
+ */
+- (void)addButtonWithTitles:(NSArray *)titles images:(NSArray *)images type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler;
 
 /// Displays the action sheet.
 - (void)show;
