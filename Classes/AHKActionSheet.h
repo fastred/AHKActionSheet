@@ -101,6 +101,15 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
  */
 - (void)addButtonWithTitle:(NSString *)title image:(UIImage *)image type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler;
 
+/**
+ *  Adds a button without an image. Has to be called before showing the action sheet.
+ *
+ *  @param image     The image to display on the left of the title.
+ *  @param accessory The accessory to display on the right of the title.
+ *  @param handler   A completion handler block to execute when a dismissal animation (after the user tapped on the button) has finished.
+ */
+- (void)addButtonWithTitle:(NSString *)title image:(UIImage *)image accessory:(UITableViewCellAccessoryType)accessory type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler;
+
 /// Displays the action sheet.
 - (void)show;
 

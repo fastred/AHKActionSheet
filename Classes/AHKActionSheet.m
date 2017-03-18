@@ -32,6 +32,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 @interface AHKActionSheetItem : NSObject
 @property (copy, nonatomic) NSString *title;
 @property (strong, nonatomic) UIImage *image;
+@property (nonatomic) UITableViewCellAccessoryType accessory;
 @property (nonatomic) AHKActionSheetButtonType type;
 @property (strong, nonatomic) AHKActionSheetHandler handler;
 @end
@@ -150,6 +151,8 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
         cell.imageView.tintColor = attributes[NSForegroundColorAttributeName] ? attributes[NSForegroundColorAttributeName] : [UIColor blackColor];
     }
 
+    cell.accessoryType = item.accessory;
+
     cell.backgroundColor = [UIColor clearColor];
 
     if (self.selectedBackgroundColor && ![cell.selectedBackgroundView.backgroundColor isEqual:self.selectedBackgroundColor]) {
@@ -251,9 +254,15 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
 - (void)addButtonWithTitle:(NSString *)title image:(UIImage *)image type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler
 {
+    [self addButtonWithTitle:title image:nil accessory:UITableViewCellAccessoryNone type:type handler:handler];
+}
+
+- (void)addButtonWithTitle:(NSString *)title image:(UIImage *)image accessory:(UITableViewCellAccessoryType)accessory type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler
+{
     AHKActionSheetItem *item = [[AHKActionSheetItem alloc] init];
     item.title = title;
     item.image = image;
+    item.accessory = accessory;
     item.type = type;
     item.handler = handler;
     [self.items addObject:item];
